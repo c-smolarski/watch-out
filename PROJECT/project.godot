@@ -10,13 +10,20 @@ config_version=5
 
 [application]
 
-config/name="Nouveau Projet De Jeu"
+config/name="OneButtonGame"
+run/main_scene="res://Scenes/Main.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
-config/icon="res://icon.svg"
+config/icon="res://Assets/icon.svg"
+
+[display]
+
+window/size/viewport_width=1080
+window/size/viewport_height=2400
+window/handheld/orientation=1
 
 [dotnet]
 
-project/assembly_name="Nouveau Projet De Jeu"
+project/assembly_name="OneButtonGame"
 
 [rendering]
 

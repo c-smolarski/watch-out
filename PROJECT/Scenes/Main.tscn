@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0c4suyvuber7"]
+
+[ext_resource type="Texture2D" uid="uid://bqy0hhg8vm17a" path="res://Assets/icon.svg" id="1_batfk"]
+
+[node name="Main" type="Node"]
+
+[node name="Managers" type="Node" parent="."]
+
+[node name="GameManager" type="Node" parent="Managers"]
+
+[node name="Icon" type="Sprite2D" parent="."]
+texture = ExtResource("1_batfk")
+
+[node name="GameContainer" type="Node2D" parent="."]
