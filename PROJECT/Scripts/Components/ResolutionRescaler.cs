@@ -1,11 +1,10 @@
-using Com.IsartDigital.WoolyWay.Managers;
 using Godot;
 using System;
 using System.Collections.Generic;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.WoolyWay.Components
+namespace Com.IsartDigital.OneButtonGame.Components
 {
 	public partial class ResolutionRescaler : Node
 	{
@@ -31,7 +30,6 @@ namespace Com.IsartDigital.WoolyWay.Components
 			base._Ready();
 			BaseScaleInit();
 			GetViewport().SizeChanged += RescaleTargets;
-			SignalBus.Instance.FullscreenButtonPressed += RescaleTargets;
 			RescaleTargets();
 			ProcessMode = ProcessModeEnum.Always;
 		}
@@ -81,7 +79,6 @@ namespace Com.IsartDigital.WoolyWay.Components
         {
 			if(IsInstanceValid(GetViewport()))
 				GetViewport().SizeChanged -= RescaleTargets;
-            SignalBus.Instance.FullscreenButtonPressed -= RescaleTargets;
             base.Dispose(disposing);
         }
     }

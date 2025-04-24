@@ -12,7 +12,7 @@ config_version=5
 
 config/name="OneButtonGame"
 run/main_scene="res://Scenes/Main.tscn"
-config/features=PackedStringArray("4.2", "Mobile")
+config/features=PackedStringArray("4.2", "C#", "Mobile")
 config/icon="res://Assets/icon.svg"
 
 [display]
@@ -25,6 +25,28 @@ window/handheld/orientation=1
 
 project/assembly_name="OneButtonGame"
 
+[file_customization]
+
+folder_colors={
+"res://Assets/": "purple",
+"res://Scenes/": "green",
+"res://Scripts/": "red"
+}
+
+[filesystem]
+
+import/blender/enabled=false
+import/fbx/enabled=false
+
+[input]
+
+click={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

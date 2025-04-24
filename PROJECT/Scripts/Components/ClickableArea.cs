@@ -1,15 +1,17 @@
-﻿using Com.IsartDigital.WoolyWay.Managers;
+﻿using Com.IsartDigital.OneButtonGame.Utils;
 using Godot;
 using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.WoolyWay.Components
+namespace Com.IsartDigital.OneButtonGame.Components
 {
     //Button is only a rectangle. This, paired with a CollisionPolygon can be any shape.
     public partial class ClickableArea : Area2D
     {
         [Signal] public delegate void ClickedEventHandler();
+        [Signal] public delegate void HoveredEventHandler();
+        [Signal] public delegate void UnhoveredEventHandler();
 
         private const string COLLIDER_PATH = "collider";
         private const string DISABLED = "disabled";
@@ -25,21 +27,26 @@ namespace Com.IsartDigital.WoolyWay.Components
             MouseExited += SetUnhovered;
         }
 
-        public override void _Input(InputEvent @event)
+        public override void _Input(InputEvent pEvent)
         {
-            base._Input(@event);
-            if (IsHovered && Input.IsActionJustPressed(InputManager.UI_CLICK))
+            base._Input(pEvent);
+            if (IsHovered && Input.IsActionJustPressed(ActionInput.CLICK))
                 EmitSignal(SignalName.Clicked);
         }
 
         private void SetHovered()
         {
             IsHovered = true;
+            EmitSignal(SignalName.Hovered);
         }
 
         private void SetUnhovered()
         {
-            IsHovered = false;
+            if (IsHovered)
+            {
+                IsHovered = false;
+                EmitSignal(SignalName.Unhovered);
+            }
         }
 
         public void SetActive(bool pEnabled = true)

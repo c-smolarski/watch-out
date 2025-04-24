@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://pvkx2krmebrw"]
+
+[ext_resource type="Texture2D" uid="uid://bqy0hhg8vm17a" path="res://Assets/icon.svg" id="1_0plnh"]
+[ext_resource type="Script" path="res://Scripts/Waste.cs" id="1_jkf60"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h4lfs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0plnh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Waste" type="Node2D"]
+script = ExtResource("1_jkf60")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.3, 1)
+sprite_frames = SubResource("SpriteFrames_h4lfs")

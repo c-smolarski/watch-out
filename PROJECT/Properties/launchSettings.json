@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "OneButtonGame": {
+      "commandName": "Executable",
+      "executablePath": "$(Godot)",
+      "commandLineArgs": "--path . --verbose",
+      "workingDirectory": "."
+    }
+  }
+}
