@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Com.IsartDigital.OneButtonGame
 {
-    public partial class Dumpster : Node2D
+    public partial class Dumpster : GameObject
     {
         [Export] private ClickableArea mouseDetector;
 
@@ -19,6 +19,12 @@ namespace Com.IsartDigital.OneButtonGame
             SetWasteType(default);
             DumpsterInstances.Add(this);
             mouseDetector.Clicked += NextDumpsterType;
+        }
+
+        protected override void OnHit(Area2D pArea)
+        {
+            if (pArea is not Waste)
+                return;
         }
 
         private void NextDumpsterType()

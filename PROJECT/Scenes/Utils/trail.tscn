@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvqvp5r87d5oh"]
+
+[ext_resource type="Script" path="res://Scripts/Utils/Effects/VFX/Trail.cs" id="1_ajhda"]
+[ext_resource type="Script" path="res://Scripts/Utils/Effects/VFX/TrailMarker.cs" id="1_fd5fx"]
+
+[sub_resource type="Curve" id="Curve_i06ns"]
+_data = [Vector2(0, 0.637363), 0.0, 0.0, 0, 0, Vector2(1, 0.021978), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_dv1qu"]
+
+[node name="TrailMarker" type="Marker2D" node_paths=PackedStringArray("TrailLine")]
+script = ExtResource("1_fd5fx")
+TrailLine = NodePath("Trail")
+
+[node name="Trail" type="Line2D" parent="." node_paths=PackedStringArray("target")]
+z_index = -1
+points = PackedVector2Array(0, 0, 91, -128, 267, -190, 407, -178, 489, -81, 459, 30, 357, 76, 240, 20, 277, -72)
+width = 30.0
+width_curve = SubResource("Curve_i06ns")
+gradient = SubResource("Gradient_dv1qu")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+script = ExtResource("1_ajhda")
+target = NodePath("..")
+reparent = true

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://du0cl7xgfhbkh"]
+
+[ext_resource type="Script" path="res://Scripts/Utils/Effects/VFX/Shaker.cs" id="1_i8v56"]
+
+[node name="Shaker" type="Node2D" node_paths=PackedStringArray("_targets")]
+script = ExtResource("1_i8v56")
+_targets = []

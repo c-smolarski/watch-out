@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://pvkx2krmebrw"]
+[gd_scene load_steps=5 format=3 uid="uid://pvkx2krmebrw"]
 
 [ext_resource type="Texture2D" uid="uid://bqy0hhg8vm17a" path="res://Assets/icon.svg" id="1_0plnh"]
-[ext_resource type="Script" path="res://Scripts/Waste.cs" id="1_jkf60"]
+[ext_resource type="Script" path="res://Scripts/GameObjects/Waste.cs" id="1_31t0v"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_h4lfs"]
 animations = [{
@@ -14,9 +14,15 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Waste" type="Node2D"]
-script = ExtResource("1_jkf60")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vtd5h"]
+size = Vector2(50, 150)
+
+[node name="Waste" type="Area2D"]
+script = ExtResource("1_31t0v")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.3, 1)
 sprite_frames = SubResource("SpriteFrames_h4lfs")
+
+[node name="hitBox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_vtd5h")

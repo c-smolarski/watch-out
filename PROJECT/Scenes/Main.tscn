@@ -1,21 +1,21 @@
 [gd_scene load_steps=5 format=3 uid="uid://d0c4suyvuber7"]
 
-[ext_resource type="Texture2D" uid="uid://bqy0hhg8vm17a" path="res://Assets/icon.svg" id="1_batfk"]
 [ext_resource type="Script" path="res://Scripts/Managers/GameManager.cs" id="1_uixe0"]
 [ext_resource type="PackedScene" uid="uid://pvkx2krmebrw" path="res://Scenes/GameObjects/Waste.tscn" id="2_n3qn6"]
 [ext_resource type="PackedScene" uid="uid://dij6jvwqyel7t" path="res://Scenes/GameObjects/Dumpster.tscn" id="3_dti63"]
+[ext_resource type="Script" path="res://Scripts/Managers/LevelManager.cs" id="4_183ov"]
 
 [node name="Main" type="Node"]
 
 [node name="Managers" type="Node" parent="."]
 
-[node name="GameManager" type="Node" parent="Managers" node_paths=PackedStringArray("GameContainer")]
-script = ExtResource("1_uixe0")
-GameContainer = NodePath("../../GameContainer")
+[node name="LevelManager" type="Node" parent="Managers"]
+script = ExtResource("4_183ov")
 WasteScene = ExtResource("2_n3qn6")
 DumpsterScene = ExtResource("3_dti63")
 
-[node name="Icon" type="Sprite2D" parent="."]
-texture = ExtResource("1_batfk")
+[node name="GameManager" type="Node" parent="Managers" node_paths=PackedStringArray("GameContainer")]
+script = ExtResource("1_uixe0")
+GameContainer = NodePath("../../GameContainer")
 
 [node name="GameContainer" type="Node2D" parent="."]

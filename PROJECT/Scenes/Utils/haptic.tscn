@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://t32qmtl7xanw"]
+
+[ext_resource type="Texture2D" uid="uid://covol3mgmg5mv" path="res://Assets/Utils/Haptic.png" id="1_0o41i"]
+[ext_resource type="Script" path="res://Scripts/Utils/Effects/VFX/Haptic.cs" id="2_0dors"]
+[ext_resource type="PackedScene" uid="uid://du0cl7xgfhbkh" path="res://Scenes/Utils/shaker.tscn" id="3_fv604"]
+
+[node name="Haptic" type="Sprite2D"]
+texture = ExtResource("1_0o41i")
+script = ExtResource("2_0dors")
+
+[node name="Shaker" parent="." instance=ExtResource("3_fv604")]

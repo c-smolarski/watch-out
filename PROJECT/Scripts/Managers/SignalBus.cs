@@ -1,28 +1,25 @@
-﻿using Com.IsartDigital.OneButtonGame.Utils;
-using Godot;
+﻿using Godot;
 using System;
 
 namespace Com.IsartDigital.OneButtonGame.Managers
 {
-    public partial class GameManager : Node
+    public partial class SignalBus : Node
     {
-        [ExportGroup("Nodes")]
-        [Export] public Node2D GameContainer { get; private set; }
+        [Signal] public delegate void GameStartedEventHandler();
 
-        public static GameManager Instance { get; private set; }
+        public static SignalBus Instance { get; private set; }
 
         public override void _Ready()
         {
             #region Singleton
             if (Instance != null)
             {
-                GD.Print("Error : " + nameof(GameManager) + " already exists. The new one is being freed...");
+                GD.Print("Error : " + nameof(SignalBus) + " already exists. The new one is being freed...");
                 QueueFree();
                 return;
             }
             Instance = this;
             #endregion
-            SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameStarted);
         }
 
         protected override void Dispose(bool pDisposing)

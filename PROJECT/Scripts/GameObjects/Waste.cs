@@ -5,11 +5,11 @@ using System;
 
 namespace Com.IsartDigital.OneButtonGame
 {
-    public partial class Waste : Node2D
+    public partial class Waste : GameObject
     {
-        private const float BASE_SPEED = 1f;
+        private const float MAX_SPEED = 1250f;
 
-        private float speed, speedModifier, elapsedTime;
+        private float speed, speedMultiplier, elapsedTime;
         private Dumpster closestDump;
         private Vector2 direction, velocity;
         private WasteType wasteType = WasteType.GENERAL_WASTE;
@@ -26,13 +26,19 @@ namespace Com.IsartDigital.OneButtonGame
             Move((float)pDelta);
         }
 
+        protected override void OnHit(Area2D pArea)
+        {
+            if (pArea is not Dumpster)
+                return;
+        }
+
         private void SetDirection()
         {
             float lDistance, lMinDistance = Mathf.Inf;
             foreach (Dumpster lDump in Dumpster.DumpsterInstances)
             {
                 lDistance = (lDump.GlobalPosition - GlobalPosition).Length();
-                if (lMinDistance * lMinDistance > lDistance * lDistance)
+                if (lDump != closestDump && lMinDistance * lMinDistance > lDistance * lDistance)
                 {
                     lMinDistance = lDistance;
                     closestDump = lDump;
@@ -46,19 +52,22 @@ namespace Com.IsartDigital.OneButtonGame
         {
             Position += direction * speed * pDelta;
             elapsedTime += pDelta;
-            speed = Mathf.Pow(1 + elapsedTime, 8);
-            GD.Print(speed);
+            speed = Mathf.Clamp(
+                Mathf.Pow(1 + (elapsedTime * 1 / 2) * speedMultiplier, 12),
+                0,
+                MAX_SPEED
+            );
         }
 
-        public static Waste Create(WasteType pType, Vector2 pPos, float pSpeedModifier = 1.0f)
+        public static Waste Create(WasteType pType, Vector2 pPos, float pSpeedMultiplier = 1.0f)
         {
             Waste lWaste = NodeCreator.CreateNode<Waste>(
-                GameManager.Instance.WasteScene,
+                LevelManager.Instance.WasteScene,
                 GameManager.Instance.GameContainer,
                 pPos
             );
             lWaste.wasteType = pType;
-            lWaste.speedModifier = pSpeedModifier;
+            lWaste.speedMultiplier = pSpeedMultiplier;
             return lWaste;
         }
     }
