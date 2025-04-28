@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://pvkx2krmebrw"]
+[gd_scene load_steps=6 format=3 uid="uid://pvkx2krmebrw"]
 
 [ext_resource type="Texture2D" uid="uid://bqy0hhg8vm17a" path="res://Assets/icon.svg" id="1_0plnh"]
 [ext_resource type="Script" path="res://Scripts/GameObjects/Waste.cs" id="1_31t0v"]
+[ext_resource type="PackedScene" uid="uid://dvqvp5r87d5oh" path="res://Scenes/Utils/trail.tscn" id="3_dcwcl"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_h4lfs"]
 animations = [{
@@ -15,7 +16,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vtd5h"]
-size = Vector2(50, 150)
+size = Vector2(25, 100)
 
 [node name="Waste" type="Area2D"]
 script = ExtResource("1_31t0v")
@@ -26,3 +27,5 @@ sprite_frames = SubResource("SpriteFrames_h4lfs")
 
 [node name="hitBox" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_vtd5h")
+
+[node name="TrailMarker" parent="." instance=ExtResource("3_dcwcl")]

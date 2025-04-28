@@ -33,6 +33,7 @@ project/assembly_name="OneButtonGame"
 
 folder_colors={
 "res://Assets/": "purple",
+"res://Resources/": "yellow",
 "res://Scenes/": "green",
 "res://Scripts/": "red"
 }

@@ -6,7 +6,6 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 {
     public partial class LevelManager : Node
     {
-
         [ExportGroup("PackedScenes")]
         [Export] public PackedScene WasteScene { get; private set; }
         [Export] public PackedScene DumpsterScene { get; private set; }
@@ -29,11 +28,12 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 
         private void OnGameStart()
         {
+            Vector2 lViewportSize = GetViewport().GetVisibleRect().Size;
             NodeCreator.CreateNode<Dumpster>(
-                DumpsterScene, 
-                GameManager.Instance.GameContainer, 
-                new Vector2(540, 300));
-            Waste.Create(WasteType.GENERAL_WASTE, Vector2.Zero);
+                DumpsterScene,
+                GameManager.Instance.GameContainer,
+                new Vector2(lViewportSize.X / 2, lViewportSize.Y / 8)
+                );
         }
 
         protected override void Dispose(bool pDisposing)

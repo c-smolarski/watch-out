@@ -11,7 +11,7 @@ namespace Com.IsartDigital.OneButtonGame
 
         public static List<Dumpster> DumpsterInstances { get; private set; } = new();
 
-        private WasteType currentWasteType;
+        public Waste.Category CurrentCategory { get; private set; }
 
         public override void _Ready()
         {
@@ -25,38 +25,25 @@ namespace Com.IsartDigital.OneButtonGame
         {
             if (pArea is not Waste)
                 return;
+
+            if (((Waste)pArea).CurrentCategory == CurrentCategory)
+                ScorePoints();
+        }
+
+        private void ScorePoints()
+        {
+            throw new NotImplementedException();
         }
 
         private void NextDumpsterType()
         {
-            SetWasteType((int)currentWasteType + 1);
+            SetWasteType((int)CurrentCategory + 1);
         }
 
-        private void SetWasteType(int pTypeValue)
+        private void SetWasteType(int pCategoryValue)
         {
-            if (Enum.IsDefined(typeof(WasteType), pTypeValue))
-                currentWasteType = (WasteType)pTypeValue;
-            else
-                currentWasteType = default;
-            Modulate = GetDumpsterColor(currentWasteType);
-        }
-
-        private Color GetDumpsterColor(WasteType pType)
-        {
-            switch (pType)
-            {
-                case WasteType.GENERAL_WASTE:
-                    return Colors.Black;
-                case WasteType.RECYCLE:
-                    return Colors.Yellow;
-                case WasteType.PAPER:
-                    return Colors.Blue;
-                case WasteType.GLASS:
-                    return Colors.Green;
-                case WasteType.COMPOST:
-                    return Colors.SaddleBrown;
-            }
-            return Colors.White;
+            CurrentCategory = Waste.GetCategoryFromValue(pCategoryValue);
+            Modulate = Waste.GetColorFromCategory(CurrentCategory);
         }
 
         protected override void Dispose(bool pDisposing)

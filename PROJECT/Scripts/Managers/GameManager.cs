@@ -1,5 +1,4 @@
-﻿using Com.IsartDigital.OneButtonGame.Utils;
-using Godot;
+﻿using Godot;
 using System;
 
 namespace Com.IsartDigital.OneButtonGame.Managers
@@ -9,7 +8,12 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         [ExportGroup("Nodes")]
         [Export] public Node2D GameContainer { get; private set; }
 
+        private const string ANDROID = "Android";
+        private const string IOS = "iOS";
+
         public static GameManager Instance { get; private set; }
+
+        public static bool PlayingOnMobile { get; private set; }
 
         public override void _Ready()
         {
@@ -22,6 +26,9 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             }
             Instance = this;
             #endregion
+
+            PlayingOnMobile = OS.GetName() == ANDROID || OS.GetName() == IOS;
+
             SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameStarted);
         }
 

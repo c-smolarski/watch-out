@@ -1,4 +1,5 @@
-﻿using Com.IsartDigital.OneButtonGame.Utils;
+﻿using Com.IsartDigital.OneButtonGame.Managers;
+using Com.IsartDigital.OneButtonGame.Utils;
 using Godot;
 using System;
 
@@ -19,19 +20,47 @@ namespace Com.IsartDigital.OneButtonGame.Components
         public bool IsHovered { get; private set; }
         public CollisionShape2D Collider { get; private set; }
 
+        private Action onInput;
+        private bool pressed; //prevents input echo
+
         public override void _Ready()
         {
             base._Ready();
             Collider = GetNode<CollisionShape2D>(COLLIDER_PATH);
-            MouseEntered += SetHovered;
-            MouseExited += SetUnhovered;
+            if (!GameManager.PlayingOnMobile)
+            {
+                MouseEntered += SetHovered;
+                MouseExited += SetUnhovered;
+                onInput = Click;
+            }
+            else
+                onInput = CheckPosAndClick;
         }
 
         public override void _Input(InputEvent pEvent)
         {
             base._Input(pEvent);
-            if (IsHovered && Input.IsActionJustPressed(ActionInput.CLICK))
+            if(pEvent.IsAction(ActionInput.CLICK))
+                onInput();
+        }
+
+        private void CheckPosAndClick()
+        {
+            IsHovered = Geometry2D.IsPointInPolygon(
+                Collider.ToLocal(GetGlobalMousePosition()),
+                ((ConvexPolygonShape2D)Collider.Shape).Points);
+            Click();
+        }
+
+        private void Click()
+        {
+            if (IsHovered && Input.IsActionJustPressed(ActionInput.CLICK) && !pressed)
+            {
+                pressed = true;
                 EmitSignal(SignalName.Clicked);
+            }
+            else if (Input.IsActionJustReleased(ActionInput.CLICK))
+                pressed = false;
         }
 
         private void SetHovered()
@@ -54,6 +83,16 @@ namespace Com.IsartDigital.OneButtonGame.Components
             if (!pEnabled)
                 SetUnhovered();
             Collider.SetDeferred(DISABLED, !pEnabled);
+        }
+
+        protected override void Dispose(bool pDisposing)
+        {
+            if (!GameManager.PlayingOnMobile)
+            {
+                MouseEntered -= SetHovered;
+                MouseExited -= SetUnhovered;
+            }
+            base.Dispose(pDisposing);
         }
     }
 }

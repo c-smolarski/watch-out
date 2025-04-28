@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0c4suyvuber7"]
+[gd_scene load_steps=6 format=3 uid="uid://d0c4suyvuber7"]
 
 [ext_resource type="Script" path="res://Scripts/Managers/GameManager.cs" id="1_uixe0"]
 [ext_resource type="PackedScene" uid="uid://pvkx2krmebrw" path="res://Scenes/GameObjects/Waste.tscn" id="2_n3qn6"]
 [ext_resource type="PackedScene" uid="uid://dij6jvwqyel7t" path="res://Scenes/GameObjects/Dumpster.tscn" id="3_dti63"]
 [ext_resource type="Script" path="res://Scripts/Managers/LevelManager.cs" id="4_183ov"]
+[ext_resource type="Script" path="res://Scripts/WasteSpawner.cs" id="5_71dfj"]
 
 [node name="Main" type="Node"]
 
@@ -19,3 +20,8 @@ script = ExtResource("1_uixe0")
 GameContainer = NodePath("../../GameContainer")
 
 [node name="GameContainer" type="Node2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="GameContainer"]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(0, 500, 150, 700, 350, 800, 730, 800, 930, 700, 1080, 500, 1080, 850, 880, 1000, 680, 1050, 400, 1050, 200, 1000, 0, 850)
+script = ExtResource("5_71dfj")
