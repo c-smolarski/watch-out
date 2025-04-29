@@ -23,6 +23,9 @@ SignalBus="*res://Scripts/Managers/SignalBus.cs"
 
 window/size/viewport_width=1080
 window/size/viewport_height=2400
+window/size/window_width_override=600
+window/size/window_height_override=800
+window/stretch/mode="viewport"
 window/handheld/orientation=1
 
 [dotnet]
@@ -54,3 +57,4 @@ click={
 
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0.804743, 0.804743, 0.804743, 1)
