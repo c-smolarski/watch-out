@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgxnpp4vru1a3"]
+
+[ext_resource type="PackedScene" uid="uid://dij6jvwqyel7t" path="res://Scenes/GameObjects/Dumpster.tscn" id="1_ja7vf"]
+[ext_resource type="Script" path="res://Scripts/WasteSpawner.cs" id="2_21ulf"]
+
+[node name="GameScene" type="Node2D"]
+
+[node name="Dumpster" parent="." instance=ExtResource("1_ja7vf")]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(0, -230)
+color = Color(1, 1, 1, 0.196078)
+polygon = PackedVector2Array(-540, 0, -390, -200, -190, -300, 190, -300, 390, -200, 540, 0, 540, -350, 340, -500, 140, -550, -140, -550, -340, -500, -540, -350)
+script = ExtResource("2_21ulf")

@@ -12,5 +12,11 @@ namespace Com.IsartDigital.OneButtonGame
         }
 
         protected abstract void OnHit(Area2D pArea);
+
+        protected override void Dispose(bool pDisposing)
+        {
+            AreaEntered -= OnHit;
+            base.Dispose(pDisposing);
+        }
     }
 }

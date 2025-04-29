@@ -7,6 +7,8 @@ namespace Com.IsartDigital.OneButtonGame.Managers
     {
         [Signal] public delegate void GameStartedEventHandler();
 
+        [Signal] public delegate void DumpsterAppearedEventHandler(Dumpster pDump);
+        [Signal] public delegate void DumpDisposedEventHandler(Dumpster pDump);
         public static SignalBus Instance { get; private set; }
 
         public override void _Ready()

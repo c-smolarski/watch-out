@@ -1,11 +1,14 @@
 ﻿using Godot;
 using System;
 using System.Collections.Generic;
+using static Com.IsartDigital.OneButtonGame.Waste;
 
 namespace Com.IsartDigital.OneButtonGame
 {
     public partial class WasteSpawner : Polygon2D
     {
+        private const int SCORE_MULT = 100;
+        private const int SMALLEST_SCORE = 50;
         private const float SPAWN_DISTANCE_MIN = 200f;
 
         private static readonly List<int> baseCategoryProbability = new() { 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3 };
@@ -22,6 +25,7 @@ namespace Com.IsartDigital.OneButtonGame
         public override void _Ready()
         {
             base._Ready();
+            Color = Colors.Transparent;
             categoryProbability = baseCategoryProbability;
             rand.Randomize();
             RectInit();
@@ -72,11 +76,16 @@ namespace Com.IsartDigital.OneButtonGame
             SpawnWaste(lCategory);
         }
 
-        private void SpawnWaste(Waste.Category pCategoryValue)
+        private void SpawnWaste(Category pCategoryValue)
         {
+            int lPoints = Mathf.Max(lastCategory - pCategoryValue, pCategoryValue - lastCategory) * SCORE_MULT;
+            if (lPoints < SMALLEST_SCORE)
+                lPoints = SMALLEST_SCORE;
+
             Waste.Create(
                 lastCategory = pCategoryValue,
-                GetNewWasteSpawnPos()
+                GetNewWasteSpawnPos(),
+                lPoints
                 );
         }
 

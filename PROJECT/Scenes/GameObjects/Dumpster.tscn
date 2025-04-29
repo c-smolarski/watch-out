@@ -23,4 +23,5 @@ shape = SubResource("RectangleShape2D_gsof6")
 script = ExtResource("2_nqnxs")
 
 [node name="collider" type="CollisionShape2D" parent="clickable"]
+scale = Vector2(4, 4)
 shape = SubResource("ConvexPolygonShape2D_s1hrb")

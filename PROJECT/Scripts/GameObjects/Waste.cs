@@ -22,10 +22,12 @@ namespace Com.IsartDigital.OneButtonGame
         public static int UnlockedCategories { get; private set; } = 2;
 
         public Category CurrentCategory { get; private set; } = default;
+        public int Score { get; private set; }
+        public bool HasAlreadyBounced { get; private set; }
         private Vector2 DirectionToTarget => (currentTarget.GlobalPosition - GlobalPosition).Normalized();
 
         private Node2D currentTarget;
-        private bool isBouncing, hasAlreadyBounced;
+        private bool isBouncing;
         private Vector2 direction, rotateStartDirection, velocity;
         private float speed, speedMultiplier, elapsedTime, rotateTime;
 
@@ -43,7 +45,7 @@ namespace Com.IsartDigital.OneButtonGame
             if (pArea is not Dumpster)
                 return;
 
-            if (((Dumpster)pArea).CurrentCategory == CurrentCategory || hasAlreadyBounced)
+            if (((Dumpster)pArea).CurrentCategory == CurrentCategory || HasAlreadyBounced)
                 QueueFree();
             else
                 BounceOff();
@@ -58,7 +60,7 @@ namespace Com.IsartDigital.OneButtonGame
         private void BounceOff()
         {
             direction = new Vector2(direction.X, -direction.Y);
-            isBouncing = hasAlreadyBounced = true;
+            isBouncing = HasAlreadyBounced = true;
             rotateStartDirection = direction;
             rotateTime = 0;
         }
@@ -87,7 +89,7 @@ namespace Com.IsartDigital.OneButtonGame
         {
             Dumpster lClosestDump = null;
             float lDistance, lMinDistance = Mathf.Inf;
-            foreach (Dumpster lDump in Dumpster.DumpsterInstances)
+            foreach (Dumpster lDump in Dumpster.Instances)
             {
                 lDistance = (lDump.GlobalPosition - GlobalPosition).Length();
                 if (lDump != currentTarget && lMinDistance * lMinDistance > lDistance * lDistance)
@@ -126,7 +128,7 @@ namespace Com.IsartDigital.OneButtonGame
             return Colors.White;
         }
 
-        public static Waste Create(Category pCategory, Vector2 pPos, float pSpeedMultiplier = 1.0f)
+        public static Waste Create(Category pCategory, Vector2 pPos, int pScore, float pSpeedMultiplier = 1.0f)
         {
             Waste lWaste = NodeCreator.CreateNode<Waste>(
                 LevelManager.Instance.WasteScene,
@@ -134,6 +136,7 @@ namespace Com.IsartDigital.OneButtonGame
                 pPos
             );
             lWaste.DirectionInit();
+            lWaste.Score = pScore;
             lWaste.CurrentCategory = pCategory;
             lWaste.Modulate = GetColorFromCategory(lWaste.CurrentCategory);
             lWaste.speedMultiplier = pSpeedMultiplier;

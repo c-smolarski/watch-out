@@ -36,6 +36,11 @@ namespace Com.IsartDigital.OneButtonGame.Managers
                 );
         }
 
+        private void StartMultiplayerGame()
+        {
+
+        }
+
         protected override void Dispose(bool pDisposing)
         {
             SignalBus.Instance.GameStarted -= OnGameStart;

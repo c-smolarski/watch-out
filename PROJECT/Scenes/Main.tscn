@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://d0c4suyvuber7"]
+[gd_scene load_steps=8 format=3 uid="uid://d0c4suyvuber7"]
 
 [ext_resource type="Script" path="res://Scripts/Managers/GameManager.cs" id="1_uixe0"]
 [ext_resource type="PackedScene" uid="uid://pvkx2krmebrw" path="res://Scenes/GameObjects/Waste.tscn" id="2_n3qn6"]
 [ext_resource type="PackedScene" uid="uid://dij6jvwqyel7t" path="res://Scenes/GameObjects/Dumpster.tscn" id="3_dti63"]
 [ext_resource type="Script" path="res://Scripts/Managers/LevelManager.cs" id="4_183ov"]
-[ext_resource type="Script" path="res://Scripts/WasteSpawner.cs" id="5_71dfj"]
+[ext_resource type="Script" path="res://Scripts/Managers/UIManager.cs" id="5_sjir5"]
+[ext_resource type="PackedScene" uid="uid://iivvjga4nhou" path="res://Scenes/UI/ScoreBar.tscn" id="6_q8v1y"]
+[ext_resource type="PackedScene" uid="uid://c1ir0rc5kx6i5" path="res://Scenes/GameScenes/MultiplayerGameScene.tscn" id="7_fr2i1"]
 
 [node name="Main" type="Node"]
 
@@ -19,9 +21,15 @@ DumpsterScene = ExtResource("3_dti63")
 script = ExtResource("1_uixe0")
 GameContainer = NodePath("../../GameContainer")
 
+[node name="UIManager" type="Node" parent="Managers" node_paths=PackedStringArray("canvasLayer")]
+script = ExtResource("5_sjir5")
+canvasLayer = NodePath("../../CanvasLayer")
+packedScoreUI = ExtResource("6_q8v1y")
+
 [node name="GameContainer" type="Node2D" parent="."]
 
-[node name="Polygon2D" type="Polygon2D" parent="GameContainer"]
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(0, 500, 150, 700, 350, 800, 730, 800, 930, 700, 1080, 500, 1080, 850, 880, 1000, 680, 1050, 400, 1050, 200, 1000, 0, 850)
-script = ExtResource("5_71dfj")
+[node name="MultiplayerScene" parent="GameContainer" instance=ExtResource("7_fr2i1")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
