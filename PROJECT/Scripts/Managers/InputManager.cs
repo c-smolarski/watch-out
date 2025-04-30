@@ -13,6 +13,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         public const float TAP_THRESHOLD = 0.15f;
 
         public static InputManager Instance { get; private set; }
+        public static bool HeldDown { get; private set; } = false;
         public static bool Activated
         {
             set
@@ -23,7 +24,6 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         }
 
         private Action<float> clickTimer = null;
-        private bool holding = false;
         private int nPrevTap;
         private float elapsedTime;
 
@@ -38,6 +38,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             }
             Instance = this;
             #endregion
+            Activated = false;
         }
 
         public override void _Process(double pDelta)
@@ -50,7 +51,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         public override void _Input(InputEvent pEvent)
         {
             base._Input(pEvent);
-            if (pEvent.IsActionPressed(CLICK) && !holding)
+            if (pEvent.IsActionPressed(CLICK) && !HeldDown)
                 StartPressedTimer();
             else if (pEvent.IsActionReleased(CLICK))
                 ClickReleased();
@@ -67,7 +68,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             elapsedTime += pDelta;
             if (elapsedTime >= TAP_THRESHOLD)
             {
-                holding = true;
+                HeldDown = true;
                 EmitSignal(SignalName.StartedHolding, nPrevTap);
                 StopTimer();
             }
@@ -75,7 +76,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 
         private void ClickReleased()
         {
-            if (!holding)
+            if (!HeldDown)
                 StartReleasedTimer();
             else
                 StopHolding();
@@ -101,7 +102,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 
         private void StopHolding()
         {
-            holding = false;
+            HeldDown = false;
             nPrevTap = default;
             EmitSignal(SignalName.StoppedHolding);
         }
@@ -115,7 +116,10 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         protected override void Dispose(bool pDisposing)
         {
             if (Instance == this)
+            {
+                HeldDown = false;
                 Instance = null;
+            }
             base.Dispose(pDisposing);
         }
     }

@@ -7,13 +7,13 @@
 
 [sub_resource type="Curve2D" id="Curve2D_xwu57"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 100, 1000, 0, 200, 0, -200, 100, -200, 200, 0, -200, 0, -200, -500, 0, 0, 0, 0, -3500, -500)
+"points": PackedVector2Array(0, 0, 0, 0, 100, 1000, 0, 200, 0, -200, 100, -200, 200, 0, -200, 0, -200, -500, 0, 0, 0, 0, -1000, -500)
 }
 point_count = 4
 
 [sub_resource type="Curve2D" id="Curve2D_tho4s"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1980, -500, 0, 0, 0, 0, -3500, -500)
+"points": PackedVector2Array(0, 0, 0, 0, 1980, -500, 0, 0, 0, 0, -1000, -500)
 }
 point_count = 2
 
@@ -68,8 +68,10 @@ polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
 [node name="StopSign" parent="GameObjects" index="0" instance=ExtResource("2_hn6pu")]
 position = Vector2(100, -25)
 
-[node name="Player" parent="GameObjects" index="1" instance=ExtResource("2_hr8lp")]
+[node name="Player" parent="GameObjects" index="1" node_paths=PackedStringArray("pathFollow") instance=ExtResource("2_hr8lp")]
 position = Vector2(100, 1000)
+rotation = -1.5708
+pathFollow = NodePath("../../Paths/PlayerPath/PlayerFollow")
 
 [node name="Car" parent="GameObjects" index="2" instance=ExtResource("3_jmgid")]
 position = Vector2(1980, -500)
@@ -81,6 +83,7 @@ curve = SubResource("Curve2D_xwu57")
 [node name="PlayerFollow" type="PathFollow2D" parent="Paths/PlayerPath" index="0"]
 position = Vector2(100, 1000)
 rotation = -1.5708
+loop = false
 
 [node name="CarPath" type="Path2D" parent="Paths" index="1"]
 curve = SubResource("Curve2D_tho4s")
@@ -88,3 +91,4 @@ curve = SubResource("Curve2D_tho4s")
 [node name="CarFollow" type="PathFollow2D" parent="Paths/CarPath" index="0"]
 position = Vector2(1980, -500)
 rotation = 3.14159
+loop = false

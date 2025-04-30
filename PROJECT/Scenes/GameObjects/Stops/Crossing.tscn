@@ -5,6 +5,10 @@ size = Vector2(400, 80)
 
 [node name="Crossing" type="Area2D"]
 
+[node name="roadPolygon" type="Polygon2D" parent="."]
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-200, -50, 200, -50, 200, 50, -200, 50)
+
 [node name="Polygon2D" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-10, -40, 10, -40, 10, 40, -10, 40)
 

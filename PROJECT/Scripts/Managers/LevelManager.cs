@@ -23,6 +23,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 
         private void OnGameStart()
         {
+            InputManager.Activated = true;
         }
 
         protected override void Dispose(bool pDisposing)
