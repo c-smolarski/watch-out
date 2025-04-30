@@ -1,4 +1,5 @@
-﻿using Com.IsartDigital.OneButtonGame.Utils;
+﻿using Com.IsartDigital.OneButtonGame.Managers;
+using Com.IsartDigital.OneButtonGame.Utils;
 using Godot;
 using System;
 
@@ -30,7 +31,7 @@ namespace Com.IsartDigital.OneButtonGame.Components
         public override void _Input(InputEvent pEvent)
         {
             base._Input(pEvent);
-            if (IsHovered && Input.IsActionJustPressed(ActionInput.CLICK))
+            if (IsHovered && Input.IsActionJustPressed(InputManager.CLICK))
                 EmitSignal(SignalName.Clicked);
         }
 

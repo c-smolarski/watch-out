@@ -8,9 +8,6 @@ namespace Com.IsartDigital.OneButtonGame
         public override void _Ready()
         {
             base._Ready();
-            AreaEntered += OnHit;
         }
-
-        protected abstract void OnHit(Area2D pArea);
     }
 }

@@ -1,6 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://bklu5mtgry3xg"]
+[gd_scene load_steps=7 format=3 uid="uid://bklu5mtgry3xg"]
 
 [ext_resource type="PackedScene" uid="uid://cru5wgs3k3arj" path="res://Scenes/LevelTemplate.tscn" id="1_xy2ww"]
+[ext_resource type="PackedScene" uid="uid://bl7jw454koo84" path="res://Scenes/GameObjects/Stops/StopSign.tscn" id="2_hn6pu"]
+[ext_resource type="PackedScene" uid="uid://djb4v0pxs4cp4" path="res://Scenes/GameObjects/Mobiles/Player.tscn" id="2_hr8lp"]
+[ext_resource type="PackedScene" uid="uid://dcm03idm5sq6n" path="res://Scenes/GameObjects/Mobiles/Car.tscn" id="3_jmgid"]
+
+[sub_resource type="Curve2D" id="Curve2D_xwu57"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 100, 1000, 0, 200, 0, -200, 100, -200, 200, 0, -200, 0, -200, -500, 0, 0, 0, 0, -3500, -500)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_tho4s"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1980, -500, 0, 0, 0, 0, -3500, -500)
+}
+point_count = 2
 
 [node name="Level1" instance=ExtResource("1_xy2ww")]
 
@@ -16,38 +31,60 @@ polygon = PackedVector2Array(-4000, -600, -4000, -200, 4000, -200, 4000, -600)
 
 [node name="lines" type="Node2D" parent="Assets" index="1"]
 
-[node name="stopLine" type="Polygon2D" parent="Assets/lines" index="0"]
-polygon = PackedVector2Array(200, -200, 0, -200, 0, -150, 200, -150)
+[node name="Line" type="Line2D" parent="Assets/lines" index="0"]
+points = PackedVector2Array(0, 25, 0, 1800)
+width = 20.0
 
-[node name="line" type="Polygon2D" parent="Assets/lines" index="1"]
-polygon = PackedVector2Array(10, -200, 10, 2000, -10, 2000, -10, -200)
-
-[node name="line2" type="Polygon2D" parent="Assets/lines" index="2"]
+[node name="line2" type="Polygon2D" parent="Assets/lines" index="1"]
 position = Vector2(-475, -400)
 rotation = 1.5708
 polygon = PackedVector2Array(10, -200, 10, 2000, -10, 2000, -10, -200)
 
-[node name="line3" type="Polygon2D" parent="Assets/lines" index="3"]
+[node name="line3" type="Polygon2D" parent="Assets/lines" index="2"]
 position = Vector2(475, -400)
 rotation = -1.5708
 polygon = PackedVector2Array(10, -200, 10, 2000, -10, 2000, -10, -200)
 
-[node name="dots" type="Polygon2D" parent="Assets/lines" index="4"]
+[node name="dots" type="Polygon2D" parent="Assets/lines" index="3"]
 position = Vector2(-200, -400)
 polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
 
-[node name="dots2" type="Polygon2D" parent="Assets/lines" index="5"]
+[node name="dots2" type="Polygon2D" parent="Assets/lines" index="4"]
 position = Vector2(-100, -400)
 polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
 
-[node name="dots3" type="Polygon2D" parent="Assets/lines" index="6"]
+[node name="dots3" type="Polygon2D" parent="Assets/lines" index="5"]
 position = Vector2(0, -400)
 polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
 
-[node name="dots4" type="Polygon2D" parent="Assets/lines" index="7"]
+[node name="dots4" type="Polygon2D" parent="Assets/lines" index="6"]
 position = Vector2(100, -400)
 polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
 
-[node name="dots5" type="Polygon2D" parent="Assets/lines" index="8"]
+[node name="dots5" type="Polygon2D" parent="Assets/lines" index="7"]
 position = Vector2(200, -400)
 polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="StopSign" parent="GameObjects" index="0" instance=ExtResource("2_hn6pu")]
+position = Vector2(100, -25)
+
+[node name="Player" parent="GameObjects" index="1" instance=ExtResource("2_hr8lp")]
+position = Vector2(100, 1000)
+
+[node name="Car" parent="GameObjects" index="2" instance=ExtResource("3_jmgid")]
+position = Vector2(1980, -500)
+rotation = 1.5708
+
+[node name="PlayerPath" type="Path2D" parent="Paths" index="0"]
+curve = SubResource("Curve2D_xwu57")
+
+[node name="PlayerFollow" type="PathFollow2D" parent="Paths/PlayerPath" index="0"]
+position = Vector2(100, 1000)
+rotation = -1.5708
+
+[node name="CarPath" type="Path2D" parent="Paths" index="1"]
+curve = SubResource("Curve2D_tho4s")
+
+[node name="CarFollow" type="PathFollow2D" parent="Paths/CarPath" index="0"]
+position = Vector2(1980, -500)
+rotation = 3.14159

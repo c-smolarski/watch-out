@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcm03idm5sq6n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xh18u"]
+size = Vector2(100, 200)
+
+[node name="Car" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xh18u")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.208046, 0.254857, 0.427045, 1)
+polygon = PackedVector2Array(-50, -100, 50, -100, 50, 100, -50, 100)

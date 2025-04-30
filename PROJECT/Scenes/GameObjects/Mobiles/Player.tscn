@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://djb4v0pxs4cp4"]
+
+[ext_resource type="Script" path="res://Scripts/GameObjects/Mobiles/Player.cs" id="1_mtbb8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_weiab"]
+size = Vector2(100, 200)
+
+[node name="Player" type="Area2D"]
+script = ExtResource("1_mtbb8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_weiab")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.6, 0.160784, 0, 1)
+polygon = PackedVector2Array(-50, -100, 50, -100, 50, 100, -50, 100)

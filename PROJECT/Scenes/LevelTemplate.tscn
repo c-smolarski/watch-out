@@ -3,3 +3,7 @@
 [node name="LevelTemplate" type="Node2D"]
 
 [node name="Assets" type="Node2D" parent="."]
+
+[node name="GameObjects" type="Node2D" parent="."]
+
+[node name="Paths" type="Node2D" parent="."]

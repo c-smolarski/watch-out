@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl7jw454koo84"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ioapf"]
+size = Vector2(200, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mv27b"]
+size = Vector2(200, 100)
+
+[node name="StopSign" type="Area2D"]
+
+[node name="road" type="Node2D" parent="."]
+position = Vector2(-100, 25)
+
+[node name="roadPolygon" type="Polygon2D" parent="road"]
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-200, -200, -200, 25, 200, 25, 200, -200)
+
+[node name="roadAngleL" type="Polygon2D" parent="road"]
+position = Vector2(-300, -100)
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-100, -100, 0, -75, 30, -65, 50, -50, 65, -30, 75, 0, 100, 100, 100, -100)
+
+[node name="roadAngleR" type="Polygon2D" parent="road"]
+position = Vector2(300, -100)
+rotation = -1.5708
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-100, -100, 0, -75, 30, -65, 50, -50, 65, -30, 75, 0, 100, 100, 100, -100)
+
+[node name="stopLine" type="Polygon2D" parent="."]
+position = Vector2(0, -75)
+polygon = PackedVector2Array(-100, -25, 133.33, -25, 118.75, 25, -100, 25)
+
+[node name="line" type="Polygon2D" parent="."]
+position = Vector2(-100, 0)
+polygon = PackedVector2Array(10, -100, 10, 50, -10, 50, -10, -100)
+
+[node name="StopLineArea" type="Area2D" parent="."]
+position = Vector2(0, -75)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StopLineArea"]
+shape = SubResource("RectangleShape2D_ioapf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_mv27b")

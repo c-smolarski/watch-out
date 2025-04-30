@@ -18,6 +18,7 @@ config/icon="res://Assets/icon.svg"
 [autoload]
 
 SignalBus="*res://Scripts/Managers/SignalBus.cs"
+InputManager="*res://Scripts/Managers/InputManager.cs"
 
 [display]
 

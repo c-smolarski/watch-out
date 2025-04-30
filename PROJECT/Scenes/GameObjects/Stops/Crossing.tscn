@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0520itaestcm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_875cv"]
+size = Vector2(400, 80)
+
+[node name="Crossing" type="Area2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-10, -40, 10, -40, 10, 40, -10, 40)
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+position = Vector2(-45, 0)
+polygon = PackedVector2Array(-10, -40, 10, -40, 10, 40, -10, 40)
+
+[node name="Polygon2D3" type="Polygon2D" parent="."]
+position = Vector2(-90, 0)
+polygon = PackedVector2Array(-10, -40, 10, -40, 10, 40, -10, 40)
+
+[node name="Polygon2D4" type="Polygon2D" parent="."]
+position = Vector2(-135, 0)
+polygon = PackedVector2Array(-10, -40, 10, -40, 10, 40, -10, 40)
+
+[node name="Polygon2D5" type="Polygon2D" parent="."]
+position = Vector2(-180, 0)
+polygon = PackedVector2Array(-10, -40, 10, -40, 10, 40, -10, 40)
+
+[node name="Polygon2D6" type="Polygon2D" parent="."]
+position = Vector2(45, 0)
+polygon = PackedVector2Array(-10, -40, 10, -40, 10, 40, -10, 40)
+
+[node name="Polygon2D7" type="Polygon2D" parent="."]
+position = Vector2(90, 0)
+polygon = PackedVector2Array(-10, -40, 10, -40, 10, 40, -10, 40)
+
+[node name="Polygon2D8" type="Polygon2D" parent="."]
+position = Vector2(135, 0)
+polygon = PackedVector2Array(-10, -40, 10, -40, 10, 40, -10, 40)
+
+[node name="Polygon2D9" type="Polygon2D" parent="."]
+position = Vector2(180, 0)
+polygon = PackedVector2Array(-10, -40, 10, -40, 10, 40, -10, 40)
+
+[node name="Area2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_875cv")
