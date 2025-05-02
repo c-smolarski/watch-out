@@ -1,6 +1,8 @@
 ﻿using Godot;
 using System;
 
+// Author : Camille Smolarski
+
 namespace Com.IsartDigital.OneButtonGame.Managers
 {
     public partial class LevelManager : Node
@@ -12,7 +14,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             #region Singleton
             if (Instance != null)
             {
-                GD.Print("Error : " + nameof(LevelManager) + " already exists. The new one is being freed...");
+                GD.PrintErr("Error : " + nameof(LevelManager) + " already exists. The new one is being freed...");
                 QueueFree();
                 return;
             }

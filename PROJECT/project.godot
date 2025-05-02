@@ -23,8 +23,8 @@ InputManager="*res://Scripts/Managers/InputManager.cs"
 
 [display]
 
-window/size/viewport_width=1080
-window/size/viewport_height=2400
+window/size/viewport_width=1600
+window/size/viewport_height=2560
 window/size/window_width_override=600
 window/size/window_height_override=800
 window/stretch/mode="viewport"

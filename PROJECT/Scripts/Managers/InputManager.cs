@@ -1,6 +1,8 @@
 ﻿using Godot;
 using System;
 
+// Author : Camille Smolarski
+
 namespace Com.IsartDigital.OneButtonGame.Managers
 {
     public partial class InputManager : Node
@@ -13,7 +15,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         public const float TAP_THRESHOLD = 0.15f;
 
         public static InputManager Instance { get; private set; }
-        public static bool HeldDown { get; private set; } = false;
+        public static bool Holding { get; private set; } = false;
         public static bool Activated
         {
             set
@@ -32,7 +34,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             #region Singleton
             if (Instance != null)
             {
-                GD.Print("Error : " + nameof(InputManager) + " already exists. The new one is being freed...");
+                GD.PrintErr("Error : " + nameof(InputManager) + " already exists. The new one is being freed...");
                 QueueFree();
                 return;
             }
@@ -51,7 +53,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         public override void _Input(InputEvent pEvent)
         {
             base._Input(pEvent);
-            if (pEvent.IsActionPressed(CLICK) && !HeldDown)
+            if (pEvent.IsActionPressed(CLICK) && !Holding)
                 StartPressedTimer();
             else if (pEvent.IsActionReleased(CLICK))
                 ClickReleased();
@@ -68,7 +70,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             elapsedTime += pDelta;
             if (elapsedTime >= TAP_THRESHOLD)
             {
-                HeldDown = true;
+                Holding = true;
                 EmitSignal(SignalName.StartedHolding, nPrevTap);
                 StopTimer();
             }
@@ -76,7 +78,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 
         private void ClickReleased()
         {
-            if (!HeldDown)
+            if (!Holding)
                 StartReleasedTimer();
             else
                 StopHolding();
@@ -102,7 +104,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 
         private void StopHolding()
         {
-            HeldDown = false;
+            Holding = false;
             nPrevTap = default;
             EmitSignal(SignalName.StoppedHolding);
         }
@@ -117,7 +119,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         {
             if (Instance == this)
             {
-                HeldDown = false;
+                Holding = false;
                 Instance = null;
             }
             base.Dispose(pDisposing);

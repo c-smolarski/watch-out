@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bklu5mtgry3xg"]
+[gd_scene load_steps=8 format=3 uid="uid://bklu5mtgry3xg"]
 
 [ext_resource type="PackedScene" uid="uid://cru5wgs3k3arj" path="res://Scenes/LevelTemplate.tscn" id="1_xy2ww"]
 [ext_resource type="PackedScene" uid="uid://bl7jw454koo84" path="res://Scenes/GameObjects/Stops/StopSign.tscn" id="2_hn6pu"]
@@ -13,7 +13,13 @@ point_count = 4
 
 [sub_resource type="Curve2D" id="Curve2D_tho4s"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1980, -500, 0, 0, 0, 0, -1000, -500)
+"points": PackedVector2Array(0, 0, 0, 0, 1000, -500, 0, 0, 0, 0, -1000, -500)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_i7px7"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -1000, -300, 0, 0, 0, 0, 1000, -300)
 }
 point_count = 2
 
@@ -73,9 +79,24 @@ position = Vector2(100, 1000)
 rotation = -1.5708
 pathFollow = NodePath("../../Paths/PlayerPath/PlayerFollow")
 
-[node name="Car" parent="GameObjects" index="2" instance=ExtResource("3_jmgid")]
-position = Vector2(1980, -500)
-rotation = 1.5708
+[node name="Car" parent="GameObjects" index="2" node_paths=PackedStringArray("pathFollow") instance=ExtResource("3_jmgid")]
+position = Vector2(1000, -500)
+rotation = 3.14159
+pathFollow = NodePath("../../Paths/CarPath/CarFollow")
+startAtMaxSpeed = true
+maxForwardSpeed = 1700.0
+
+[node name="Car2" parent="GameObjects" index="3" node_paths=PackedStringArray("pathFollow") instance=ExtResource("3_jmgid")]
+position = Vector2(-1000, -300)
+pathFollow = NodePath("../../Paths/CarPath2/Car2Follow")
+startAtMaxSpeed = true
+maxForwardSpeed = 1900.0
+
+[node name="Car3" parent="GameObjects" index="4" node_paths=PackedStringArray("pathFollow") instance=ExtResource("3_jmgid")]
+position = Vector2(-1000, -300)
+pathFollow = NodePath("../../Paths/CarPath2/Car3Follow")
+startAtMaxSpeed = true
+maxForwardSpeed = 1900.0
 
 [node name="PlayerPath" type="Path2D" parent="Paths" index="0"]
 curve = SubResource("Curve2D_xwu57")
@@ -89,6 +110,21 @@ loop = false
 curve = SubResource("Curve2D_tho4s")
 
 [node name="CarFollow" type="PathFollow2D" parent="Paths/CarPath" index="0"]
-position = Vector2(1980, -500)
+position = Vector2(1000, -500)
 rotation = 3.14159
 loop = false
+
+[node name="CarPath2" type="Path2D" parent="Paths" index="2"]
+curve = SubResource("Curve2D_i7px7")
+
+[node name="Car2Follow" type="PathFollow2D" parent="Paths/CarPath2" index="0"]
+position = Vector2(-1000, -300)
+loop = false
+
+[node name="Car3Follow" type="PathFollow2D" parent="Paths/CarPath2" index="1"]
+position = Vector2(-1000, -300)
+loop = false
+
+[connection signal="DriverRunnedOver" from="GameObjects/StopSign" to="GameObjects/Car" method="StartMovingForward"]
+[connection signal="DriverRunnedOver" from="GameObjects/StopSign" to="GameObjects/Car2" method="StartMovingForward"]
+[connection signal="DriverSteppedOnLine" from="GameObjects/StopSign" to="GameObjects/Car3" method="StartMovingForward"]

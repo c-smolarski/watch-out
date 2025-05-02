@@ -1,6 +1,8 @@
 ﻿using Godot;
 using System;
 
+// Author : Camille Smolarski
+
 namespace Com.IsartDigital.OneButtonGame.Managers
 {
     public partial class SignalBus : Node
@@ -14,7 +16,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             #region Singleton
             if (Instance != null)
             {
-                GD.Print("Error : " + nameof(SignalBus) + " already exists. The new one is being freed...");
+                GD.PrintErr("Error : " + nameof(SignalBus) + " already exists. The new one is being freed...");
                 QueueFree();
                 return;
             }

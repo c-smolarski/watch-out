@@ -1,6 +1,7 @@
-﻿using Com.IsartDigital.OneButtonGame.Utils;
-using Godot;
+﻿using Godot;
 using System;
+
+// Author : Camille Smolarski
 
 namespace Com.IsartDigital.OneButtonGame.Managers
 {
@@ -16,7 +17,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             #region Singleton
             if (Instance != null)
             {
-                GD.Print("Error : " + nameof(GameManager) + " already exists. The new one is being freed...");
+                GD.PrintErr("Error : " + nameof(GameManager) + " already exists. The new one is being freed...");
                 QueueFree();
                 return;
             }
