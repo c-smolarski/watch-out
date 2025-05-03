@@ -8,14 +8,23 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
 {
     public partial class Player : Mobile
     {
-        [Signal] public delegate void ChangedGearEventHandler(int pNewGear);
+        [Signal] public delegate void ChangedGearModeEventHandler(int pNewGear);
+
+        [Export] public GearBoxType GearBox { get; private set; } = GearBoxType.ELECTRIC;
+
+        public enum GearBoxType
+        {
+            NO_GEARBOX,
+            MANUAL,
+            ELECTRIC
+        }
 
         public const uint COLLISION_LAYER = 2;
 
         protected override GearMode SelectedGearMode
         {
             get => base.SelectedGearMode;
-            set => EmitSignal(SignalName.ChangedGear, (int)(base.SelectedGearMode = value));
+            set => EmitSignal(SignalName.ChangedGearMode, (int)(base.SelectedGearMode = value));
         }
 
         private bool inputConnected = true;
@@ -32,6 +41,11 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
             base.OnHit(pArea);
             if (pArea is Mobile)
                 DisconnectInput();
+        }
+
+        public void Appear()
+        {
+
         }
 
         private void OnInputHold(int pNPrevTap)

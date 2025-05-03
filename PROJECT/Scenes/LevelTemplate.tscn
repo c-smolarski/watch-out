@@ -1,9 +1,22 @@
-[gd_scene format=3 uid="uid://cru5wgs3k3arj"]
+[gd_scene load_steps=3 format=3 uid="uid://cru5wgs3k3arj"]
+
+[ext_resource type="Script" path="res://Scripts/Level.cs" id="1_0c5ti"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0a8ng"]
+size = Vector2(200, 200)
 
 [node name="LevelTemplate" type="Node2D"]
+script = ExtResource("1_0c5ti")
 
 [node name="Assets" type="Node2D" parent="."]
 
 [node name="GameObjects" type="Node2D" parent="."]
 
 [node name="Paths" type="Node2D" parent="."]
+
+[node name="LevelEnd" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="collider" type="CollisionShape2D" parent="LevelEnd"]
+shape = SubResource("RectangleShape2D_0a8ng")

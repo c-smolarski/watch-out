@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://b82jwectef5t3"]
+
+[ext_resource type="Texture2D" uid="uid://dtovtr6d2vxk" path="res://Assets/UI/Dashboard/DashboardOutline.png" id="1_jqxqh"]
+[ext_resource type="FontFile" uid="uid://cfcvv2m65kn8x" path="res://Resources/dealerplate_california.otf" id="2_nsmyp"]
+[ext_resource type="Script" path="res://Scripts/UI/DashboardElements/GearIndicators/GearModeIndicator.cs" id="2_pq6mi"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kdhny"]
+font = ExtResource("2_nsmyp")
+font_size = 300
+font_color = Color(0, 0, 0, 1)
+
+[node name="GearModeIndicator" type="TextureRect" node_paths=PackedStringArray("GearLabel")]
+offset_right = 800.0
+offset_bottom = 800.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_jqxqh")
+script = ExtResource("2_pq6mi")
+GearLabel = NodePath("GearLabel")
+
+[node name="GearLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -300.0
+offset_right = -50.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "P"
+label_settings = SubResource("LabelSettings_kdhny")
+horizontal_alignment = 1
+vertical_alignment = 1

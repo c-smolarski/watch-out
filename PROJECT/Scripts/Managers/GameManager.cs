@@ -9,6 +9,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
     {
         [ExportGroup("Nodes")]
         [Export] public Node2D GameContainer { get; private set; }
+        [Export] public Control UIContainer { get; private set; }
 
         public static GameManager Instance { get; private set; }
 

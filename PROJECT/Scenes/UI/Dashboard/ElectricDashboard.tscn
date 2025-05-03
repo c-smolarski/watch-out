@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://baoq3l7ldkrru"]
+
+[ext_resource type="PackedScene" uid="uid://cgneqyk8jcl11" path="res://Scenes/UI/Dashboard/DashboardElements/SpeedOMeter.tscn" id="1_dfuk7"]
+[ext_resource type="PackedScene" uid="uid://b82jwectef5t3" path="res://Scenes/UI/Dashboard/DashboardElements/GearModeIndicator.tscn" id="1_piv6m"]
+
+[node name="ElectricDashboard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GearModeIndicator" parent="." instance=ExtResource("1_piv6m")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -700.0
+offset_right = 600.0
+offset_bottom = 100.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="SpeedOMeter" parent="." instance=ExtResource("1_dfuk7")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -500.0
+offset_right = 300.0
+offset_bottom = 300.0
+grow_horizontal = 0
+grow_vertical = 0

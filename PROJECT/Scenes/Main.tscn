@@ -1,27 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://d0c4suyvuber7"]
+[gd_scene load_steps=5 format=3 uid="uid://d0c4suyvuber7"]
 
+[ext_resource type="Script" path="res://Scripts/Managers/UIManager.cs" id="1_jr131"]
 [ext_resource type="Script" path="res://Scripts/Managers/GameManager.cs" id="1_uixe0"]
-[ext_resource type="PackedScene" uid="uid://bklu5mtgry3xg" path="res://Scenes/Levels/Level1.tscn" id="3_kufbb"]
 [ext_resource type="Script" path="res://Scripts/Managers/LevelManager.cs" id="4_183ov"]
+[ext_resource type="PackedScene" uid="uid://baoq3l7ldkrru" path="res://Scenes/UI/Dashboard/ElectricDashboard.tscn" id="4_lheqa"]
 
 [node name="Main" type="Node"]
 
 [node name="Managers" type="Node" parent="."]
 
+[node name="UIManager" type="Node" parent="Managers"]
+script = ExtResource("1_jr131")
+PackedElectricDashboard = ExtResource("4_lheqa")
+
 [node name="LevelManager" type="Node" parent="Managers"]
 script = ExtResource("4_183ov")
 
-[node name="GameManager" type="Node" parent="Managers" node_paths=PackedStringArray("GameContainer")]
+[node name="GameManager" type="Node" parent="Managers" node_paths=PackedStringArray("GameContainer", "UIContainer")]
 script = ExtResource("1_uixe0")
 GameContainer = NodePath("../../GameContainer")
+UIContainer = NodePath("../../CanvasLayer/UIContainer")
 
 [node name="GameContainer" type="Node2D" parent="."]
 
-[node name="Level1" parent="GameContainer" instance=ExtResource("3_kufbb")]
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="UIContainer" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

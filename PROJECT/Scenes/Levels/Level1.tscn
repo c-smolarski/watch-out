@@ -23,7 +23,8 @@ _data = {
 }
 point_count = 2
 
-[node name="Level1" instance=ExtResource("1_xy2ww")]
+[node name="Level1" node_paths=PackedStringArray("Player") instance=ExtResource("1_xy2ww")]
+Player = NodePath("GameObjects/Player")
 
 [node name="road" type="Node2D" parent="Assets" index="0"]
 
@@ -124,6 +125,9 @@ loop = false
 [node name="Car3Follow" type="PathFollow2D" parent="Paths/CarPath2" index="1"]
 position = Vector2(-1000, -300)
 loop = false
+
+[node name="LevelEnd" parent="." index="3"]
+position = Vector2(-700, -500)
 
 [connection signal="DriverRunnedOver" from="GameObjects/StopSign" to="GameObjects/Car" method="StartMovingForward"]
 [connection signal="DriverRunnedOver" from="GameObjects/StopSign" to="GameObjects/Car2" method="StartMovingForward"]

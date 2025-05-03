@@ -46,6 +46,8 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
                 return;
             driverWaiting = null;
             StopWaitTimer();
+            if (!pArea.OverlapsArea(stopLine))
+                driverFinishedWaiting = false;
         }
 
         private void OnDriverStepsOnLine(Area2D pArea)
@@ -53,7 +55,7 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
             if (pArea is not Mobile)
                 return;
 
-            if (!driverFinishedWaiting || ((Mobile)pArea).Direction == (int)Mobile.GearMode.BACKWARD)
+            if (!driverFinishedWaiting || ((Mobile)pArea).Direction == (int)Mobile.GearMode.REVERSE)
                 EmitSignal(SignalName.DriverSteppedOnLine);
         }
 

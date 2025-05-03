@@ -1,6 +1,8 @@
 ﻿using Godot;
 using System;
 
+// Author : Camille SMOLARSKI
+
 namespace Com.IsartDigital.OneButtonGame.Utils
 {
     public static class MathS

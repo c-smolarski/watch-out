@@ -10,6 +10,7 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
     {
         #region Exports
         [Export] private PathFollow2D pathFollow;
+        [Export] private bool autoRestartOnEnd = true;
         [ExportGroup("Physics")]
         [Export] private bool startAtMaxSpeed = default;
         [Export] private float maxForwardSpeed = 750f;
@@ -20,15 +21,15 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
         [Export] protected float EmergencyBrakeForce { get; private set; } = 0.005f;
         #endregion
 
+        public const float MIN_SPEED_THRESHOLD = 30f;
         private const float ACCEL_CURVE_POW = 1.5f;
-        private const float MIN_SPEED_THRESHOLD = 30f;
 
         public enum GearMode
         {
             PARKED = -2,
-            BACKWARD = -1,
+            REVERSE = -1,
             NEUTRAL = 0,
-            FORWARD = 1
+            DRIVE = 1
         }
 
         public int Direction { get; private set; }
@@ -37,19 +38,20 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
         protected virtual GearMode SelectedGearMode { get; set; } = GearMode.PARKED;
         private Vector2 VelocityDirection => (GlobalPosition - lastPos).Normalized();
 
-        private bool collisionsEnabled;
         private Vector2 lastPos;
+        private bool collisionsEnabled, resetStartAtMaxSpeed;
         private float elapsedTime, baseRotation, maxSpeed, brakeForce;
 
         public override void _Ready()
         {
             base._Ready();
+            resetStartAtMaxSpeed = startAtMaxSpeed;
             lastPos = GlobalPosition;
         }
 
         protected override void OnHit(Area2D pArea)
         {
-            if (pArea is not Mobile || !collisionsEnabled)
+            if (pArea is not Mobile || !collisionsEnabled  || !((Mobile)pArea).collisionsEnabled)
                 return;
 
             Speed = maxForwardSpeed;
@@ -60,21 +62,21 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
 
         public void StartMovingForward()
         {
-            StartMoving(GearMode.FORWARD);
+            StartMoving(GearMode.DRIVE);
         }
 
         protected void StartMovingBackward()
         {
-            StartMoving(GearMode.BACKWARD);
+            StartMoving(GearMode.REVERSE);
         }
 
         private void StartMoving(GearMode pDirection)
         {
-            if (pDirection != GearMode.FORWARD && pDirection != GearMode.BACKWARD)
+            if (pDirection != GearMode.DRIVE && pDirection != GearMode.REVERSE)
                 throw new Exception("Invalid direction.");
 
             Direction = (int)(SelectedGearMode = pDirection);
-            maxSpeed = SelectedGearMode == GearMode.FORWARD ? maxForwardSpeed : maxBackwardSpeed;
+            maxSpeed = SelectedGearMode == GearMode.DRIVE ? maxForwardSpeed : maxBackwardSpeed;
 
             if (startAtMaxSpeed)
             {
@@ -105,12 +107,14 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
 
         private void Move(float pDelta)
         {
+            if (autoRestartOnEnd && !pathFollow.Loop && pathFollow.ProgressRatio >= 1)
+                StopAndReset();
+            else
+                pathFollow.Progress += Speed * Direction * pDelta;
+
             lastPos = GlobalPosition;
-            pathFollow.Progress += Speed * Direction * pDelta;
             GlobalPosition = pathFollow.GlobalPosition;
             GlobalRotation = pathFollow.GlobalRotation - baseRotation;
-            if (!pathFollow.Loop && pathFollow.ProgressRatio >= 1)
-                StopMoving();
         }
 
         protected void StartBraking(float pForce)
@@ -137,6 +141,14 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
             SelectedGearMode = GearMode.PARKED;
             Speed = Direction = default;
             doAction = null;
+        }
+
+        private void StopAndReset()
+        {
+            collisionsEnabled = false;
+            startAtMaxSpeed = resetStartAtMaxSpeed;
+            pathFollow.ProgressRatio = default;
+            StopMoving();
         }
     }
 }
