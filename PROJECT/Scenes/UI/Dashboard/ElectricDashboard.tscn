@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://baoq3l7ldkrru"]
+[gd_scene load_steps=4 format=3 uid="uid://baoq3l7ldkrru"]
 
 [ext_resource type="PackedScene" uid="uid://cgneqyk8jcl11" path="res://Scenes/UI/Dashboard/DashboardElements/SpeedOMeter.tscn" id="1_dfuk7"]
 [ext_resource type="PackedScene" uid="uid://b82jwectef5t3" path="res://Scenes/UI/Dashboard/DashboardElements/GearModeIndicator.tscn" id="1_piv6m"]
+[ext_resource type="Script" path="res://Scripts/Components/ResolutionRescaler.cs" id="3_l2uih"]
 
 [node name="ElectricDashboard" type="Control"]
 layout_mode = 3
@@ -11,7 +12,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GearModeIndicator" parent="." instance=ExtResource("1_piv6m")]
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.9, 0.9)
+
+[node name="GearModeIndicator" parent="Control" instance=ExtResource("1_piv6m")]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -25,7 +37,7 @@ offset_bottom = 100.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="SpeedOMeter" parent="." instance=ExtResource("1_dfuk7")]
+[node name="SpeedOMeter" parent="Control" instance=ExtResource("1_dfuk7")]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -38,3 +50,9 @@ offset_right = 300.0
 offset_bottom = 300.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="ResolutionRescaler" type="Node" parent="." node_paths=PackedStringArray("targets")]
+script = ExtResource("3_l2uih")
+targets = [NodePath("../Control")]
+baseResolution = Vector2(1600, 2560)
+mode = 1

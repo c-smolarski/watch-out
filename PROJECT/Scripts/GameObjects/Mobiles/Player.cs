@@ -12,6 +12,8 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
 
         [Export] public GearBoxType GearBox { get; private set; } = GearBoxType.ELECTRIC;
 
+        private const string T_KEY_ACCIDENT = "MESSAGE_ACCIDENT";
+
         public enum GearBoxType
         {
             NO_GEARBOX,
@@ -34,13 +36,15 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
             base._Ready();
             InputManager.Instance.StartedHolding += OnInputHold;
             InputManager.Instance.StoppedHolding += OnInputRelease;
+            SignalBus.Instance.LevelCompleted += OnLevelComplete;
         }
 
-        protected override void OnHit(Area2D pArea)
+        protected override void OnAccident()
         {
-            base.OnHit(pArea);
-            if (pArea is Mobile)
-                DisconnectInput();
+            base.OnAccident();
+            DisconnectInput();
+
+            SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelHardFailed, T_KEY_ACCIDENT);
         }
 
         public void Appear()
@@ -64,6 +68,12 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
                 StartBraking(EngineBrakeForce);
         }
 
+        private void OnLevelComplete()
+        {
+            DisconnectInput();
+            StartMovingForward();
+        }
+
         private void DisconnectInput()
         {
             inputConnected = false;
@@ -73,6 +83,7 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
 
         protected override void Dispose(bool pDisposing)
         {
+            SignalBus.Instance.LevelCompleted -= OnLevelComplete;
             if (inputConnected)
                 DisconnectInput();
             base.Dispose(pDisposing);

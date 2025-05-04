@@ -11,7 +11,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         public static LevelManager Instance { get; private set; }
         public static Level CurrentLevel { get; private set; }
 
-        private int currentLevelNumber;
+        public static int CurrentLevelNumber { get; private set; }
 
         public override void _Ready()
         {
@@ -25,13 +25,42 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             Instance = this;
             #endregion
             SignalBus.Instance.GameStarted += OnGameStart;
+            SignalBus.Instance.LevelHardFailed += OnLevelFail;
+            SignalBus.Instance.LevelCompleted += OnLevelComplete;
         }
 
         private void OnGameStart()
         {
             InputManager.Activated = true;
             LoadLevel(1);
-            GetTree().CreateTimer(3f).Timeout += () => LoadLevel(1);
+        }
+
+        private void OnLevelComplete()
+        {
+            UIManager.Instance.StartTransIn()
+                .Connect(
+                    Tween.SignalName.Finished,
+                    new Callable(
+                        this,
+                        CurrentLevel.SoftFailed ? MethodName.ReloadLevel : MethodName.LoadNextLevel));
+        }
+
+        private void OnLevelFail(string pFailMessage)
+        {
+            UIManager.Instance.StartTransIn(true)
+                .Connect(
+                    Tween.SignalName.Finished,
+                    new Callable(this, MethodName.ReloadLevel));
+        }
+
+        private void LoadNextLevel()
+        {
+            LoadLevel(CurrentLevelNumber + 1);
+        }
+
+        private void ReloadLevel()
+        {
+            LoadLevel(CurrentLevelNumber);
         }
 
         private async void LoadLevel(int pLevelNumber)
@@ -46,17 +75,19 @@ namespace Com.IsartDigital.OneButtonGame.Managers
                 GD.Load<PackedScene>(
                     FilePath.FetchFilePathFromFolder(
                         FilePath.LEVELS_FOLDER,
-                        --pLevelNumber)),
+                        pLevelNumber - 1)),
                 GameManager.Instance.GameContainer);
 
             UIManager.Instance.CreateDashboard(CurrentLevel.Player.GearBox);
 
-            currentLevelNumber = pLevelNumber;
+            CurrentLevelNumber = pLevelNumber;
         }
 
         protected override void Dispose(bool pDisposing)
         {
             SignalBus.Instance.GameStarted -= OnGameStart;
+            SignalBus.Instance.LevelCompleted -= OnLevelComplete;
+            SignalBus.Instance.LevelHardFailed -= OnLevelFail;
             if (Instance == this)
                 Instance = null;
             base.Dispose(pDisposing);

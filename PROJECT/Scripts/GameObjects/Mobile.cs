@@ -57,7 +57,12 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
             Speed = maxForwardSpeed;
             Direction *= -Mathf.Sign(MathS.Dot(VelocityDirection, (pArea.GlobalPosition - GlobalPosition).Normalized()));
             StartBraking(EmergencyBrakeForce);
-            ((Mobile)pArea).StartBraking(EmergencyBrakeForce);
+            OnAccident();
+        }
+
+        protected virtual void OnAccident()
+        {
+
         }
 
         public void StartMovingForward()

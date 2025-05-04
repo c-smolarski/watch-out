@@ -1,0 +1,9 @@
+﻿keys;en;fr
+LABEL_SUCCESS;Great job!;Bravo!
+LABEL_FAILED;Try again…;Essaye encore…
+MESSAGE_ACCIDENT;"W a t c h
+o u t !";A t t e n t i o n !
+STOP_STEPPED_ON;Don't forget to stop before the stop line.;N'oublie pas de t'arrêter avant la ligne d'un stop
+STOP_BACKED_ON;You can't back on a stop line.;On ne peut pas reculer sur une ligne de stop.
+STOP_RUNNED_OVER;Dangerous ! Stop before a stop line.;Danger! Il faut toujours s'arrêter devant un stop.
+MESSAGE_LEVEL1;;

@@ -9,8 +9,8 @@ namespace Com.IsartDigital.OneButtonGame.Managers
     {
         [Signal] public delegate void GameStartedEventHandler();
         [Signal] public delegate void LevelCompletedEventHandler();
-        [Signal] public delegate void LevelSoftFailedEventHandler(string pFailMessage);
-        [Signal] public delegate void LevelHardFailedEventHandler(string pFailMessage);
+        [Signal] public delegate void LevelSoftFailedEventHandler(string pTranslationKey);
+        [Signal] public delegate void LevelHardFailedEventHandler(string pTranslationKey);
 
         public static SignalBus Instance { get; private set; }
 

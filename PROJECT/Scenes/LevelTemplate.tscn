@@ -5,8 +5,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0a8ng"]
 size = Vector2(200, 200)
 
-[node name="LevelTemplate" type="Node2D"]
+[node name="LevelTemplate" type="Node2D" node_paths=PackedStringArray("winArea")]
 script = ExtResource("1_0c5ti")
+winArea = NodePath("LevelEnd")
 
 [node name="Assets" type="Node2D" parent="."]
 

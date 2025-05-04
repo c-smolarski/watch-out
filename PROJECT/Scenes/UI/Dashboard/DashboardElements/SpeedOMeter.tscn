@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b6d1jj1prlxmf" path="res://Assets/UI/Dashboard/Marks.png" id="2_jcva5"]
 [ext_resource type="Script" path="res://Scripts/UI/DashboardElements/DashboardGauges/SpeedOMeter.cs" id="2_od6mj"]
 [ext_resource type="Texture2D" uid="uid://cil6y32ogslwv" path="res://Assets/UI/Dashboard/pointer.png" id="3_3mcmo"]
-[ext_resource type="FontFile" uid="uid://cfcvv2m65kn8x" path="res://Resources/dealerplate_california.otf" id="4_pxwn5"]
+[ext_resource type="FontFile" uid="uid://cfcvv2m65kn8x" path="res://Resources/Fonts/dealerplate_california.otf" id="4_pxwn5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_np6ti"]
 font = ExtResource("4_pxwn5")

@@ -38,6 +38,7 @@ project/assembly_name="OneButtonGame"
 
 folder_colors={
 "res://Assets/": "purple",
+"res://Resources/": "blue",
 "res://Scenes/": "green",
 "res://Scripts/": "red"
 }
@@ -47,6 +48,12 @@ folder_colors={
 import/blender/enabled=false
 import/fbx/enabled=false
 
+[importer_defaults]
+
+csv_translation={
+"delimiter": 1
+}
+
 [input]
 
 click={
@@ -54,6 +61,10 @@ click={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
 ]
 }
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://Resources/Locaization/Translation.en.translation", "res://Resources/Locaization/Translation.fr.translation")
 
 [rendering]
 

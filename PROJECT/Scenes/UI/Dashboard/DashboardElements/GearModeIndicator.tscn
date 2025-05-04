@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://b82jwectef5t3"]
 
 [ext_resource type="Texture2D" uid="uid://dtovtr6d2vxk" path="res://Assets/UI/Dashboard/DashboardOutline.png" id="1_jqxqh"]
-[ext_resource type="FontFile" uid="uid://cfcvv2m65kn8x" path="res://Resources/dealerplate_california.otf" id="2_nsmyp"]
 [ext_resource type="Script" path="res://Scripts/UI/DashboardElements/GearIndicators/GearModeIndicator.cs" id="2_pq6mi"]
+[ext_resource type="FontFile" uid="uid://cfcvv2m65kn8x" path="res://Resources/Fonts/dealerplate_california.otf" id="3_2is08"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kdhny"]
-font = ExtResource("2_nsmyp")
+font = ExtResource("3_2is08")
 font_size = 300
 font_color = Color(0, 0, 0, 1)
 

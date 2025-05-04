@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://cfcvv2m65kn8x"
-path="res://.godot/imported/dealerplate_california.otf-47c3a070b261c128b8e8a954049c4d3b.fontdata"
+path="res://.godot/imported/dealerplate_california.otf-b5ae2f90cb2575b5231653651b94a419.fontdata"
 
 [deps]
 
-source_file="res://Resources/dealerplate_california.otf"
-dest_files=["res://.godot/imported/dealerplate_california.otf-47c3a070b261c128b8e8a954049c4d3b.fontdata"]
+source_file="res://Resources/Fonts/dealerplate_california.otf"
+dest_files=["res://.godot/imported/dealerplate_california.otf-b5ae2f90cb2575b5231653651b94a419.fontdata"]
 
 [params]
 

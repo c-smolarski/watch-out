@@ -1,4 +1,5 @@
 ﻿using Com.IsartDigital.OneButtonGame.GameObjects.Mobiles;
+using Com.IsartDigital.OneButtonGame.Managers;
 using Godot;
 using System;
 
@@ -14,6 +15,11 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
 
         [Export] private Area2D stopLine;
         [Export] private bool onlyDetectsPlayer = true;
+
+
+        private const string T_KEY_STEPPED_ON = "STOP_STEPPED_ON";
+        private const string T_KEY_BACKED_ON = "STOP_BACKED_ON";
+        private const string T_KEY_RUNNED_OVER = "STOP_RUNNED_OVER";
 
         private const float STOP_TIME = 3f;
 
@@ -55,8 +61,18 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
             if (pArea is not Mobile)
                 return;
 
-            if (!driverFinishedWaiting || ((Mobile)pArea).Direction == (int)Mobile.GearMode.REVERSE)
+            bool lAreaGoingReverse = ((Mobile)pArea).Direction == (int)Mobile.GearMode.REVERSE;
+            if (!driverFinishedWaiting || lAreaGoingReverse)
+            {
                 EmitSignal(SignalName.DriverSteppedOnLine);
+                if(pArea is Player)
+                {
+                    if (lAreaGoingReverse)
+                        SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelSoftFailed, T_KEY_BACKED_ON);
+                    else
+                        SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelSoftFailed, T_KEY_STEPPED_ON);
+                }
+            }
         }
 
         private void OnDriverLeavesLine(Area2D pArea)
@@ -69,7 +85,11 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
                 if (driverFinishedWaiting)
                     driverFinishedWaiting = false;
                 else
+                {
                     EmitSignal(SignalName.DriverRunnedOver);
+                    if (pArea is Player)
+                        SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelSoftFailed, T_KEY_RUNNED_OVER);
+                }
             }
         }
 
