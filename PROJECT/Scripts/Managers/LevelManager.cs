@@ -13,6 +13,8 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 
         public static int CurrentLevelNumber { get; private set; }
 
+        private bool isLoadingLevel;
+        private Callable transitionCallable;
         public override void _Ready()
         {
             #region Singleton
@@ -37,20 +39,28 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 
         private void OnLevelComplete()
         {
-            UIManager.Instance.StartTransIn()
-                .Connect(
-                    Tween.SignalName.Finished,
-                    new Callable(
+            if (isLoadingLevel)
+                return;
+            isLoadingLevel = true;
+
+            UIManager.Instance.StartTransIn();
+            UIManager.Instance.Connect(
+                    UIManager.SignalName.TransOutStarted,
+                    transitionCallable = new Callable(
                         this,
                         CurrentLevel.SoftFailed ? MethodName.ReloadLevel : MethodName.LoadNextLevel));
         }
 
         private void OnLevelFail(string pFailMessage)
         {
-            UIManager.Instance.StartTransIn(true)
-                .Connect(
-                    Tween.SignalName.Finished,
-                    new Callable(this, MethodName.ReloadLevel));
+            if (isLoadingLevel)
+                return;
+            isLoadingLevel = true;
+
+            UIManager.Instance.StartTransIn(true);
+            UIManager.Instance.Connect(
+                    UIManager.SignalName.TransOutStarted,
+                    transitionCallable = new Callable(this, MethodName.ReloadLevel));
         }
 
         private void LoadNextLevel()
@@ -65,6 +75,9 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 
         private async void LoadLevel(int pLevelNumber)
         {
+            if (transitionCallable.Target != null && UIManager.Instance.IsConnected(UIManager.SignalName.TransOutStarted, transitionCallable))
+                UIManager.Instance.Disconnect(UIManager.SignalName.TransOutStarted, transitionCallable);
+
             if (CurrentLevel != null)
             {
                 CurrentLevel.QueueFree();
@@ -81,6 +94,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             UIManager.Instance.CreateDashboard(CurrentLevel.Player.GearBox);
 
             CurrentLevelNumber = pLevelNumber;
+            isLoadingLevel = false;
         }
 
         protected override void Dispose(bool pDisposing)

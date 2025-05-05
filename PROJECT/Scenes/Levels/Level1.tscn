@@ -75,9 +75,10 @@ polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
 [node name="StopSign" parent="GameObjects" index="0" instance=ExtResource("2_hn6pu")]
 position = Vector2(100, -25)
 
-[node name="Player" parent="GameObjects" index="1" node_paths=PackedStringArray("pathFollow") instance=ExtResource("2_hr8lp")]
+[node name="Player" parent="GameObjects" index="1" node_paths=PackedStringArray("AppearAnimStartPos", "pathFollow") instance=ExtResource("2_hr8lp")]
 position = Vector2(100, 1000)
 rotation = -1.5708
+AppearAnimStartPos = NodePath("../../Marker2D")
 pathFollow = NodePath("../../Paths/PlayerPath/PlayerFollow")
 
 [node name="Car" parent="GameObjects" index="2" node_paths=PackedStringArray("pathFollow") instance=ExtResource("3_jmgid")]
@@ -128,6 +129,9 @@ loop = false
 
 [node name="LevelEnd" parent="." index="3"]
 position = Vector2(-700, -500)
+
+[node name="Marker2D" type="Marker2D" parent="." index="4"]
+position = Vector2(100, 1600)
 
 [connection signal="DriverRunnedOver" from="GameObjects/StopSign" to="GameObjects/Car" method="StartMovingForward"]
 [connection signal="DriverRunnedOver" from="GameObjects/StopSign" to="GameObjects/Car2" method="StartMovingForward"]

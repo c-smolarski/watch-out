@@ -7,15 +7,13 @@ using System;
 
 namespace Com.IsartDigital.OneButtonGame.GameObjects
 {
-    public partial class Stop : GameObject
+    public partial class Stop : DriverDetector
     {
         [Signal] public delegate void DriverStoppedEventHandler();
         [Signal] public delegate void DriverSteppedOnLineEventHandler();
         [Signal] public delegate void DriverRunnedOverEventHandler();
 
         [Export] private Area2D stopLine;
-        [Export] private bool onlyDetectsPlayer = true;
-
 
         private const string T_KEY_STEPPED_ON = "STOP_STEPPED_ON";
         private const string T_KEY_BACKED_ON = "STOP_BACKED_ON";
@@ -33,13 +31,11 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
             AreaExited += OnDriverLeavesStopArea;
             stopLine.AreaEntered += OnDriverStepsOnLine;
             stopLine.AreaExited += OnDriverLeavesLine;
-
-            if (onlyDetectsPlayer)
-                CollisionLayer = CollisionMask = Player.COLLISION_LAYER;
         }
 
         protected override void OnHit(Area2D pArea)
         {
+            base.OnHit(pArea);
             if (pArea is not Mobile || driverWaiting != null)
                 return;
             driverWaiting = (Mobile)pArea;
@@ -122,8 +118,8 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
             AreaExited -= OnDriverLeavesStopArea;
             if (IsInstanceValid(stopLine))
             {
-                stopLine.AreaEntered += OnDriverStepsOnLine;
-                stopLine.AreaExited += OnDriverLeavesLine;
+                stopLine.AreaEntered -= OnDriverStepsOnLine;
+                stopLine.AreaExited -= OnDriverLeavesLine;
             }
             base.Dispose(pDisposing);
         }

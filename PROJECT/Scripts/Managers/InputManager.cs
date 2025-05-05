@@ -12,7 +12,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         [Signal] public delegate void StoppedHoldingEventHandler();
 
         public const string CLICK = "click";
-        public const float TAP_THRESHOLD = 0.15f;
+        private const float TAP_THRESHOLD = 0.15f;
 
         public static InputManager Instance { get; private set; }
         public static bool Holding { get; private set; } = false;

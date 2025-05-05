@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d0c4suyvuber7"]
+[gd_scene load_steps=19 format=3 uid="uid://d0c4suyvuber7"]
 
 [ext_resource type="Script" path="res://Scripts/Managers/UIManager.cs" id="1_jr131"]
 [ext_resource type="Script" path="res://Scripts/Managers/GameManager.cs" id="1_uixe0"]
@@ -11,6 +11,7 @@
 [ext_resource type="Shader" path="res://Resources/Shaders/Wave.gdshader" id="8_qc7ey"]
 [ext_resource type="FontFile" uid="uid://bt1wq1bv3boxj" path="res://Resources/Fonts/GonziExpanded.otf" id="9_lp8ec"]
 [ext_resource type="FontFile" uid="uid://bg5g2r0po66u4" path="res://Resources/Fonts/GonziExpandedLight.otf" id="10_ypeor"]
+[ext_resource type="PackedScene" uid="uid://b3htajddkday5" path="res://Scenes/UI/TouchIcon.tscn" id="12_ak6xg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j73bd"]
 shader = ExtResource("5_qukli")
@@ -52,9 +53,10 @@ font_color = Color(0, 0, 0, 1)
 
 [node name="Managers" type="Node" parent="."]
 
-[node name="UIManager" type="Node" parent="Managers" node_paths=PackedStringArray("transitionRect", "accidentLabel", "successLabel", "successMessageLabel")]
+[node name="UIManager" type="Node" parent="Managers" node_paths=PackedStringArray("transitionRect", "touchIcon", "accidentLabel", "successLabel", "successMessageLabel")]
 script = ExtResource("1_jr131")
 transitionRect = NodePath("../../CanvasLayer/TransitionContainer/TransitionRect")
+touchIcon = NodePath("../../CanvasLayer/TransitionContainer/TouchIcon")
 accidentLabel = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/accidentLabel")
 successLabel = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels/successLabel")
 successMessageLabel = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels/transitionLabel")
@@ -188,5 +190,21 @@ script = ExtResource("8_lx12m")
 targets = [NodePath("..")]
 baseResolution = Vector2(1600, 2560)
 mode = 1
+
+[node name="TouchIcon" parent="CanvasLayer/TransitionContainer" instance=ExtResource("12_ak6xg")]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -350.0
+offset_top = -350.0
+offset_right = -350.0
+offset_bottom = -350.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.8, 0.8)
 
 [node name="Camera2D" type="Camera2D" parent="."]
