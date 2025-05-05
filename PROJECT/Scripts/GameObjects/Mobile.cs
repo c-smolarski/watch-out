@@ -17,12 +17,14 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
         [Export] private float maxBackwardSpeed= 250f;
         [Export] protected float TimeToMaxSpeed { get; private set; } = 1.5f;
         [Export] protected float EngineBrakeForce { get; private set; } = 0.1f;
-        [Export] protected float BrakeForce { get; private set; } = 0.015f;
+        [Export] protected float ManualBrakeForce { get; private set; } = 0.015f;
         [Export] protected float EmergencyBrakeForce { get; private set; } = 0.005f;
         #endregion
 
-        public const float MIN_SPEED_THRESHOLD = 30f;
+        public const float MIN_SPEED_THRESHOLD = 50f;
         private const float ACCEL_CURVE_POW = 1.5f;
+        private const string POLYGONS_PATH = "polygons";
+        private const string EXHAUST_PARTICLES_PATH = "exhaustParticles";
 
         public enum GearMode
         {
@@ -38,15 +40,32 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
         protected virtual GearMode SelectedGearMode { get; set; } = GearMode.PARKED;
         private Vector2 VelocityDirection => (GlobalPosition - lastPos).Normalized();
 
-        private Vector2 lastPos;
-        private bool collisionsEnabled, resetStartAtMaxSpeed;
-        private float elapsedTime, baseRotation, maxSpeed, brakeForce;
+        private Vector2 polygonsScale, lastPos;
+        private GpuParticles2D exhaustParticels;
+        private Node2D polygons;
+        private bool collisionsEnabled, resetStartAtMaxSpeed, animated = true;
+        private float elapsedTime, flutterTime, baseRotation, maxSpeed, brakeForce;
 
         public override void _Ready()
         {
             base._Ready();
+            exhaustParticels = GetNode<GpuParticles2D>(EXHAUST_PARTICLES_PATH);
+            polygons = GetNode<Node2D>(POLYGONS_PATH);
             resetStartAtMaxSpeed = startAtMaxSpeed;
             lastPos = GlobalPosition;
+            polygonsScale = polygons.Scale;
+        }
+
+        public override void _Process(double pDelta)
+        {
+            base._Process(pDelta);
+            if (animated)
+            {
+                flutterTime += (float)pDelta;
+                if (flutterTime > 0.1f)
+                    flutterTime = default;
+                polygons.Scale = polygonsScale + Vector2.One * 0.3f * flutterTime;
+            }
         }
 
         protected override void OnHit(Area2D pArea)
@@ -62,7 +81,8 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
 
         protected virtual void OnAccident()
         {
-
+            animated = exhaustParticels.Emitting = false;
+            polygons.Scale = polygonsScale;
         }
 
         public void StartMovingForward()
@@ -79,6 +99,9 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
         {
             if (pDirection != GearMode.DRIVE && pDirection != GearMode.REVERSE)
                 throw new Exception("Invalid direction.");
+
+            if (Direction == (int)GearMode.REVERSE)
+                StopMoving();
 
             Direction = (int)(SelectedGearMode = pDirection);
             maxSpeed = SelectedGearMode == GearMode.DRIVE ? maxForwardSpeed : maxBackwardSpeed;
@@ -136,6 +159,8 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
             if (Speed < MIN_SPEED_THRESHOLD)
             {
                 StopMoving();
+                if (brakeForce == ManualBrakeForce)
+                    StartMovingBackward();
                 return;
             }
             Move(pDelta);

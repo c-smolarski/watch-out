@@ -22,6 +22,7 @@
         public const string MODULATE_BLUE = "modulate:b";
         public const string MODULATE_ALPHA = "modulate:a";
         public const string COLOR = "color";
+        public const string COLOR_R = "color:r";
 
         //ANIMATED SPRITE
         public const string FRAME = "frame";

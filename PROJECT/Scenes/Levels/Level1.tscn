@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://cru5wgs3k3arj" path="res://Scenes/LevelTemplate.tscn" id="1_xy2ww"]
 [ext_resource type="PackedScene" uid="uid://bl7jw454koo84" path="res://Scenes/GameObjects/Stops/StopSign.tscn" id="2_hn6pu"]
-[ext_resource type="PackedScene" uid="uid://djb4v0pxs4cp4" path="res://Scenes/GameObjects/Mobiles/Player.tscn" id="2_hr8lp"]
-[ext_resource type="PackedScene" uid="uid://dcm03idm5sq6n" path="res://Scenes/GameObjects/Mobiles/Car.tscn" id="3_jmgid"]
+[ext_resource type="PackedScene" uid="uid://df4215fpxxyfq" path="res://Scenes/GameObjects/Mobiles/Player.tscn" id="2_hr8lp"]
+[ext_resource type="PackedScene" uid="uid://cu1jctaxsdr7v" path="res://Scenes/GameObjects/Mobiles/Car.tscn" id="3_jmgid"]
 
 [sub_resource type="Curve2D" id="Curve2D_xwu57"]
 _data = {
@@ -75,30 +75,27 @@ polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
 [node name="StopSign" parent="GameObjects" index="0" instance=ExtResource("2_hn6pu")]
 position = Vector2(100, -25)
 
-[node name="Player" parent="GameObjects" index="1" node_paths=PackedStringArray("AppearAnimStartPos", "pathFollow") instance=ExtResource("2_hr8lp")]
-position = Vector2(100, 1000)
-rotation = -1.5708
-AppearAnimStartPos = NodePath("../../Marker2D")
-pathFollow = NodePath("../../Paths/PlayerPath/PlayerFollow")
-
-[node name="Car" parent="GameObjects" index="2" node_paths=PackedStringArray("pathFollow") instance=ExtResource("3_jmgid")]
+[node name="Car" parent="GameObjects" index="1" node_paths=PackedStringArray("pathFollow") instance=ExtResource("3_jmgid")]
 position = Vector2(1000, -500)
 rotation = 3.14159
 pathFollow = NodePath("../../Paths/CarPath/CarFollow")
-startAtMaxSpeed = true
 maxForwardSpeed = 1700.0
 
-[node name="Car2" parent="GameObjects" index="3" node_paths=PackedStringArray("pathFollow") instance=ExtResource("3_jmgid")]
+[node name="Car2" parent="GameObjects" index="2" node_paths=PackedStringArray("pathFollow") instance=ExtResource("3_jmgid")]
 position = Vector2(-1000, -300)
 pathFollow = NodePath("../../Paths/CarPath2/Car2Follow")
-startAtMaxSpeed = true
-maxForwardSpeed = 1900.0
+maxForwardSpeed = 1700.0
 
-[node name="Car3" parent="GameObjects" index="4" node_paths=PackedStringArray("pathFollow") instance=ExtResource("3_jmgid")]
+[node name="Car3" parent="GameObjects" index="3" node_paths=PackedStringArray("pathFollow") instance=ExtResource("3_jmgid")]
 position = Vector2(-1000, -300)
 pathFollow = NodePath("../../Paths/CarPath2/Car3Follow")
-startAtMaxSpeed = true
 maxForwardSpeed = 1900.0
+
+[node name="Player" parent="GameObjects" index="4" node_paths=PackedStringArray("appearAnimStartPos", "pathFollow") instance=ExtResource("2_hr8lp")]
+position = Vector2(100, 1000)
+rotation = -1.5708
+appearAnimStartPos = NodePath("../../Marker2D")
+pathFollow = NodePath("../../Paths/PlayerPath/PlayerFollow")
 
 [node name="PlayerPath" type="Path2D" parent="Paths" index="0"]
 curve = SubResource("Curve2D_xwu57")

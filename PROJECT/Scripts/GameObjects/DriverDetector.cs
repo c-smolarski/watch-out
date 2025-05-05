@@ -9,12 +9,12 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
     public partial class DriverDetector : GameObject
     {
         [Signal] public delegate void DriverDetectedEventHandler();
-        [Export] private bool onlyDetectsPlayer = true;
+        [Export] protected bool OnlyDetectsPlayer = true;
 
         public override void _Ready()
         {
             base._Ready();
-            if (onlyDetectsPlayer)
+            if (OnlyDetectsPlayer)
                 CollisionLayer = CollisionMask = Player.COLLISION_LAYER;
         }
 

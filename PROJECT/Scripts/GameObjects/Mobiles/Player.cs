@@ -11,7 +11,7 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
     {
         [Signal] public delegate void ChangedGearModeEventHandler(int pNewGear);
 
-        [Export] private Marker2D AppearAnimStartPos;
+        [Export] private Marker2D appearAnimStartPos;
         [Export] public GearBoxType GearBox { get; private set; } = GearBoxType.ELECTRIC;
 
         public const uint COLLISION_LAYER = 2;
@@ -52,6 +52,7 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
             inputConnected = true;
             InputManager.Instance.StartedHolding += OnInputHold;
             InputManager.Instance.StoppedHolding += OnInputRelease;
+            SignalBus.Instance.EmitSignal(SignalBus.SignalName.PlayerActivated);
         }
 
         private void DisconnectInputs()
@@ -65,15 +66,15 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
 
         public void Appear()
         {
-            if (!IsInstanceValid(AppearAnimStartPos))
+            if (!IsInstanceValid(appearAnimStartPos))
             {
                 ConnectInputs();
                 return;
             }
 
             Tween lTween = CreateTween();
-            lTween.TweenProperty(this, TweenProp.GLOBAL_POSITION, GlobalPosition, 0.75f)
-                .From(AppearAnimStartPos.GlobalPosition)
+            lTween.TweenProperty(this, TweenProp.GLOBAL_POSITION, GlobalPosition, 1.5f)
+                .From(appearAnimStartPos.GlobalPosition)
                 .SetTrans(Tween.TransitionType.Quad)
                 .SetEase(Tween.EaseType.Out);
             lTween.Connect(
@@ -86,7 +87,7 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
             if (pNPrevTap == 0)
                 StartMovingForward();
             else if (IsMoving)
-                StartBraking(BrakeForce);
+                StartBraking(ManualBrakeForce);
             else
                 StartMovingBackward();
         }

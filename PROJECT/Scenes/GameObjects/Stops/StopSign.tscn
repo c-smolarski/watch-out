@@ -1,6 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://bl7jw454koo84"]
+[gd_scene load_steps=9 format=3 uid="uid://bl7jw454koo84"]
 
 [ext_resource type="Script" path="res://Scripts/GameObjects/DriverDetectors/Stop.cs" id="1_k5gux"]
+[ext_resource type="FontFile" uid="uid://bt1wq1bv3boxj" path="res://Resources/Fonts/GonziExpanded.otf" id="2_2yifv"]
+[ext_resource type="Shader" uid="uid://c3tkylxr357wo" path="res://Resources/Shaders/StopRadial.tres" id="2_jyo5f"]
+[ext_resource type="Texture2D" uid="uid://bqy0hhg8vm17a" path="res://Assets/icon.svg" id="3_ks5cb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dxhmo"]
+shader = ExtResource("2_jyo5f")
+shader_parameter/Color = Color(0.745098, 0, 0, 1)
+shader_parameter/lightColor = Color(1, 1, 0.823529, 1)
+shader_parameter/lightRadius = 2.25
+shader_parameter/angle = 0.0
+shader_parameter/mixAlpha = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_wxkvf"]
+font = ExtResource("2_2yifv")
+font_size = 25
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ioapf"]
 size = Vector2(200, 50)
@@ -8,9 +23,11 @@ size = Vector2(200, 50)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mv27b"]
 size = Vector2(200, 100)
 
-[node name="StopSign" type="Area2D" node_paths=PackedStringArray("stopLine")]
+[node name="StopSign" type="Area2D" node_paths=PackedStringArray("stopLine", "linePolygon", "redSignBG")]
 script = ExtResource("1_k5gux")
 stopLine = NodePath("StopLineArea")
+linePolygon = NodePath("stopLine")
+redSignBG = NodePath("sign/red")
 
 [node name="road" type="Node2D" parent="."]
 position = Vector2(-100, 25)
@@ -37,6 +54,36 @@ polygon = PackedVector2Array(-100, -25, 133.33, -25, 118.75, 25, -100, 25)
 [node name="line" type="Polygon2D" parent="."]
 position = Vector2(-100, 0)
 polygon = PackedVector2Array(10, -100, 10, 50, -10, 50, -10, -100)
+
+[node name="sign" type="Node2D" parent="."]
+position = Vector2(260, -25)
+scale = Vector2(2, 2)
+
+[node name="white" type="Polygon2D" parent="sign"]
+polygon = PackedVector2Array(-22, -50, 22, -50, 50, -22, 50, 22, 22, 50, -22, 50, -50, 22, -50, -22)
+
+[node name="red" type="Polygon2D" parent="sign"]
+material = SubResource("ShaderMaterial_dxhmo")
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("3_ks5cb")
+polygon = PackedVector2Array(-20, -45, 20, -45, 45, -20, 45, 20, 20, 45, -20, 45, -45, 20, -45, -20)
+
+[node name="Label" type="Label" parent="sign"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -15.0
+offset_right = 50.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "STOP"
+label_settings = SubResource("LabelSettings_wxkvf")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="StopLineArea" type="Area2D" parent="."]
 position = Vector2(0, -75)

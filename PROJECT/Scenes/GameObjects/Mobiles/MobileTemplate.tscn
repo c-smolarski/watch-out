@@ -1,0 +1,89 @@
+[gd_scene load_steps=9 format=3 uid="uid://bx6fqlpfkbitb"]
+
+[ext_resource type="Texture2D" uid="uid://br2hfebwco4ya" path="res://Assets/Particles/smoke_spritesheet.png" id="1_5d0fk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6f17c"]
+size = Vector2(200, 100)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_c428v"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 5
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_hfwms"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_hunae"]
+curve = SubResource("Curve_hfwms")
+
+[sub_resource type="Gradient" id="Gradient_ub64g"]
+colors = PackedColorArray(0.758192, 0.758192, 0.758192, 1, 0.899258, 0.899258, 0.899258, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5wsek"]
+gradient = SubResource("Gradient_ub64g")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mfyfg"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(2, 2, 1)
+angle_min = -180.0
+angle_max = 180.0
+direction = Vector3(-1, 0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 25.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.15
+color_ramp = SubResource("GradientTexture1D_5wsek")
+alpha_curve = SubResource("CurveTexture_hunae")
+anim_offset_max = 1.0
+
+[node name="Mobile" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6f17c")
+
+[node name="exhaustParticles" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_c428v")
+position = Vector2(-106, -26)
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_mfyfg")
+texture = ExtResource("1_5d0fk")
+lifetime = 0.2
+
+[node name="polygons" type="Node2D" parent="."]
+
+[node name="tire" type="Polygon2D" parent="polygons"]
+position = Vector2(-60, -50)
+color = Color(0.144063, 0.144063, 0.144063, 1)
+polygon = PackedVector2Array(-15, -5, 15, -5, 15, 5, -15, 5)
+
+[node name="tire2" type="Polygon2D" parent="polygons"]
+position = Vector2(52, -50)
+color = Color(0.144063, 0.144063, 0.144063, 1)
+polygon = PackedVector2Array(-15, -5, 15, -5, 15, 5, -15, 5)
+
+[node name="tire3" type="Polygon2D" parent="polygons"]
+position = Vector2(52, 50)
+color = Color(0.144063, 0.144063, 0.144063, 1)
+polygon = PackedVector2Array(-15, -5, 15, -5, 15, 5, -15, 5)
+
+[node name="tire4" type="Polygon2D" parent="polygons"]
+position = Vector2(-60, 50)
+color = Color(0.144063, 0.144063, 0.144063, 1)
+polygon = PackedVector2Array(-15, -5, 15, -5, 15, 5, -15, 5)
+
+[node name="exhaust" type="Polygon2D" parent="polygons"]
+position = Vector2(-91, -26)
+color = Color(0.35907, 0.359069, 0.359069, 1)
+polygon = PackedVector2Array(-15, -5, 15, -5, 15, 5, -15, 5)
+
+[node name="body" type="Polygon2D" parent="polygons"]
+color = Color(0.208046, 0.254857, 0.427045, 1)
+polygon = PackedVector2Array(-100, -42, -100, 39.9633, -84, 50, 84.3654, 50, 96, 46, 100, 33.6847, 100, -34, 97, -43, 84.1294, -50, -86, -50)
+
+[node name="windshield" type="Polygon2D" parent="polygons"]
+color = Color(0.304669, 0.492207, 0.688503, 1)
+polygon = PackedVector2Array(20, -30, 20, 30, 50, 35, 50, -35)

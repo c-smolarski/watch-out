@@ -12,7 +12,7 @@ namespace Com.IsartDigital.OneButtonGame.UI.DashboardElements.DashboardGauges
         {
             base._Process(pDelta);
             float lPlayerSpeed = Player.Speed - Mobile.MIN_SPEED_THRESHOLD;
-            Pointer.Rotation = ToPointerRot(lPlayerSpeed < 0 ? 0 : Mathf.Sqrt(lPlayerSpeed) * 2f);
+            Pointer.Rotation = Mathf.Lerp(Pointer.Rotation, ToPointerRot(lPlayerSpeed < 0 ? 0 : Mathf.Sqrt(lPlayerSpeed) * 2f), 0.25f);
         }
     }
 }

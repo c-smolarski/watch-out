@@ -24,9 +24,10 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         [Export] private PackedScene PackedElectricDashboard;
 
 
-        private const float TRANSITION_DURATION = 3f;
+        private const float TRANS_IN_DURATION = 3f;
+        private const float TRANS_OUT_DURATION = TRANS_IN_DURATION * 0.3f;
         private const float TOUCH_ICON_DELAY = 0.5f;
-        private const float LABEL_DELAY = TRANSITION_DURATION - TRANSITION_DURATION / 6f;
+        private const float LABEL_DELAY = TRANS_IN_DURATION - TRANS_IN_DURATION / 6f;
 
         private const string T_KEY_SUCCESS = "LABEL_SUCCESS";
         private const string T_KEY_FAILED = "LABEL_FAILED";
@@ -119,19 +120,19 @@ namespace Com.IsartDigital.OneButtonGame.Managers
                 .SetEase(Tween.EaseType.In)
                 .SetTrans(Tween.TransitionType.Quad)
                 .SetParallel();
-            lTween.TweenProperty(this, nameof(TransitionCircleSize), 1f, TRANSITION_DURATION)
+            lTween.TweenProperty(this, nameof(TransitionCircleSize), 1f, TRANS_IN_DURATION)
                 .From(0f);
 
             if (pHardFail)
-                lTween.TweenProperty(accidentLabel, TweenProp.MODULATE_ALPHA, 1f, TRANSITION_DURATION).SetDelay(LABEL_DELAY);
+                lTween.TweenProperty(accidentLabel, TweenProp.MODULATE_ALPHA, 1f, TRANS_IN_DURATION).SetDelay(LABEL_DELAY);
             else
             {
-                lTween.TweenProperty(successLabel, TweenProp.MODULATE_ALPHA, 1f, TRANSITION_DURATION).SetDelay(LABEL_DELAY);
-                lTween.TweenProperty(successMessageLabel, TweenProp.MODULATE_ALPHA, 1f, TRANSITION_DURATION).SetDelay(LABEL_DELAY);
+                lTween.TweenProperty(successLabel, TweenProp.MODULATE_ALPHA, 1f, TRANS_IN_DURATION).SetDelay(LABEL_DELAY);
+                lTween.TweenProperty(successMessageLabel, TweenProp.MODULATE_ALPHA, 1f, TRANS_IN_DURATION).SetDelay(LABEL_DELAY);
             }
 
             lTween.TweenProperty(touchIcon, TweenProp.MODULATE_ALPHA, 1f, TOUCH_ICON_DELAY)
-                .SetDelay(LABEL_DELAY + TRANSITION_DURATION)
+                .SetDelay(LABEL_DELAY + TRANS_IN_DURATION)
                 .Connect(
                     PropertyTweener.SignalName.Finished,
                     Callable.From(StartTouchIconAnim));
@@ -152,8 +153,8 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             Tween lTween = CreateTween()
                 .SetParallel();
             foreach (Label lLabel in new Label[] { accidentLabel, successLabel, successMessageLabel})
-                lTween.TweenProperty(lLabel, TweenProp.MODULATE_ALPHA, 0f, TRANSITION_DURATION / 2);
-            lTween.TweenProperty(this, nameof(TransitionCircleSize), 0f, TRANSITION_DURATION / 2);
+                lTween.TweenProperty(lLabel, TweenProp.MODULATE_ALPHA, 0f, TRANS_OUT_DURATION);
+            lTween.TweenProperty(this, nameof(TransitionCircleSize), 0f, TRANS_OUT_DURATION);
 
             lTween.TweenProperty(touchIcon, TweenProp.MODULATE_ALPHA, 0f, TOUCH_ICON_DELAY)
                 .Connect(
