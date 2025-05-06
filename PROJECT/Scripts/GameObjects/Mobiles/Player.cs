@@ -38,9 +38,9 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
             SignalBus.Instance.LevelCompleted += OnLevelComplete;
         }
 
-        protected override void OnAccident()
+        protected override void OnAccident(Mobile pDriver)
         {
-            base.OnAccident();
+            base.OnAccident(pDriver);
             DisconnectInputs();
             SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelHardFailed, T_KEY_ACCIDENT);
         }
@@ -64,8 +64,9 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
             InputManager.Instance.StoppedHolding -= OnInputRelease;
         }
 
-        public void Appear()
+        public override void Appear()
         {
+            base.Appear();
             if (!IsInstanceValid(appearAnimStartPos))
             {
                 ConnectInputs();

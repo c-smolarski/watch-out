@@ -9,12 +9,13 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
     public partial class Mobile : GameObject
     {
         #region Exports
-        [Export] private PathFollow2D pathFollow;
+        [Export] protected PathFollow2D pathFollow;
         [Export] private bool autoRestartOnEnd = true;
+        [Export] private bool animated = true;
         [ExportGroup("Physics")]
         [Export] private bool startAtMaxSpeed = default;
-        [Export] private float maxForwardSpeed = 750f;
-        [Export] private float maxBackwardSpeed= 250f;
+        [Export] protected float maxForwardSpeed = 750f;
+        [Export] private float maxBackwardSpeed = 250f;
         [Export] protected float TimeToMaxSpeed { get; private set; } = 1.5f;
         [Export] protected float EngineBrakeForce { get; private set; } = 0.1f;
         [Export] protected float ManualBrakeForce { get; private set; } = 0.015f;
@@ -24,7 +25,7 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
         public const float MIN_SPEED_THRESHOLD = 50f;
         private const float ACCEL_CURVE_POW = 1.5f;
         private const string POLYGONS_PATH = "polygons";
-        private const string EXHAUST_PARTICLES_PATH = "exhaustParticles";
+        private const string EXHAUST_PARTICLES_PATH = "Particles";
 
         public enum GearMode
         {
@@ -43,7 +44,7 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
         private Vector2 polygonsScale, lastPos;
         private GpuParticles2D exhaustParticels;
         private Node2D polygons;
-        private bool collisionsEnabled, resetStartAtMaxSpeed, animated = true;
+        private bool collisionsEnabled, resetStartAtMaxSpeed;
         private float elapsedTime, flutterTime, baseRotation, maxSpeed, brakeForce;
 
         public override void _Ready()
@@ -76,10 +77,13 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
             Speed = maxForwardSpeed;
             Direction *= -Mathf.Sign(MathS.Dot(VelocityDirection, (pArea.GlobalPosition - GlobalPosition).Normalized()));
             StartBraking(EmergencyBrakeForce);
-            OnAccident();
+            OnAccident((Mobile) pArea);
         }
 
-        protected virtual void OnAccident()
+        public virtual void Appear()
+        { }
+
+        protected virtual void OnAccident(Mobile pDriver)
         {
             animated = exhaustParticels.Emitting = false;
             polygons.Scale = polygonsScale;
@@ -135,14 +139,20 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
 
         private void Move(float pDelta)
         {
-            if (autoRestartOnEnd && !pathFollow.Loop && pathFollow.ProgressRatio >= 1)
-                StopAndReset();
-            else
-                pathFollow.Progress += Speed * Direction * pDelta;
+            if (!pathFollow.Loop && pathFollow.ProgressRatio >= 1)
+                OnReachPathEnd();
+
+            pathFollow.Progress += Speed * Direction * pDelta;
 
             lastPos = GlobalPosition;
             GlobalPosition = pathFollow.GlobalPosition;
             GlobalRotation = pathFollow.GlobalRotation - baseRotation;
+        }
+
+        protected virtual void OnReachPathEnd()
+        {
+            if(autoRestartOnEnd)
+                StopAndReset();
         }
 
         protected void StartBraking(float pForce)
@@ -166,7 +176,7 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
             Move(pDelta);
         }
 
-        private void StopMoving()
+        protected void StopMoving()
         {
             SelectedGearMode = GearMode.PARKED;
             Speed = Direction = default;

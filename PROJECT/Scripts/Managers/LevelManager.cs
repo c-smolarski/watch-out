@@ -34,7 +34,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         private void OnGameStart()
         {
             InputManager.Activated = true;
-            LoadLevel(1);
+            LoadLevel(2);
         }
 
         private void OnLevelComplete()

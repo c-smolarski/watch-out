@@ -1,23 +1,27 @@
 ﻿using Com.IsartDigital.OneButtonGame.GameObjects.Mobiles;
-using Com.IsartDigital.OneButtonGame.Managers;
 using Com.IsartDigital.Utils.Tweens;
 using Godot;
 using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.GameObjects
+namespace Com.IsartDigital.OneButtonGame.GameObjects.DriverDetectors
 {
-    public partial class Stop : DriverDetector
+    public partial class Stop : StoppingDetector
     {
-        [Signal] public delegate void DriverStoppedEventHandler();
+        #region Signals
         [Signal] public delegate void DriverSteppedOnLineEventHandler();
         [Signal] public delegate void DriverRunnedOverEventHandler();
+        #endregion
 
+        #region Exports
         [Export] private Area2D stopLine;
         [Export] private Polygon2D linePolygon;
+        [Export] private Node2D sign;
         [Export] private Polygon2D redSignBG;
+        #endregion
 
+        #region Consts
         private const string T_KEY_STEPPED_ON = "STOP_STEPPED_ON";
         private const string T_KEY_BACKED_ON = "STOP_BACKED_ON";
         private const string T_KEY_RUNNED_OVER = "STOP_RUNNED_OVER";
@@ -26,8 +30,13 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
         private const string SIGN_SHADER_ANGLE_PARAM = "angle";
         private const int SIGN_SHADER_ANGLE_MAX_VALUE = 360;
 
+        private const float ANIM_DEFAULT_DURATION = 0.25f;
+        private const float SUCCESS_ANIM_MULT = 1.3f;
+
         private const float STOP_TIME = 3f;
-        private const float STEP_ANIM_DURATION = 1f;
+        #endregion
+
+        protected override float StopTime => STOP_TIME;
 
         private float ShaderAlpha
         {
@@ -35,10 +44,8 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
             set => signShader.SetShaderParameter(SIGN_SHADER_ALPHA_PARAM, value);
         }
 
-        private float elapsedTime;
         private bool driverFinishedWaiting;
         private Tween shaderTween;
-        private Mobile driverWaiting;
         private ShaderMaterial signShader;
 
         public override void _Ready()
@@ -46,7 +53,6 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
             base._Ready();
             if (OnlyDetectsPlayer)
                 stopLine.CollisionLayer = stopLine.CollisionMask = Player.COLLISION_LAYER;
-            AreaExited += OnDriverLeavesStopArea;
             stopLine.AreaEntered += OnDriverStepsOnLine;
             stopLine.AreaExited += OnDriverLeavesLine;
             redSignBG.Material = signShader = (ShaderMaterial)redSignBG.Material.Duplicate();
@@ -56,22 +62,10 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
          * EVENTS METHODS
          */
 
-        protected override void OnHit(Area2D pArea)
+        protected override void OnDriverLeft(Mobile pDriver)
         {
-            base.OnHit(pArea);
-            if (pArea is not Mobile || driverWaiting != null)
-                return;
-            driverWaiting = (Mobile)pArea;
-            StartWaitTimer();
-        }
-
-        private void OnDriverLeavesStopArea(Area2D pArea)
-        {
-            if (pArea is not Mobile || pArea != driverWaiting)
-                return;
-            driverWaiting = null;
-            StopWaitTimer();
-            if (!pArea.OverlapsArea(stopLine))
+            base.OnDriverLeft(pDriver);
+            if (!pDriver.OverlapsArea(stopLine))
                 DriverStopsWaiting();
         }
 
@@ -85,13 +79,7 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
             {
                 EmitSignal(SignalName.DriverSteppedOnLine);
                 if(pArea is Player)
-                {
-                    StepAnim();
-                    if (lAreaGoingReverse)
-                        SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelSoftFailed, T_KEY_BACKED_ON);
-                    else
-                        SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelSoftFailed, T_KEY_STEPPED_ON);
-                }
+                    PlayerSteppedOnWrongObject(linePolygon, lAreaGoingReverse ? T_KEY_BACKED_ON : T_KEY_STEPPED_ON);
             }
         }
 
@@ -108,12 +96,32 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
                 {
                     EmitSignal(SignalName.DriverRunnedOver);
                     if (pArea is Player)
-                    {
-                        StepAnim();
-                        SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelSoftFailed, T_KEY_RUNNED_OVER);
-                    }
+                        PlayerSteppedOnWrongObject(linePolygon, T_KEY_RUNNED_OVER);
                 }
             }
+        }
+
+        /*
+         * TIMER METHODS
+         */
+
+        protected override void WaitTimerProgressed(float pElapsedTime)
+        {
+            base.WaitTimerProgressed(pElapsedTime);
+            signShader.SetShaderParameter(SIGN_SHADER_ANGLE_PARAM, pElapsedTime * SIGN_SHADER_ANGLE_MAX_VALUE / STOP_TIME);
+        }
+
+        protected override void WaitTimerCompleted()
+        {
+            base.WaitTimerCompleted();
+            driverFinishedWaiting = true;
+            SucessAnim();
+        }
+
+        protected override void WaitTimerStopped()
+        {
+            base.WaitTimerStopped();
+            ResetShaderValues();
         }
 
         /*
@@ -124,8 +132,19 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
         {
             driverFinishedWaiting = false;
             shaderTween = CreateTween();
-            shaderTween.TweenProperty(this, nameof(ShaderAlpha), 0f, 0.5f);
+            shaderTween.TweenProperty(this, nameof(ShaderAlpha), 0f, ANIM_DEFAULT_DURATION * 2f);
             shaderTween.Connect(Tween.SignalName.Finished, Callable.From(ResetShaderValues));
+        }
+
+        private void SucessAnim()
+        {
+            Tween lTween = CreateTween();
+            lTween.TweenProperty(sign, TweenProp.SCALE, sign.Scale * SUCCESS_ANIM_MULT, ANIM_DEFAULT_DURATION)
+                .SetTrans(Tween.TransitionType.Back)
+                .SetEase(Tween.EaseType.In);
+            lTween.TweenProperty(sign, TweenProp.SCALE, sign.Scale, ANIM_DEFAULT_DURATION * 2f)
+                .SetTrans(Tween.TransitionType.Bounce)
+                .SetEase(Tween.EaseType.Out);
         }
 
         private void ResetShaderValues()
@@ -139,47 +158,8 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects
             }
         }
 
-        private void StepAnim()
-        {
-            Tween lTween = CreateTween()
-                .SetTrans(Tween.TransitionType.Circ)
-                .SetEase(Tween.EaseType.Out);
-            lTween.TweenProperty(linePolygon, TweenProp.COLOR, Colors.DarkRed, STEP_ANIM_DURATION);
-        }
-
-        /*
-         * TIMER METHODS
-         */
-
-        private void StartWaitTimer()
-        {
-            doAction = WaitTimer;
-            if (elapsedTime != default)
-                elapsedTime = default;
-            ResetShaderValues();
-        }
-
-        private void WaitTimer(float pDelta)
-        {
-            elapsedTime += pDelta;
-            signShader.SetShaderParameter(SIGN_SHADER_ANGLE_PARAM, elapsedTime * SIGN_SHADER_ANGLE_MAX_VALUE / STOP_TIME);
-            if (elapsedTime > STOP_TIME)
-            {
-                driverFinishedWaiting = true;
-                EmitSignal(SignalName.DriverStopped);
-                StopWaitTimer();
-            }
-        }
-
-        private void StopWaitTimer()
-        {
-            doAction = null;
-            elapsedTime = default;
-        }
-
         protected override void Dispose(bool pDisposing)
         {
-            AreaExited -= OnDriverLeavesStopArea;
             if (IsInstanceValid(stopLine))
             {
                 stopLine.AreaEntered -= OnDriverStepsOnLine;

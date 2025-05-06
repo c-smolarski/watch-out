@@ -64,7 +64,7 @@ click={
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://Resources/Locaization/Translation.en.translation", "res://Resources/Locaization/Translation.fr.translation")
+locale/translations=PackedStringArray("res://Resources/Localization/Translation.en.translation", "res://Resources/Localization/Translation.fr.translation")
 
 [rendering]
 

@@ -6,4 +6,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>Com.IsartDigital.OneButtonGame</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\GameObjects\DriverDetectors\StoppingDetectors\" />
+  </ItemGroup>
 </Project>

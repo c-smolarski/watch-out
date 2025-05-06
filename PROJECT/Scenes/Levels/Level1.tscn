@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://cru5wgs3k3arj" path="res://Scenes/LevelTemplate.tscn" id="1_xy2ww"]
 [ext_resource type="PackedScene" uid="uid://bl7jw454koo84" path="res://Scenes/GameObjects/Stops/StopSign.tscn" id="2_hn6pu"]
-[ext_resource type="PackedScene" uid="uid://df4215fpxxyfq" path="res://Scenes/GameObjects/Mobiles/Player.tscn" id="2_hr8lp"]
-[ext_resource type="PackedScene" uid="uid://cu1jctaxsdr7v" path="res://Scenes/GameObjects/Mobiles/Car.tscn" id="3_jmgid"]
+[ext_resource type="PackedScene" uid="uid://df4215fpxxyfq" path="res://Scenes/GameObjects/Mobiles/Cars/Player.tscn" id="2_hr8lp"]
+[ext_resource type="PackedScene" uid="uid://cu1jctaxsdr7v" path="res://Scenes/GameObjects/Mobiles/Cars/Car.tscn" id="3_jmgid"]
 
 [sub_resource type="Curve2D" id="Curve2D_xwu57"]
 _data = {
@@ -28,11 +28,11 @@ Player = NodePath("GameObjects/Player")
 
 [node name="road" type="Node2D" parent="Assets" index="0"]
 
-[node name="Polygon2D" type="Polygon2D" parent="Assets/road" index="0"]
+[node name="RoadV" type="Polygon2D" parent="Assets/road" index="0"]
 color = Color(0.176419, 0.176419, 0.176419, 1)
 polygon = PackedVector2Array(-200, -200, -200, 1800, 200, 1800, 200, -200)
 
-[node name="Polygon2D2" type="Polygon2D" parent="Assets/road" index="1"]
+[node name="RoadH" type="Polygon2D" parent="Assets/road" index="1"]
 color = Color(0.176419, 0.176419, 0.176419, 1)
 polygon = PackedVector2Array(-4000, -600, -4000, -200, 4000, -200, 4000, -600)
 

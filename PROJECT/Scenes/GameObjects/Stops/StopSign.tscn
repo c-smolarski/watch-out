@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bl7jw454koo84"]
 
-[ext_resource type="Script" path="res://Scripts/GameObjects/DriverDetectors/Stop.cs" id="1_k5gux"]
+[ext_resource type="Script" path="res://Scripts/GameObjects/DriverDetectors/StoppingDetectors/Stop.cs" id="1_mg5d2"]
 [ext_resource type="FontFile" uid="uid://bt1wq1bv3boxj" path="res://Resources/Fonts/GonziExpanded.otf" id="2_2yifv"]
 [ext_resource type="Shader" uid="uid://c3tkylxr357wo" path="res://Resources/Shaders/StopRadial.tres" id="2_jyo5f"]
 [ext_resource type="Texture2D" uid="uid://bqy0hhg8vm17a" path="res://Assets/icon.svg" id="3_ks5cb"]
@@ -23,10 +23,11 @@ size = Vector2(200, 50)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mv27b"]
 size = Vector2(200, 100)
 
-[node name="StopSign" type="Area2D" node_paths=PackedStringArray("stopLine", "linePolygon", "redSignBG")]
-script = ExtResource("1_k5gux")
+[node name="StopSign" type="Area2D" node_paths=PackedStringArray("stopLine", "linePolygon", "sign", "redSignBG")]
+script = ExtResource("1_mg5d2")
 stopLine = NodePath("StopLineArea")
 linePolygon = NodePath("stopLine")
+sign = NodePath("sign")
 redSignBG = NodePath("sign/red")
 
 [node name="road" type="Node2D" parent="."]

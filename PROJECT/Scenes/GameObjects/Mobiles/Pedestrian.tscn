@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://pv2egy82ph3n"]
+
+[ext_resource type="PackedScene" uid="uid://bx6fqlpfkbitb" path="res://Scenes/GameObjects/Mobiles/MobileTemplate.tscn" id="1_o2rck"]
+[ext_resource type="Script" path="res://Scripts/GameObjects/Mobiles/Pedestrian.cs" id="2_vnpni"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r0lm1"]
+radius = 20.0
+
+[node name="Pedestrian" instance=ExtResource("1_o2rck")]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_vnpni")
+autoRestartOnEnd = false
+animated = false
+startAtMaxSpeed = true
+maxForwardSpeed = 250.0
+
+[node name="collider" type="CollisionShape2D" parent="." index="0"]
+shape = SubResource("CircleShape2D_r0lm1")
+disabled = true
+
+[node name="body" type="Polygon2D" parent="polygons" index="0"]
+scale = Vector2(0.5, 0.5)
+color = Color(0.0935223, 0.658762, 1, 1)
+polygon = PackedVector2Array(0, -40, 10, -39, 20, -35, 29, -28, 35, -20, 39, -10, 40, 0, 39, 11, 35, 20, 29, 28, 20, 35, 10, 39, 0, 40, -10, 39, -20, 35, -29, 28, -35, 20, -39, 10, -40, 0, -39, -10, -35, -20, -28, -29, -20, -35, -10, -39)
