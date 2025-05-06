@@ -9,6 +9,7 @@ namespace Com.IsartDigital.OneButtonGame
 {
     public partial class Level : Node2D
     {
+        [Export] public float AllocatedTime { get; private set; }
         [Export] public Player Player { get; private set; }
         [Export] private bool playerAutoAppear = true;
         [Export] private Area2D winArea;

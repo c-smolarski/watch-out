@@ -10,7 +10,8 @@ _data = {
 }
 point_count = 2
 
-[node name="LevelTemplate" node_paths=PackedStringArray("Player") instance=ExtResource("1_u07uo")]
+[node name="Level2" node_paths=PackedStringArray("Player") instance=ExtResource("1_u07uo")]
+AllocatedTime = 15.0
 Player = NodePath("GameObjects/Player")
 
 [node name="RoadV" type="Polygon2D" parent="Assets" index="0"]
@@ -28,9 +29,10 @@ width = 20.0
 
 [node name="Crossing" parent="GameObjects" index="0" instance=ExtResource("2_2m0mr")]
 
-[node name="Player" parent="GameObjects" index="1" node_paths=PackedStringArray("pathFollow") instance=ExtResource("3_suv11")]
+[node name="Player" parent="GameObjects" index="1" node_paths=PackedStringArray("appearAnimStartPos", "pathFollow") instance=ExtResource("3_suv11")]
 position = Vector2(100, 1000)
 rotation = -1.5708
+appearAnimStartPos = NodePath("../../Marker2D")
 pathFollow = NodePath("../../Paths/Path2D/PlayerPath")
 
 [node name="Path2D" type="Path2D" parent="Paths" index="0"]
