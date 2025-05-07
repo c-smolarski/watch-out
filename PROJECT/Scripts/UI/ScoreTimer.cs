@@ -1,4 +1,5 @@
 ﻿using Com.IsartDigital.OneButtonGame.Managers;
+using Com.IsartDigital.Utils.Tweens;
 using Godot;
 using System;
 
@@ -12,14 +13,17 @@ namespace Com.IsartDigital.OneButtonGame.UI
         [Export] private Label scoreLabel;
         [Export] private Panel scorePanel;
 
+        private const float APPEAR_DURATION = 1.5f;
         private const int START_SCORE = 5000;
         private const float SCORE_TIME_MULT = 0.75f;
+
         private const string PANEL_STYLEBOX = "panel";
         private const string STYLEBOX_COLOR = "bg_color";
         private const string SCORE_PREFIX = "0000";
 
+        public int CurrentScore { get; private set; }
+
         private bool active;
-        private int currentScore;
         private float totalTime, timeLeft;
 
         public override void _Ready()
@@ -27,6 +31,8 @@ namespace Com.IsartDigital.OneButtonGame.UI
             base._Ready();
             scorePanel.GetThemeStylebox(PANEL_STYLEBOX).Set(STYLEBOX_COLOR, RenderingServer.GetDefaultClearColor());
 
+            LevelManager.Instance.LevelLoaded += ResetTimer;
+            SignalBus.Instance.GameStarted += OnGameStarted;
             SignalBus.Instance.PlayerActivated += StartTimer;
             SignalBus.Instance.LevelCompleted += PauseTimer;
             SignalBus.Instance.Connect(
@@ -34,6 +40,13 @@ namespace Com.IsartDigital.OneButtonGame.UI
                 Callable.From((string pMessage) => PauseTimer()));
 
             scoreLabel.Text = START_SCORE.ToString();
+            Modulate = Colors.Transparent;
+        }
+
+        private void OnGameStarted()
+        {
+            Tween lTween = CreateTween();
+            lTween.TweenProperty(this, TweenProp.MODULATE, Colors.White, APPEAR_DURATION);
         }
 
         public override void _Process(double pDelta)
@@ -43,24 +56,23 @@ namespace Com.IsartDigital.OneButtonGame.UI
             {
                 timeLeft -= (float)pDelta;
                 if (timeLeft < 0)
-                    StopTimer();
+                    ResetTimer();
 
                 timerHand.Rotation = Mathf.Tau - (timeLeft * Mathf.Tau / totalTime);
                 if (timeLeft < totalTime * SCORE_TIME_MULT)
                 {
-                    currentScore = (int)(timeLeft * START_SCORE / (totalTime * SCORE_TIME_MULT));
-                    scoreLabel.Text = (SCORE_PREFIX + currentScore)[^4..];
+                    CurrentScore = (int)(timeLeft * START_SCORE / (totalTime * SCORE_TIME_MULT));
+                    scoreLabel.Text = (SCORE_PREFIX + CurrentScore)[^4..];
                 }
             }
         }
 
         private void StartTimer()
         {
-            StopTimer();
-            active = true;
+            ResetTimer();
             totalTime = timeLeft = LevelManager.CurrentLevel.AllocatedTime;
             timerHand.Rotation = default;
-            currentScore = START_SCORE;
+            active = true;
         }
 
         private void PauseTimer()
@@ -68,16 +80,19 @@ namespace Com.IsartDigital.OneButtonGame.UI
             active = false;
         }
 
-        private void StopTimer()
+        private void ResetTimer()
         {
             active = false;
             timerHand.Rotation = timeLeft = default;
+            scoreLabel.Text = (CurrentScore = START_SCORE).ToString();
         }
 
         protected override void Dispose(bool pDisposing)
         {
+            LevelManager.Instance.LevelLoaded -= ResetTimer;
+            SignalBus.Instance.GameStarted -= OnGameStarted;
             SignalBus.Instance.PlayerActivated -= StartTimer;
-            SignalBus.Instance.LevelCompleted -= StopTimer;
+            SignalBus.Instance.LevelCompleted -= ResetTimer;
             base.Dispose(pDisposing);
         }
     }

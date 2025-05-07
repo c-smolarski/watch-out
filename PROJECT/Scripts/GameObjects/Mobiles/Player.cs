@@ -52,7 +52,6 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
             inputConnected = true;
             InputManager.Instance.StartedHolding += OnInputHold;
             InputManager.Instance.StoppedHolding += OnInputRelease;
-            SignalBus.Instance.EmitSignal(SignalBus.SignalName.PlayerActivated);
         }
 
         private void DisconnectInputs()
@@ -80,7 +79,13 @@ namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
                 .SetEase(Tween.EaseType.Out);
             lTween.Connect(
                 Tween.SignalName.Finished,
-                Callable.From(ConnectInputs));
+                Callable.From(OnPlayerAppeared));
+        }
+
+        private void OnPlayerAppeared()
+        {
+            ConnectInputs();
+            SignalBus.Instance.EmitSignal(SignalBus.SignalName.PlayerActivated);
         }
 
         private void OnInputHold(int pNPrevTap)

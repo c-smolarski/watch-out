@@ -8,6 +8,8 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 {
     public partial class LevelManager : Node
     {
+        [Signal] public delegate void LevelLoadedEventHandler();
+
         public static LevelManager Instance { get; private set; }
         public static Level CurrentLevel { get; private set; }
 
@@ -34,7 +36,8 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         private void OnGameStart()
         {
             InputManager.Activated = true;
-            LoadLevel(2);
+            CurrentLevelNumber = default;
+            LoadNextLevel();
         }
 
         private void OnLevelComplete()
@@ -43,12 +46,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
                 return;
             isLoadingLevel = true;
 
-            UIManager.Instance.StartTransIn();
-            UIManager.Instance.Connect(
-                    UIManager.SignalName.TransOutStarted,
-                    transitionCallable = new Callable(
-                        this,
-                        CurrentLevel.SoftFailed ? MethodName.ReloadLevel : MethodName.LoadNextLevel));
+            UIManager.Instance.StartTransIn(CurrentLevel.SoftFailed ? ReloadLevel : LoadNextLevel);
         }
 
         private void OnLevelFail(string pFailMessage)
@@ -57,10 +55,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
                 return;
             isLoadingLevel = true;
 
-            UIManager.Instance.StartTransIn(true);
-            UIManager.Instance.Connect(
-                    UIManager.SignalName.TransOutStarted,
-                    transitionCallable = new Callable(this, MethodName.ReloadLevel));
+            UIManager.Instance.StartTransIn(ReloadLevel, true);
         }
 
         private void LoadNextLevel()
@@ -75,9 +70,6 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 
         private async void LoadLevel(int pLevelNumber)
         {
-            if (transitionCallable.Target != null && UIManager.Instance.IsConnected(UIManager.SignalName.TransOutStarted, transitionCallable))
-                UIManager.Instance.Disconnect(UIManager.SignalName.TransOutStarted, transitionCallable);
-
             if (CurrentLevel != null)
             {
                 CurrentLevel.QueueFree();
@@ -95,6 +87,8 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 
             CurrentLevelNumber = pLevelNumber;
             isLoadingLevel = false;
+
+            EmitSignal(SignalName.LevelLoaded);
         }
 
         protected override void Dispose(bool pDisposing)

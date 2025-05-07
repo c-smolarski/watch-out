@@ -11,14 +11,15 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 {
     public partial class UIManager : Node
     {
-        [Signal] public delegate void TransOutStartedEventHandler();
-
         [Export] private ColorRect transitionRect;
         [Export] private TouchIcon touchIcon;
+        [Export] private ScoreTimer scoreTimer;
         [ExportGroup("Transition Labels")]
         [Export] private Label accidentLabel;
+        [Export] private Control transLabelContainer;
         [Export] private Label successLabel;
         [Export] private Label successMessageLabel;
+        [Export] private Label scoreLabel;
         [ExportGroup("PackedScenes")]
         [Export] private PackedScene PackedManualDashboard;
         [Export] private PackedScene PackedElectricDashboard;
@@ -32,6 +33,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         private const string T_KEY_SUCCESS = "LABEL_SUCCESS";
         private const string T_KEY_FAILED = "LABEL_FAILED";
         private const string T_KEY_LEVEL_MESSAGE = "MESSAGE_LEVEL";
+        private const string SCORE_PREFIX = "SCORE : ";
 
         private const string RECT_VIEWPORT_SIZE_SHADER_PARAM = "viewportSize";
         private const string RECT_CIRCLE_RATIO_SHADER_PARAM = "circleRatio";
@@ -44,6 +46,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
         }
 
         private Control dashboard;
+        private Action transOutAction;
         private ShaderMaterial transRectShaderMat;
         private bool listeningTaps;
 
@@ -73,6 +76,12 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             {
                 listeningTaps = false;
                 StartTransOut();
+
+                if (transOutAction != null)
+                {
+                    transOutAction();
+                    transOutAction = null;
+                }
             }
         }
 
@@ -87,6 +96,8 @@ namespace Com.IsartDigital.OneButtonGame.Managers
                 successLabel.Text = Tr(T_KEY_SUCCESS);
                 successMessageLabel.Text = Tr(T_KEY_LEVEL_MESSAGE + (LevelManager.CurrentLevelNumber + 1));
             }
+
+            scoreLabel.Text = LevelManager.CurrentLevel.SoftFailed ? default : SCORE_PREFIX + scoreTimer.CurrentScore;
         }
 
         private void OnLevelSoftFail(string pTranslationKey)
@@ -114,7 +125,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             transRectShaderMat.SetShaderParameter(RECT_VIEWPORT_SIZE_SHADER_PARAM, GetViewport().GetVisibleRect().Size);
         }
 
-        public void StartTransIn(bool pHardFail = false)
+        public void StartTransIn(Action pActionOnOutStart = null, bool pHardFail = false)
         {
             Tween lTween = CreateTween()
                 .SetEase(Tween.EaseType.In)
@@ -126,10 +137,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             if (pHardFail)
                 lTween.TweenProperty(accidentLabel, TweenProp.MODULATE_ALPHA, 1f, TRANS_IN_DURATION).SetDelay(LABEL_DELAY);
             else
-            {
-                lTween.TweenProperty(successLabel, TweenProp.MODULATE_ALPHA, 1f, TRANS_IN_DURATION).SetDelay(LABEL_DELAY);
-                lTween.TweenProperty(successMessageLabel, TweenProp.MODULATE_ALPHA, 1f, TRANS_IN_DURATION).SetDelay(LABEL_DELAY);
-            }
+                lTween.TweenProperty(transLabelContainer, TweenProp.MODULATE_ALPHA, 1f, TRANS_IN_DURATION).SetDelay(LABEL_DELAY);
 
             lTween.TweenProperty(touchIcon, TweenProp.MODULATE_ALPHA, 1f, TOUCH_ICON_DELAY)
                 .SetDelay(LABEL_DELAY + TRANS_IN_DURATION)
@@ -140,6 +148,9 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             lTween.Connect(
                 Tween.SignalName.Finished,
                 Callable.From(OnTransInFinished));
+
+            if (pActionOnOutStart != null)
+                transOutAction = pActionOnOutStart;
         }
 
         private void OnTransInFinished()
@@ -149,11 +160,10 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 
         private void StartTransOut()
         {
-            EmitSignal(SignalName.TransOutStarted);
             Tween lTween = CreateTween()
                 .SetParallel();
-            foreach (Label lLabel in new Label[] { accidentLabel, successLabel, successMessageLabel})
-                lTween.TweenProperty(lLabel, TweenProp.MODULATE_ALPHA, 0f, TRANS_OUT_DURATION);
+            lTween.TweenProperty(accidentLabel, TweenProp.MODULATE_ALPHA, 0f, TRANS_OUT_DURATION);
+            lTween.TweenProperty(transLabelContainer, TweenProp.MODULATE_ALPHA, 0f, TRANS_OUT_DURATION);
             lTween.TweenProperty(this, nameof(TransitionCircleSize), 0f, TRANS_OUT_DURATION);
 
             lTween.TweenProperty(touchIcon, TweenProp.MODULATE_ALPHA, 0f, TOUCH_ICON_DELAY)

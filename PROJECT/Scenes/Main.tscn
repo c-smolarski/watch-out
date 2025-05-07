@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://d0c4suyvuber7"]
+[gd_scene load_steps=24 format=3 uid="uid://d0c4suyvuber7"]
 
 [ext_resource type="Script" path="res://Scripts/Managers/UIManager.cs" id="1_jr131"]
 [ext_resource type="Script" path="res://Scripts/Managers/GameManager.cs" id="1_uixe0"]
@@ -6,28 +6,15 @@
 [ext_resource type="PackedScene" uid="uid://baoq3l7ldkrru" path="res://Scenes/UI/Dashboard/ElectricDashboard.tscn" id="4_lheqa"]
 [ext_resource type="Shader" uid="uid://dut0gkibfdn7a" path="res://Resources/Shaders/TransitionRect.tres" id="5_qukli"]
 [ext_resource type="PackedScene" uid="uid://pv2egy82ph3n" path="res://Scenes/GameObjects/Mobiles/Pedestrian.tscn" id="5_ukjh1"]
-[ext_resource type="Shader" uid="uid://du26pnbn1rfks" path="res://Resources/Shaders/Background.tres" id="6_6ccwq"]
 [ext_resource type="Shader" path="res://Resources/Shaders/TransitionLabel.gdshader" id="6_ef20s"]
 [ext_resource type="PackedScene" uid="uid://tvfcp1usf1e3" path="res://Scenes/UI/ScoreTimer.tscn" id="6_lwkgc"]
-[ext_resource type="Texture2D" uid="uid://bqy0hhg8vm17a" path="res://Assets/icon.svg" id="7_5ryu6"]
 [ext_resource type="FontFile" uid="uid://cfcvv2m65kn8x" path="res://Resources/Fonts/dealerplate_california.otf" id="7_m041i"]
-[ext_resource type="Texture2D" uid="uid://bv0mw7ohqkv4m" path="res://Assets/UI/Background/backgroundSpritesheet.png" id="7_o7v0f"]
+[ext_resource type="PackedScene" uid="uid://dt2gvk56ve6e6" path="res://Scenes/UI/MainMenu.tscn" id="7_tnuc6"]
 [ext_resource type="Script" path="res://Scripts/Components/ResolutionRescaler.cs" id="8_lx12m"]
 [ext_resource type="Shader" path="res://Resources/Shaders/Wave.gdshader" id="8_qc7ey"]
 [ext_resource type="FontFile" uid="uid://bt1wq1bv3boxj" path="res://Resources/Fonts/GonziExpanded.otf" id="9_lp8ec"]
 [ext_resource type="FontFile" uid="uid://bg5g2r0po66u4" path="res://Resources/Fonts/GonziExpandedLight.otf" id="10_ypeor"]
 [ext_resource type="PackedScene" uid="uid://b3htajddkday5" path="res://Scenes/UI/TouchIcon.tscn" id="12_ak6xg"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bx8rv"]
-shader = ExtResource("6_6ccwq")
-shader_parameter/bgcolor = Color(0.803922, 0.803922, 0.803922, 1)
-shader_parameter/gridSize = 6.0
-shader_parameter/scrollspeed = 0.25
-shader_parameter/scrollAngle = -155.0
-shader_parameter/spritesheetSize = 4.0
-shader_parameter/spritesheeetV = true
-shader_parameter/alpha = 0.15
-shader_parameter/spritesheet = ExtResource("7_o7v0f")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4c8ru"]
 shader = ExtResource("5_qukli")
@@ -65,31 +52,32 @@ font = ExtResource("10_ypeor")
 font_size = 150
 font_color = Color(0, 0, 0, 1)
 
-[node name="Main" type="Node"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lp3ig"]
+shader = ExtResource("8_qc7ey")
+shader_parameter/height = 5.0
+shader_parameter/frequency = 40.0
+shader_parameter/speed = 1.5
 
-[node name="background" type="TextureRect" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_bx8rv")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1500.0
-offset_top = -1500.0
-offset_right = -100.0
-offset_bottom = -1060.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("7_5ryu6")
+[sub_resource type="LabelSettings" id="LabelSettings_hb757"]
+line_spacing = 5.0
+font = ExtResource("7_m041i")
+font_size = 150
+font_color = Color(0, 0, 0, 1)
+
+[node name="Main" type="Node"]
 
 [node name="Managers" type="Node" parent="."]
 
-[node name="UIManager" type="Node" parent="Managers" node_paths=PackedStringArray("transitionRect", "touchIcon", "accidentLabel", "successLabel", "successMessageLabel")]
+[node name="UIManager" type="Node" parent="Managers" node_paths=PackedStringArray("transitionRect", "touchIcon", "scoreTimer", "accidentLabel", "transLabelContainer", "successLabel", "successMessageLabel", "scoreLabel")]
 script = ExtResource("1_jr131")
 transitionRect = NodePath("../../CanvasLayer/TransitionContainer/TransitionRect")
 touchIcon = NodePath("../../CanvasLayer/TransitionContainer/TouchIcon")
+scoreTimer = NodePath("../../CanvasLayer/UIContainer/ScoreTimer")
 accidentLabel = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/accidentLabel")
+transLabelContainer = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels")
 successLabel = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels/successLabel")
 successMessageLabel = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels/transitionLabel")
+scoreLabel = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels/scoreLabel")
 PackedElectricDashboard = ExtResource("4_lheqa")
 
 [node name="LevelManager" type="Node" parent="Managers"]
@@ -114,6 +102,9 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ScoreTimer" parent="CanvasLayer/UIContainer" instance=ExtResource("6_lwkgc")]
+layout_mode = 1
+
+[node name="MainMenu" parent="CanvasLayer/UIContainer" instance=ExtResource("7_tnuc6")]
 layout_mode = 1
 
 [node name="TransitionContainer" type="Control" parent="CanvasLayer"]
@@ -168,6 +159,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="transitionLabels" type="Control" parent="CanvasLayer/TransitionContainer/LabelsContainer"]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -177,7 +169,6 @@ grow_vertical = 2
 pivot_offset = Vector2(800, 1280)
 
 [node name="successLabel" type="Label" parent="CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels"]
-modulate = Color(1, 1, 1, 0)
 material = SubResource("ShaderMaterial_04cgg")
 layout_mode = 1
 anchors_preset = 8
@@ -199,7 +190,6 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="transitionLabel" type="Label" parent="CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels"]
-modulate = Color(1, 1, 1, 0)
 material = SubResource("ShaderMaterial_04cgg")
 layout_mode = 1
 anchors_preset = 8
@@ -216,6 +206,27 @@ grow_vertical = 2
 pivot_offset = Vector2(700, 700)
 text = "Don't forget to stop before the stop line"
 label_settings = SubResource("LabelSettings_fhjl6")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="scoreLabel" type="Label" parent="CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels"]
+material = SubResource("ShaderMaterial_lp3ig")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -700.0
+offset_top = 787.0
+offset_right = 700.0
+offset_bottom = 1287.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(700, 250)
+text = "SCORE : 0000"
+label_settings = SubResource("LabelSettings_hb757")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3

@@ -15,7 +15,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 
         public static GameManager Instance { get; private set; }
 
-        public override void _Ready()
+        public override async void _Ready()
         {
             #region Singleton
             if (Instance != null)
@@ -26,6 +26,7 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             }
             Instance = this;
             #endregion
+            await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
             SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameStarted);
         }
 
