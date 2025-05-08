@@ -2,7 +2,7 @@
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.UI.DashboardElements.DashboardGauges
+namespace Com.IsartDigital.WatchOut.UI.DashboardElements.DashboardGauges
 {
     public partial class TachOMeter : DashboardGauge
     {

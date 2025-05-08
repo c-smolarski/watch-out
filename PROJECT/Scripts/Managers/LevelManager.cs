@@ -1,10 +1,10 @@
-﻿using Com.IsartDigital.OneButtonGame.Utils;
+﻿using Com.IsartDigital.WatchOut.Utils;
 using Godot;
 using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.Managers
+namespace Com.IsartDigital.WatchOut.Managers
 {
     public partial class LevelManager : Node
     {
@@ -35,9 +35,8 @@ namespace Com.IsartDigital.OneButtonGame.Managers
 
         private void OnGameStart()
         {
-            InputManager.Activated = true;
             CurrentLevelNumber = default;
-            LoadNextLevel();
+            LoadNextLevel(); 
         }
 
         private void OnLevelComplete()

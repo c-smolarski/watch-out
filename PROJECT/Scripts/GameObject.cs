@@ -3,7 +3,7 @@ using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame
+namespace Com.IsartDigital.WatchOut
 {
     public abstract partial class GameObject : Area2D
     {

@@ -1,9 +1,9 @@
-﻿using Com.IsartDigital.OneButtonGame.GameObjects;
+﻿using Com.IsartDigital.WatchOut.GameObjects;
 using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.UI.DashboardElements.GearIndicators
+namespace Com.IsartDigital.WatchOut.UI.DashboardElements.GearIndicators
 {
     public partial class GearModeIndicator : GearIndicator
     {

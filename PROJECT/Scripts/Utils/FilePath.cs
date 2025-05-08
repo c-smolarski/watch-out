@@ -3,7 +3,7 @@ using System;
 
 // Author : Camille SMOLARSKI
 
-namespace Com.IsartDigital.OneButtonGame.Utils
+namespace Com.IsartDigital.WatchOut.Utils
 {
     public static class FilePath
     {

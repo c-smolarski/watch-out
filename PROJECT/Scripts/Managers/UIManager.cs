@@ -1,13 +1,13 @@
-﻿using Com.IsartDigital.OneButtonGame.GameObjects.Mobiles;
-using Com.IsartDigital.OneButtonGame.UI;
-using Com.IsartDigital.OneButtonGame.Utils;
+﻿using Com.IsartDigital.WatchOut.GameObjects.Mobiles;
+using Com.IsartDigital.WatchOut.UI;
+using Com.IsartDigital.WatchOut.Utils;
 using Com.IsartDigital.Utils.Tweens;
 using Godot;
 using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.Managers
+namespace Com.IsartDigital.WatchOut.Managers
 {
     public partial class UIManager : Node
     {

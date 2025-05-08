@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.Components
+namespace Com.IsartDigital.WatchOut.Components
 {
 	public partial class ResolutionRescaler : Node
 	{

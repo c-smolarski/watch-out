@@ -1,13 +1,13 @@
-﻿using Com.IsartDigital.OneButtonGame.GameObjects.DriverDetectors;
-using Com.IsartDigital.OneButtonGame.Managers;
-using Com.IsartDigital.OneButtonGame.Utils;
+﻿using Com.IsartDigital.WatchOut.GameObjects.DriverDetectors;
+using Com.IsartDigital.WatchOut.Managers;
+using Com.IsartDigital.WatchOut.Utils;
 using Com.IsartDigital.Utils.Tweens;
 using Godot;
 using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.GameObjects.Mobiles
+namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
 {
     public partial class Pedestrian : Mobile
     {

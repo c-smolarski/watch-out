@@ -1,4 +1,4 @@
-﻿using Com.IsartDigital.OneButtonGame.GameObjects.Mobiles;
+﻿using Com.IsartDigital.WatchOut.GameObjects.Mobiles;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.GameObjects.DriverDetectors
+namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
 {
     public partial class Crossing : StoppingDetector
     {

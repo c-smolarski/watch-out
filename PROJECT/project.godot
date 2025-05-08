@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="OneButtonGame"
+config/name="WatchOut"
 run/main_scene="res://Scenes/Main.tscn"
 config/features=PackedStringArray("4.2", "C#", "Mobile")
 run/max_fps=60
@@ -32,7 +32,7 @@ window/handheld/orientation=1
 
 [dotnet]
 
-project/assembly_name="OneButtonGame"
+project/assembly_name="WatchOut"
 
 [file_customization]
 

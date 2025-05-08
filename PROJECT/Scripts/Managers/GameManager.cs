@@ -1,21 +1,29 @@
-﻿using Godot;
+﻿using Com.IsartDigital.Utils;
+using Com.IsartDigital.Utils.Effects;
+using Com.IsartDigital.WatchOut.Enums;
+using Godot;
 using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.Managers
+namespace Com.IsartDigital.WatchOut.Managers
 {
     public partial class GameManager : Node
     {
         [ExportGroup("Nodes")]
         [Export] public Node2D GameContainer { get; private set; }
         [Export] public Control UIContainer { get; private set; }
+        [Export] private Control mainMenu;
+        [ExportSubgroup("Shaker")]
+        [Export] private Shaker lightShaker;
+        [Export] private Shaker midShaker;
+        [Export] private Shaker strongShaker;
         [ExportGroup("PackedScenes")]
         [Export] public PackedScene PackedPedestrian { get; private set; }
 
         public static GameManager Instance { get; private set; }
 
-        public override async void _Ready()
+        public override void _Ready()
         {
             #region Singleton
             if (Instance != null)
@@ -26,8 +34,37 @@ namespace Com.IsartDigital.OneButtonGame.Managers
             }
             Instance = this;
             #endregion
-            await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-            SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameStarted);
+            OS.RequestPermissions();
+            SignalBus.Instance.GameStarted += OnGameStart;
+        }
+
+        private void OnGameStart()
+        {
+            mainMenu?.QueueFree();
+        }
+
+        public static void ShakeCamera(ScreenShakeForce pShakeForce)
+        {
+            switch (pShakeForce)
+            {
+                case ScreenShakeForce.LIGHT:
+                    Vibrate(VibrationDuration.SHORT);
+                    Instance.lightShaker.Start();
+                    break;
+                case ScreenShakeForce.MEDIUM:
+                    Vibrate(VibrationDuration.MID);
+                    Instance.midShaker.Start();
+                    break;
+                case ScreenShakeForce.STRONG:
+                    Vibrate(VibrationDuration.LONG);
+                    Instance.strongShaker.Start();
+                    break;
+            }
+        }
+
+        public static void Vibrate(VibrationDuration pVibration)
+        {
+            Input.VibrateHandheld((int)pVibration);
         }
 
         protected override void Dispose(bool pDisposing)

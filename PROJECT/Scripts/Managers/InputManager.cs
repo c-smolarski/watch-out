@@ -3,7 +3,7 @@ using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.Managers
+namespace Com.IsartDigital.WatchOut.Managers
 {
     public partial class InputManager : Node
     {

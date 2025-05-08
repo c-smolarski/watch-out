@@ -11,7 +11,7 @@ _data = {
 point_count = 2
 
 [node name="Level2" node_paths=PackedStringArray("Player") instance=ExtResource("1_u07uo")]
-AllocatedTime = 15.0
+AllocatedTime = 18.0
 Player = NodePath("GameObjects/Player")
 
 [node name="RoadV" type="Polygon2D" parent="Assets" index="0"]

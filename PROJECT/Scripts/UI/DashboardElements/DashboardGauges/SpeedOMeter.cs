@@ -1,10 +1,10 @@
-﻿using Com.IsartDigital.OneButtonGame.GameObjects;
+﻿using Com.IsartDigital.WatchOut.GameObjects;
 using Godot;
 using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.UI.DashboardElements.DashboardGauges
+namespace Com.IsartDigital.WatchOut.UI.DashboardElements.DashboardGauges
 {
     public partial class SpeedOMeter : DashboardGauge
     {

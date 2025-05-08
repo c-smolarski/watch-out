@@ -1,10 +1,10 @@
-﻿using Com.IsartDigital.OneButtonGame.GameObjects.Mobiles;
+﻿using Com.IsartDigital.WatchOut.GameObjects.Mobiles;
 using Godot;
 using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.GameObjects
+namespace Com.IsartDigital.WatchOut.GameObjects
 {
     public partial class DriverDetector : GameObject
     {

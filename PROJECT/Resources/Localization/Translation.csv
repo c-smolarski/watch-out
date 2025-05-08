@@ -1,8 +1,10 @@
 ﻿keys;en;fr
-LABEL_SUCCESS;Great job!;Bravo!
+LABEL_WELCOME;Get ready!;Faites chauffer le moteur !
+LABEL_SUCCESS;Great job!;Bravo !
 LABEL_FAILED;Try again…;Essaye encore…
 MESSAGE_ACCIDENT;"W a t c h
 o u t !";A t t e n t i o n !
+FIRST_MESSAGE;Let's start with the basics…;Commençons par les bases…
 CROSSING_STOPPED_ON;Stopping on zebra lines is prohibited.;Il est interdit de s'arrêter sur un passage piéton.
 CROSSING_PEDESTRIAN_WALKING;You have to wait for pedestrians to finish crossing.;Tu dois attendre que les piétons aient fini de traverser avant de passer.
 STOP_STEPPED_ON;Don't forget to stop before the stop line.;N'oublie pas de t'arrêter avant la ligne d'un stop

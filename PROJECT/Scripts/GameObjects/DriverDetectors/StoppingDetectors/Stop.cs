@@ -1,11 +1,11 @@
-﻿using Com.IsartDigital.OneButtonGame.GameObjects.Mobiles;
+﻿using Com.IsartDigital.WatchOut.GameObjects.Mobiles;
 using Com.IsartDigital.Utils.Tweens;
 using Godot;
 using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.GameObjects.DriverDetectors
+namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
 {
     public partial class Stop : StoppingDetector
     {

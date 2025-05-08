@@ -3,7 +3,7 @@ using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.UI
+namespace Com.IsartDigital.WatchOut.UI
 {
     public abstract partial class GearIndicator : DashboardElement
     {

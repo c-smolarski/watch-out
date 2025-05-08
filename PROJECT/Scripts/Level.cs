@@ -1,11 +1,11 @@
-﻿using Com.IsartDigital.OneButtonGame.GameObjects.Mobiles;
-using Com.IsartDigital.OneButtonGame.Managers;
+﻿using Com.IsartDigital.WatchOut.GameObjects.Mobiles;
+using Com.IsartDigital.WatchOut.Managers;
 using Godot;
 using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame
+namespace Com.IsartDigital.WatchOut
 {
     public partial class Level : Node2D
     {

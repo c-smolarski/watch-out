@@ -1,10 +1,10 @@
-﻿using Com.IsartDigital.OneButtonGame.Managers;
+﻿using Com.IsartDigital.WatchOut.Managers;
 using Godot;
 using System;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.OneButtonGame.Components
+namespace Com.IsartDigital.WatchOut.Components
 {
     //Button is only a rectangle. This, paired with a CollisionPolygon can be any shape.
     public partial class ClickableArea : Area2D

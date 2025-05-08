@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://d0c4suyvuber7"]
+[gd_scene load_steps=25 format=3 uid="uid://d0c4suyvuber7"]
 
 [ext_resource type="Script" path="res://Scripts/Managers/UIManager.cs" id="1_jr131"]
 [ext_resource type="Script" path="res://Scripts/Managers/GameManager.cs" id="1_uixe0"]
@@ -15,6 +15,7 @@
 [ext_resource type="FontFile" uid="uid://bt1wq1bv3boxj" path="res://Resources/Fonts/GonziExpanded.otf" id="9_lp8ec"]
 [ext_resource type="FontFile" uid="uid://bg5g2r0po66u4" path="res://Resources/Fonts/GonziExpandedLight.otf" id="10_ypeor"]
 [ext_resource type="PackedScene" uid="uid://b3htajddkday5" path="res://Scenes/UI/TouchIcon.tscn" id="12_ak6xg"]
+[ext_resource type="PackedScene" uid="uid://du0cl7xgfhbkh" path="res://Scenes/Utils/shaker.tscn" id="16_br75i"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4c8ru"]
 shader = ExtResource("5_qukli")
@@ -83,10 +84,11 @@ PackedElectricDashboard = ExtResource("4_lheqa")
 [node name="LevelManager" type="Node" parent="Managers"]
 script = ExtResource("4_183ov")
 
-[node name="GameManager" type="Node" parent="Managers" node_paths=PackedStringArray("GameContainer", "UIContainer")]
+[node name="GameManager" type="Node" parent="Managers" node_paths=PackedStringArray("GameContainer", "UIContainer", "mainMenu")]
 script = ExtResource("1_uixe0")
 GameContainer = NodePath("../../GameContainer")
 UIContainer = NodePath("../../CanvasLayer/UIContainer")
+mainMenu = NodePath("../../CanvasLayer/UIContainer/MainMenu")
 PackedPedestrian = ExtResource("5_ukjh1")
 
 [node name="GameContainer" type="Node2D" parent="."]
@@ -103,6 +105,7 @@ grow_vertical = 2
 
 [node name="ScoreTimer" parent="CanvasLayer/UIContainer" instance=ExtResource("6_lwkgc")]
 layout_mode = 1
+mouse_filter = 2
 
 [node name="MainMenu" parent="CanvasLayer/UIContainer" instance=ExtResource("7_tnuc6")]
 layout_mode = 1
@@ -115,6 +118,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(800, 1280)
+mouse_filter = 2
 
 [node name="TransitionRect" type="ColorRect" parent="CanvasLayer/TransitionContainer"]
 material = SubResource("ShaderMaterial_4c8ru")
@@ -125,6 +129,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(800, 1280)
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="LabelsContainer" type="Control" parent="CanvasLayer/TransitionContainer"]
@@ -136,6 +141,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="accidentLabel" type="Label" parent="CanvasLayer/TransitionContainer/LabelsContainer"]
 modulate = Color(1, 1, 1, 0)
@@ -167,6 +173,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(800, 1280)
+mouse_filter = 2
 
 [node name="successLabel" type="Label" parent="CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels"]
 material = SubResource("ShaderMaterial_04cgg")
@@ -183,7 +190,7 @@ offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(700, 500)
-text = "Try again..."
+text = "LABEL_WELCOME"
 label_settings = SubResource("LabelSettings_bmwtv")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -204,7 +211,7 @@ offset_bottom = 920.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(700, 700)
-text = "Don't forget to stop before the stop line"
+text = "FIRST_MESSAGE"
 label_settings = SubResource("LabelSettings_fhjl6")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -225,7 +232,6 @@ offset_bottom = 1287.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(700, 250)
-text = "SCORE : 0000"
 label_settings = SubResource("LabelSettings_hb757")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -252,5 +258,14 @@ offset_bottom = -350.0
 grow_horizontal = 0
 grow_vertical = 0
 scale = Vector2(0.8, 0.8)
+mouse_filter = 2
+
+[node name="Shakers" type="Node" parent="."]
+
+[node name="lightShaker" parent="Shakers" instance=ExtResource("16_br75i")]
+
+[node name="midShaker" parent="Shakers" instance=ExtResource("16_br75i")]
+
+[node name="strongShaker" parent="Shakers" instance=ExtResource("16_br75i")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
