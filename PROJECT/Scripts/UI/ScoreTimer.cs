@@ -2,6 +2,7 @@
 using Com.IsartDigital.Utils.Tweens;
 using Godot;
 using System;
+using Com.IsartDigital.WatchOut.GameObjects.Mobiles;
 
 // Author : Camille Smolarski
 
@@ -31,22 +32,34 @@ namespace Com.IsartDigital.WatchOut.UI
             base._Ready();
             scorePanel.GetThemeStylebox(PANEL_STYLEBOX).Set(STYLEBOX_COLOR, RenderingServer.GetDefaultClearColor());
 
-            LevelManager.Instance.LevelLoaded += ResetTimer;
-            SignalBus.Instance.GameStarted += OnGameStarted;
-            SignalBus.Instance.PlayerActivated += StartTimer;
+            LevelManager.Instance.LevelLoaded += OnLevelLoad;
+            SignalBus.Instance.PlayerAppearing += OnPlayerAppear;
+            SignalBus.Instance.PlayerActivated += OnPlayerActive;
             SignalBus.Instance.LevelCompleted += PauseTimer;
             SignalBus.Instance.Connect(
                 SignalBus.SignalName.LevelHardFailed,
                 Callable.From((string pMessage) => PauseTimer()));
 
             scoreLabel.Text = START_SCORE.ToString();
-            Modulate = Colors.Transparent;
         }
 
-        private void OnGameStarted()
+        private void OnLevelLoad()
+        {
+            ResetTimer();
+            Modulate = Colors.Transparent;
+            Visible = LevelManager.CurrentLevel.AllocatedTime != default;
+        }
+
+        private void OnPlayerAppear()
         {
             Tween lTween = CreateTween();
-            lTween.TweenProperty(this, TweenProp.MODULATE, Colors.White, APPEAR_DURATION);
+            lTween.TweenProperty(this, TweenProp.MODULATE, Colors.White, Player.APPEAR_FADE_DURATION);
+        }
+
+        private void OnPlayerActive()
+        {
+            if (Visible)
+                StartTimer();
         }
 
         public override void _Process(double pDelta)
@@ -89,9 +102,9 @@ namespace Com.IsartDigital.WatchOut.UI
 
         protected override void Dispose(bool pDisposing)
         {
-            LevelManager.Instance.LevelLoaded -= ResetTimer;
-            SignalBus.Instance.GameStarted -= OnGameStarted;
-            SignalBus.Instance.PlayerActivated -= StartTimer;
+            LevelManager.Instance.LevelLoaded -= OnLevelLoad;
+            SignalBus.Instance.PlayerAppearing -= OnPlayerAppear;
+            SignalBus.Instance.PlayerActivated -= OnPlayerActive;
             SignalBus.Instance.LevelCompleted -= ResetTimer;
             base.Dispose(pDisposing);
         }

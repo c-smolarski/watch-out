@@ -89,7 +89,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects
             polygons.Scale = polygonsScale;
         }
 
-        public void StartMovingForward()
+        protected void StartMovingForward()
         {
             StartMoving(GearMode.DRIVE);
         }
@@ -99,7 +99,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects
             StartMoving(GearMode.REVERSE);
         }
 
-        private void StartMoving(GearMode pDirection)
+        protected virtual void StartMoving(GearMode pDirection)
         {
             if (pDirection != GearMode.DRIVE && pDirection != GearMode.REVERSE)
                 throw new Exception("Invalid direction.");
@@ -109,6 +109,9 @@ namespace Com.IsartDigital.WatchOut.GameObjects
 
             Direction = (int)(SelectedGearMode = pDirection);
             maxSpeed = SelectedGearMode == GearMode.DRIVE ? maxForwardSpeed : maxBackwardSpeed;
+
+            if (Speed < MIN_SPEED_THRESHOLD)
+                Speed = MIN_SPEED_THRESHOLD;
 
             if (startAtMaxSpeed)
             {

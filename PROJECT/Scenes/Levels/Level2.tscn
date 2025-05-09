@@ -6,7 +6,7 @@
 
 [sub_resource type="Curve2D" id="Curve2D_27yuw"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 100, 1000, 0, 0, 0, 0, 100, -1000)
+"points": PackedVector2Array(0, 0, 0, 0, 100, 1000, 0, 0, 0, 0, 100, -1700)
 }
 point_count = 2
 
@@ -44,10 +44,7 @@ rotation = -1.5708
 loop = false
 
 [node name="LevelEnd" parent="." index="3"]
-position = Vector2(0, -328)
-
-[node name="collider" parent="LevelEnd" index="0"]
-position = Vector2(100, -400)
+position = Vector2(100, -750)
 
 [node name="Marker2D" type="Marker2D" parent="." index="4"]
 position = Vector2(100, 1600)

@@ -1,0 +1,88 @@
+[gd_scene load_steps=10 format=3 uid="uid://bjb3tgt7q5rdl"]
+
+[ext_resource type="PackedScene" uid="uid://cru5wgs3k3arj" path="res://Scenes/LevelTemplate.tscn" id="1_i7xp5"]
+[ext_resource type="PackedScene" uid="uid://df4215fpxxyfq" path="res://Scenes/GameObjects/Mobiles/Cars/Player.tscn" id="2_ktacd"]
+[ext_resource type="PackedScene" uid="uid://b3htajddkday5" path="res://Scenes/UI/TouchIcon.tscn" id="3_njaum"]
+[ext_resource type="Shader" path="res://Resources/Shaders/Wave.gdshader" id="4_5fg2q"]
+[ext_resource type="FontFile" uid="uid://bt1wq1bv3boxj" path="res://Resources/Fonts/GonziExpanded.otf" id="5_2ge7o"]
+[ext_resource type="Script" path="res://Scripts/Components/ResolutionRescaler.cs" id="6_rbpjb"]
+
+[sub_resource type="Curve2D" id="Curve2D_nng08"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 100, 1000, 0, 0, 0, 0, 100, -1700)
+}
+point_count = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8a65y"]
+shader = ExtResource("4_5fg2q")
+shader_parameter/height = 3.0
+shader_parameter/frequency = 20.0
+shader_parameter/speed = 3.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_6j27w"]
+font = ExtResource("5_2ge7o")
+font_size = 110
+font_color = Color(0.176471, 0.176471, 0.176471, 1)
+
+[node name="FTUE1" node_paths=PackedStringArray("Player") instance=ExtResource("1_i7xp5")]
+Player = NodePath("GameObjects/Player")
+
+[node name="RoadV" type="Polygon2D" parent="Assets" index="0"]
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-200, -1800, -200, 1800, 200, 1800, 200, -1800)
+
+[node name="Line" type="Line2D" parent="Assets" index="1"]
+points = PackedVector2Array(0, -1800, 0, 1800)
+width = 20.0
+
+[node name="Player" parent="GameObjects" index="0" node_paths=PackedStringArray("appearAnimStartPos", "pathFollow") instance=ExtResource("2_ktacd")]
+position = Vector2(100, 1000)
+rotation = -1.5708
+appearAnimStartPos = NodePath("../../Marker2D")
+pathFollow = NodePath("../../Paths/Path2D/PlayerPath")
+
+[node name="Path2D" type="Path2D" parent="Paths" index="0"]
+curve = SubResource("Curve2D_nng08")
+
+[node name="PlayerPath" type="PathFollow2D" parent="Paths/Path2D" index="0"]
+position = Vector2(100, 1000)
+rotation = -1.5708
+loop = false
+
+[node name="LevelEnd" parent="." index="3"]
+position = Vector2(100, -750)
+
+[node name="Marker2D" type="Marker2D" parent="." index="4"]
+position = Vector2(100, 1600)
+
+[node name="Control" type="Control" parent="." index="5"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="TouchIcon" parent="Control" index="0" instance=ExtResource("3_njaum")]
+offset_left = 300.0
+offset_top = -700.0
+offset_right = 300.0
+offset_bottom = -700.0
+startAnim = 2
+startAnimLoopTime = 1.0
+
+[node name="Label" type="Label" parent="Control/TouchIcon" index="4"]
+material = SubResource("ShaderMaterial_8a65y")
+layout_mode = 0
+offset_left = 15.0
+offset_top = 400.0
+offset_right = 390.0
+offset_bottom = 800.0
+text = "GAS !
+GAS !
+GAS !"
+label_settings = SubResource("LabelSettings_6j27w")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResolutionRescaler" type="Node" parent="." index="6" node_paths=PackedStringArray("targets")]
+script = ExtResource("6_rbpjb")
+targets = [NodePath("../Control/TouchIcon")]
+baseResolution = Vector2(1600, 2560)
+mode = 1

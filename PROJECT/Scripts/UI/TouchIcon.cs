@@ -9,6 +9,8 @@ namespace Com.IsartDigital.WatchOut.UI
     {
         [Export] private Polygon2D handPolygon;
         [Export] private AnimationPlayer animPlayer;
+        [Export] private TouchAnim startAnim;
+        [Export] private float startAnimLoopTime = -1;
 
         public bool Playing => PlayingAnimation != null;
         public TouchAnim? PlayingAnimation { get; private set; }
@@ -35,6 +37,8 @@ namespace Com.IsartDigital.WatchOut.UI
             handPolygon.Color = RenderingServer.Singleton.GetDefaultClearColor();
             resetValuesCallable = new Callable(this, MethodName.ResetValues);
             loopAnimCallable = new Callable(this, MethodName.LoopAnim);
+            if (startAnim != default)
+                Play(startAnim, startAnimLoopTime < 0 ? null : startAnimLoopTime);
         }
 
         public void Play(TouchAnim pAnim, float? pSecBetweenLoops = null)
@@ -102,7 +106,8 @@ namespace Com.IsartDigital.WatchOut.UI
 
         protected override void Dispose(bool pDisposing)
         {
-            Stop();
+            if (IsInstanceValid(animPlayer))
+                Stop();
             base.Dispose(pDisposing);
         }
     }

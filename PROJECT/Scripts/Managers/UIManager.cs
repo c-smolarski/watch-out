@@ -107,6 +107,7 @@ namespace Com.IsartDigital.WatchOut.Managers
                 successMessageLabel.Text = Tr(T_KEY_LEVEL_MESSAGE + (LevelManager.CurrentLevelNumber + 1));
             }
 
+            scoreLabel.Visible = scoreTimer.Visible;
             scoreLabel.Text = LevelManager.CurrentLevel.SoftFailed ? default : SCORE_PREFIX + scoreTimer.CurrentScore;
         }
 
@@ -168,6 +169,7 @@ namespace Com.IsartDigital.WatchOut.Managers
         private void OnTransInFinished()
         {
             listeningTaps = true;
+            currentTrans = null;
         }
 
         private void StartTransOut()

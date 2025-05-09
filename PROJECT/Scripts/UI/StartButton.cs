@@ -44,6 +44,8 @@ namespace Com.IsartDigital.WatchOut.Scripts.UI
 
         private void OnPressed()
         {
+            Disabled = true;
+
             float lHMargin = (float)styleBox.Get(CORNER_RADIUS);
 
             Tween lTween = CreateTween()

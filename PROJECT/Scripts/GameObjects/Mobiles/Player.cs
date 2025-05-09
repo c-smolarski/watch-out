@@ -14,7 +14,9 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
 
         [Export] private Marker2D appearAnimStartPos;
         [Export] public GearBoxType GearBox { get; private set; } = GearBoxType.ELECTRIC;
+        [Export] private bool stopOnLevelEnd;
 
+        public const float APPEAR_FADE_DURATION = 1.5f;
         public const uint COLLISION_LAYER = 2;
         private const string T_KEY_ACCIDENT = "MESSAGE_ACCIDENT";
 
@@ -36,6 +38,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
         public override void _Ready()
         {
             base._Ready();
+            Visible = false;
             SignalBus.Instance.LevelCompleted += OnLevelComplete;
         }
 
@@ -71,6 +74,10 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
         public override void Appear()
         {
             base.Appear();
+
+            Visible = true;
+            SignalBus.Instance.EmitSignal(SignalBus.SignalName.PlayerAppearing);
+
             if (!IsInstanceValid(appearAnimStartPos))
             {
                 OnPlayerAppeared();
@@ -78,13 +85,13 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
             }
 
             Tween lTween = CreateTween();
-            lTween.TweenProperty(this, TweenProp.GLOBAL_POSITION, GlobalPosition, 1.5f)
-                .From(appearAnimStartPos.GlobalPosition)
+            lTween.TweenProperty(this, TweenProp.GLOBAL_POSITION, GlobalPosition, APPEAR_FADE_DURATION)
                 .SetTrans(Tween.TransitionType.Quad)
                 .SetEase(Tween.EaseType.Out);
             lTween.Connect(
                 Tween.SignalName.Finished,
                 Callable.From(OnPlayerAppeared));
+            GlobalPosition = appearAnimStartPos.GlobalPosition;
         }
 
         private void OnPlayerAppeared()
@@ -112,7 +119,8 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
         private void OnLevelComplete()
         {
             DisconnectInputs();
-            StartMovingForward();
+            if (!stopOnLevelEnd)
+                StartMovingForward();
         }
 
         protected override void Dispose(bool pDisposing)

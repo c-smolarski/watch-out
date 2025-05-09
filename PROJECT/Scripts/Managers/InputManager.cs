@@ -12,7 +12,7 @@ namespace Com.IsartDigital.WatchOut.Managers
         [Signal] public delegate void StoppedHoldingEventHandler();
 
         public const string CLICK = "click";
-        private const float TAP_THRESHOLD = 0.15f;
+        private const float TAP_THRESHOLD = 0.3f;
 
         public static InputManager Instance { get; private set; }
         public static bool Holding { get; private set; } = false;

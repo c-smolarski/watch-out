@@ -17,8 +17,8 @@ position = Vector2(0, -175)
 [node name="line" parent="." index="2"]
 position = Vector2(-100, 50)
 
-[node name="StopLineArea" parent="." index="3"]
-position = Vector2(0, -175)
-
 [node name="Crossing" parent="." index="4" instance=ExtResource("2_2041n")]
 position = Vector2(-100, -100)
+
+[node name="StopLineArea" parent="." index="5"]
+position = Vector2(0, -175)
