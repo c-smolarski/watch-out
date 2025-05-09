@@ -1,17 +1,24 @@
-[gd_scene load_steps=28 format=3 uid="uid://dt2gvk56ve6e6"]
+[gd_scene load_steps=41 format=3 uid="uid://dt2gvk56ve6e6"]
 
 [ext_resource type="Shader" uid="uid://du26pnbn1rfks" path="res://Resources/Shaders/Background.tres" id="1_u2r1q"]
 [ext_resource type="Texture2D" uid="uid://bv0mw7ohqkv4m" path="res://Assets/UI/MainMenu/backgroundSpritesheet.png" id="2_1e1mp"]
 [ext_resource type="Texture2D" uid="uid://bqy0hhg8vm17a" path="res://Assets/icon.svg" id="3_p8221"]
-[ext_resource type="Script" path="res://Scripts/UI/CarLogo.cs" id="4_2iwth"]
+[ext_resource type="Script" path="res://Scripts/UI/TitleElements/CarLogo.cs" id="4_2iwth"]
 [ext_resource type="Texture2D" uid="uid://b1upmt7jmq7gd" path="res://Assets/UI/MainMenu/tire.png" id="4_4ti7i"]
+[ext_resource type="Script" path="res://Scripts/UI/TitleElements/WatchSign.cs" id="4_7d5v7"]
 [ext_resource type="Texture2D" uid="uid://br2hfebwco4ya" path="res://Assets/Particles/smoke_spritesheet.png" id="4_h2tnu"]
+[ext_resource type="FontFile" uid="uid://cfcvv2m65kn8x" path="res://Resources/Fonts/dealerplate_california.otf" id="4_jb4xn"]
+[ext_resource type="FontFile" uid="uid://bt1wq1bv3boxj" path="res://Resources/Fonts/GonziExpanded.otf" id="5_5frha"]
 [ext_resource type="Shader" path="res://Resources/Shaders/Wave.gdshader" id="7_brrh5"]
 [ext_resource type="Script" path="res://Scripts/UI/StartButton.cs" id="8_i036j"]
 [ext_resource type="Texture2D" uid="uid://dspt5idtdfqp2" path="res://Assets/UI/MainMenu/play.png" id="9_dophp"]
 [ext_resource type="Texture2D" uid="uid://ddo5bdnhosulr" path="res://Assets/UI/MainMenu/Flags/fr.png" id="10_d56kb"]
 [ext_resource type="PackedScene" uid="uid://du0cl7xgfhbkh" path="res://Scenes/Utils/shaker.tscn" id="10_jwx36"]
+[ext_resource type="Script" path="res://Scripts/UI/TextureSwitchingButtons/LanguageButton.cs" id="11_0uf1m"]
 [ext_resource type="Texture2D" uid="uid://d04amx7tnh3f8" path="res://Assets/UI/MainMenu/Volume/sound_on.png" id="11_44ean"]
+[ext_resource type="Texture2D" uid="uid://chb1ex26besg7" path="res://Assets/UI/MainMenu/Flags/en.png" id="12_nwhlp"]
+[ext_resource type="Script" path="res://Scripts/UI/TextureSwitchingButtons/SoundButton.cs" id="14_qa8fs"]
+[ext_resource type="Texture2D" uid="uid://caxbn2i25nqj4" path="res://Assets/UI/MainMenu/Volume/sound_off.png" id="15_eb057"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bx8rv"]
 shader = ExtResource("1_u2r1q")
@@ -27,6 +34,15 @@ shader_parameter/spritesheetSize = 4.0
 shader_parameter/spritesheeetV = true
 shader_parameter/alpha = 0.15
 shader_parameter/spritesheet = ExtResource("2_1e1mp")
+
+[sub_resource type="LabelSettings" id="LabelSettings_g2qd8"]
+font = ExtResource("4_jb4xn")
+font_size = 120
+font_color = Color(0.176471, 0.176471, 0.176471, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ui4gt"]
+font = ExtResource("5_5frha")
+font_size = 60
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f3glc"]
 particles_animation = true
@@ -50,7 +66,7 @@ colors = PackedColorArray(0.813259, 0.813257, 0.813257, 1, 0.65834, 0.65834, 0.6
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_123lx"]
 shader = ExtResource("7_brrh5")
-shader_parameter/height = 7.0
+shader_parameter/height = 6.0
 shader_parameter/frequency = 10.0
 shader_parameter/speed = 1.5
 
@@ -144,6 +160,54 @@ corner_radius_top_right = 35
 corner_radius_bottom_right = 35
 corner_radius_bottom_left = 35
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e5hlx"]
+bg_color = Color(0.803922, 0.803922, 0.803922, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.176471, 0.176471, 0.176471, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c7huw"]
+bg_color = Color(0.803922, 0.803922, 0.803922, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.176471, 0.176471, 0.176471, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5m3nq"]
+bg_color = Color(0.803922, 0.803922, 0.803922, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.176471, 0.176471, 0.176471, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ujnii"]
+bg_color = Color(0.803922, 0.803922, 0.803922, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.176471, 0.176471, 0.176471, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -169,26 +233,110 @@ grow_vertical = 2
 pivot_offset = Vector2(1500, 1500)
 texture = ExtResource("3_p8221")
 
-[node name="Car" type="Control" parent="." node_paths=PackedStringArray("tires", "startButton", "idleParticles", "movingParticles", "shaker")]
+[node name="Logo" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 875.0
+offset_bottom = 875.0
+grow_horizontal = 2
+scale = Vector2(1.25, 1.25)
+
+[node name="WatchSign" type="Control" parent="Logo" node_paths=PackedStringArray("outSign")]
+anchors_preset = 0
+offset_left = -70.0
+offset_right = -70.0
+script = ExtResource("4_7d5v7")
+outSign = NodePath("../OutSign")
+
+[node name="Line2D" type="Line2D" parent="Logo/WatchSign"]
+points = PackedVector2Array(0, 0, 0, -320)
+default_color = Color(0.176471, 0.176471, 0.176471, 1)
+
+[node name="Sign" type="Control" parent="Logo/WatchSign"]
+anchors_preset = 0
+offset_left = 2.0
+offset_top = -395.0
+offset_right = 2.0
+offset_bottom = -395.0
+
+[node name="gray" type="Polygon2D" parent="Logo/WatchSign/Sign"]
+scale = Vector2(2.5, 2.5)
+color = Color(0.176471, 0.176471, 0.176471, 1)
+polygon = PackedVector2Array(-62, -40, 62, -40, 75, -20, 75, 20, 62, 40, -62, 40, -75, 20, -75, -20)
+
+[node name="yellow" type="Polygon2D" parent="Logo/WatchSign/Sign"]
+scale = Vector2(2.5, 2.5)
+color = Color(0.9169, 0.788735, 0.0127616, 1)
+polygon = PackedVector2Array(-60, -35, 60, -35, 70, -20, 70, 20, 60, 35, -60, 35, -70, 20, -70, -20)
+
+[node name="Label" type="Label" parent="Logo/WatchSign/Sign"]
+layout_mode = 0
+offset_left = -180.0
+offset_top = -60.0
+offset_right = 176.0
+offset_bottom = 91.0
+text = "WATCH"
+label_settings = SubResource("LabelSettings_g2qd8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OutSign" type="Control" parent="Logo"]
+anchors_preset = 0
+offset_left = 70.0
+offset_right = 70.0
+rotation = 0.47822
+
+[node name="Line2D" type="Line2D" parent="Logo/OutSign"]
+points = PackedVector2Array(0, 0, 0, -320)
+default_color = Color(0.176471, 0.176471, 0.176471, 1)
+
+[node name="Sign" type="Control" parent="Logo/OutSign"]
+anchors_preset = 0
+offset_left = 2.05194
+offset_top = -350.235
+offset_right = 2.05194
+offset_bottom = -350.235
+
+[node name="white" type="Polygon2D" parent="Logo/OutSign/Sign"]
+scale = Vector2(2, 2)
+polygon = PackedVector2Array(-22, -50, 22, -50, 50, -22, 50, 22, 22, 50, -22, 50, -50, 22, -50, -22)
+
+[node name="red" type="Polygon2D" parent="Logo/OutSign/Sign"]
+scale = Vector2(2, 2)
+color = Color(0.745098, 0, 0, 1)
+polygon = PackedVector2Array(-20, -45, 20, -45, 45, -20, 45, 20, 20, 45, -20, 45, -45, 20, -45, -20)
+
+[node name="Label" type="Label" parent="Logo/OutSign/Sign"]
+layout_mode = 0
+offset_left = -82.0
+offset_top = -19.0
+offset_right = 72.0
+offset_bottom = 41.0
+text = "OUT"
+label_settings = SubResource("LabelSettings_ui4gt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Car" type="Control" parent="Logo" node_paths=PackedStringArray("tires", "startButton", "idleParticles", "movingParticles", "shaker")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_top = -140.0
-offset_bottom = -140.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.5, 1.5)
 script = ExtResource("4_2iwth")
 tires = [NodePath("Tire"), NodePath("Tire2")]
-startButton = NodePath("../Button")
+startButton = NodePath("../../StartButton")
 idleParticles = NodePath("idleParticles")
 movingParticles = NodePath("movingParticles")
-shaker = NodePath("../Shaker")
+shaker = NodePath("../../Shaker")
 
-[node name="idleParticles" type="CPUParticles2D" parent="Car"]
+[node name="idleParticles" type="CPUParticles2D" parent="Logo/Car"]
 material = SubResource("CanvasItemMaterial_f3glc")
 position = Vector2(-196.334, -28.0001)
 amount = 1
@@ -205,7 +353,7 @@ color_initial_ramp = SubResource("Gradient_w7miu")
 anim_offset_min = 0.2
 anim_offset_max = 1.0
 
-[node name="movingParticles" type="CPUParticles2D" parent="Car"]
+[node name="movingParticles" type="CPUParticles2D" parent="Logo/Car"]
 material = SubResource("CanvasItemMaterial_f3glc")
 position = Vector2(-196.334, -28.0001)
 emitting = false
@@ -224,55 +372,55 @@ color_ramp = SubResource("Gradient_06frq")
 color_initial_ramp = SubResource("Gradient_yqvmm")
 anim_offset_max = 1.0
 
-[node name="polygons" type="Node2D" parent="Car"]
+[node name="polygons" type="Node2D" parent="Logo/Car"]
 
-[node name="exhaust" type="Polygon2D" parent="Car/polygons"]
+[node name="exhaust" type="Polygon2D" parent="Logo/Car/polygons"]
 position = Vector2(-181.667, -28.6667)
 color = Color(0.35907, 0.359069, 0.359069, 1)
 polygon = PackedVector2Array(-15, -5, 15, -5, 15, 5, -15, 5)
 
-[node name="body" type="Polygon2D" parent="Car/polygons"]
+[node name="body" type="Polygon2D" parent="Logo/Car/polygons"]
 position = Vector2(-13.6667, -106.667)
 scale = Vector2(3, 3)
 color = Color(0.6, 0.160784, 0, 1)
 offset = Vector2(144, 20)
 polygon = PackedVector2Array(-202.333, -1, -201.333, 6, -190, 10, -190, 0, -185, -5, -179.111, -6, -173, -5, -168, 0, -168, 10, -111, 10, -111, 0, -106, -5, -100.333, -6, -94, -5, -89, 0, -89, 10, -67, 6, -64, -6, -68, -14, -82, -21, -98, -24, -113.222, -42, -132.667, -47.3333, -157.667, -47.3333, -171, -45.6667, -179.667, -42.3333, -187.333, -36.3333, -193, -31, -197, -22.3333, -198.667, -16, -201.778, -12)
 
-[node name="plate" type="Polygon2D" parent="Car/polygons"]
+[node name="plate" type="Polygon2D" parent="Logo/Car/polygons"]
 position = Vector2(-191.667, -64.6667)
 color = Color(0.915486, 0.782488, 0.0667179, 1)
 polygon = PackedVector2Array(4, -4.66669, 10, -5, 9.4, 5, 3.33334, 5.33331)
 
-[node name="headlight" type="Polygon2D" parent="Car/polygons"]
+[node name="headlight" type="Polygon2D" parent="Logo/Car/polygons"]
 position = Vector2(203, -82.6667)
 polygon = PackedVector2Array(4.2, -5, 7.33337, -8, 11.3334, -6, 23.3334, 18, 10.6667, 13.3333, 3.6, 5)
 
-[node name="tailLightTop" type="Polygon2D" parent="Car/polygons"]
+[node name="tailLightTop" type="Polygon2D" parent="Logo/Car/polygons"]
 position = Vector2(-111, -178)
 color = Color(0.827451, 0, 0, 1)
 polygon = PackedVector2Array(-2.00006, 1.33337, -0.666718, 1.33337, 0.666687, 2, 0.666687, 3.33337, 0, 4.66669, -9.7, 4.3)
 
-[node name="tailLight" type="Polygon2D" parent="Car/polygons"]
+[node name="tailLight" type="Polygon2D" parent="Logo/Car/polygons"]
 position = Vector2(-178.334, -88.6667)
 color = Color(0.827451, 0, 0, 1)
 polygon = PackedVector2Array(0.666656, -6, 3.33328, -2.66663, 4.66666, 0, 3.33331, 3.33331, 1.33331, 6.66663, -4.66669, 6.66663, -8.66669, 6)
 
-[node name="windshield" type="Polygon2D" parent="Car/polygons"]
+[node name="windshield" type="Polygon2D" parent="Logo/Car/polygons"]
 position = Vector2(-13.6667, -106.667)
 color = Color(0.304669, 0.492207, 0.688503, 1)
 polygon = PackedVector2Array(16, -66, 47, -13, 137.15, -13, 92.3333, -65.9999)
 
-[node name="window" type="Polygon2D" parent="Car/polygons"]
+[node name="window" type="Polygon2D" parent="Logo/Car/polygons"]
 position = Vector2(-116.667, -105.667)
 color = Color(0.304669, 0.492207, 0.688503, 1)
 polygon = PackedVector2Array(34, -68, 22, -64, 4, -42, -1, -30, -1, -18, 5, -13, 140, -13, 109, -67)
 
-[node name="window2" type="Polygon2D" parent="Car/polygons"]
+[node name="window2" type="Polygon2D" parent="Logo/Car/polygons"]
 position = Vector2(-229.667, -106.667)
 color = Color(0.304669, 0.492207, 0.688503, 1)
 polygon = PackedVector2Array(86, -49, 69, -33, 59, -12, 95, -12, 101, -31, 109, -48, 123, -63, 120, -67, 109, -67)
 
-[node name="Tire" type="TextureRect" parent="Car"]
+[node name="Tire" type="TextureRect" parent="Logo/Car"]
 layout_mode = 0
 offset_left = -293.667
 offset_top = -206.667
@@ -282,7 +430,7 @@ scale = Vector2(0.18, 0.18)
 pivot_offset = Vector2(175, 175)
 texture = ExtResource("4_4ti7i")
 
-[node name="Tire2" type="TextureRect" parent="Car"]
+[node name="Tire2" type="TextureRect" parent="Logo/Car"]
 layout_mode = 0
 offset_left = -56.6667
 offset_top = -206.667
@@ -292,7 +440,7 @@ scale = Vector2(0.18, 0.18)
 pivot_offset = Vector2(175, 175)
 texture = ExtResource("4_4ti7i")
 
-[node name="Button" type="Button" parent="."]
+[node name="StartButton" type="Button" parent="."]
 material = SubResource("ShaderMaterial_123lx")
 layout_mode = 1
 anchors_preset = 8
@@ -314,7 +462,7 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_urx3h")
 theme_override_styles/focus = SubResource("StyleBoxFlat_urx3h")
 script = ExtResource("8_i036j")
 
-[node name="Play" type="TextureRect" parent="Button"]
+[node name="Play" type="TextureRect" parent="StartButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -353,6 +501,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_7owuf")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_tmi0r")
 theme_override_styles/focus = SubResource("StyleBoxFlat_aadvl")
 icon = ExtResource("10_d56kb")
+script = ExtResource("11_0uf1m")
+locales = PackedStringArray("fr", "en")
+textures = Array[Texture2D]([ExtResource("10_d56kb"), ExtResource("12_nwhlp")])
 
 [node name="soundButton" type="Button" parent="."]
 material = SubResource("ShaderMaterial_phw4l")
@@ -371,7 +522,13 @@ grow_vertical = 0
 scale = Vector2(0.4, 0.4)
 pivot_offset = Vector2(235, 160)
 theme_override_styles/normal = SubResource("StyleBoxFlat_50twj")
+theme_override_styles/hover = SubResource("StyleBoxFlat_e5hlx")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_c7huw")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_5m3nq")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ujnii")
 icon = ExtResource("11_44ean")
+script = ExtResource("14_qa8fs")
+textures = Array[Texture2D]([ExtResource("11_44ean"), ExtResource("15_eb057")])
 
 [node name="Shaker" parent="." node_paths=PackedStringArray("_targets") instance=ExtResource("10_jwx36")]
 _targets = [NodePath("..")]
@@ -380,4 +537,5 @@ amplitude = Vector2(30, 30)
 duration_ = 0.0
 _duration = 0.1
 
-[connection signal="pressed" from="Button" to="Car" method="StartMoveAnim"]
+[connection signal="pressed" from="StartButton" to="Logo/WatchSign" method="PlayAnim"]
+[connection signal="pressed" from="StartButton" to="Logo/Car" method="PlayAnim"]

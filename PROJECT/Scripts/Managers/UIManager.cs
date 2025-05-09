@@ -4,6 +4,7 @@ using Com.IsartDigital.WatchOut.Utils;
 using Com.IsartDigital.Utils.Tweens;
 using Godot;
 using System;
+using Com.IsartDigital.WatchOut.Enums;
 
 // Author : Camille Smolarski
 
@@ -24,7 +25,7 @@ namespace Com.IsartDigital.WatchOut.Managers
         [Export] private PackedScene PackedManualDashboard;
         [Export] private PackedScene PackedElectricDashboard;
 
-
+        private const float SKIP_DURATION = 10f;
         private const float TRANS_IN_DURATION = 3f;
         private const float TRANS_OUT_DURATION = TRANS_IN_DURATION * 0.3f;
         private const float TOUCH_ICON_DELAY = 0.5f;
@@ -46,6 +47,7 @@ namespace Com.IsartDigital.WatchOut.Managers
         }
 
         private Control dashboard;
+        private Tween currentTrans;
         private Action transOutAction;
         private ShaderMaterial transRectShaderMat;
         private bool listeningTaps;
@@ -74,7 +76,15 @@ namespace Com.IsartDigital.WatchOut.Managers
         {
             if (listeningTaps)
             {
+                if (currentTrans != null)
+                {
+                    currentTrans.CustomStep(SKIP_DURATION);
+                    currentTrans = null;
+                    return;
+                }
+
                 listeningTaps = false;
+                GameManager.Vibrate(VibrationDuration.SHORT);
                 StartTransOut();
 
                 if (transOutAction != null)
@@ -151,6 +161,8 @@ namespace Com.IsartDigital.WatchOut.Managers
 
             if (pActionOnOutStart != null)
                 transOutAction = pActionOnOutStart;
+            listeningTaps = true;
+            currentTrans = lTween;
         }
 
         private void OnTransInFinished()

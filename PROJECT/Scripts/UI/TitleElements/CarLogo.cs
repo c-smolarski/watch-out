@@ -10,7 +10,7 @@ using System;
 
 namespace Com.IsartDigital.WatchOut.UI
 {
-    public partial class CarLogo : Control
+    public partial class CarLogo : TitleElement
     {
         [Export] private TextureRect[] tires;
         [Export] private StartButton startButton;
@@ -24,8 +24,6 @@ namespace Com.IsartDigital.WatchOut.UI
         private const float START_MOVE_TIRE_SPEED = 20f;
         private const float MOVE_TIRE_SPEED = 200f;
 
-        private const float FALL_ANIM_DURATION = 1f;
-        private const float FIRST_BOUCE_TIME = FALL_ANIM_DURATION * 0.3f;
         private const float BOUCE_DURATION = 0.1f;
         private const float MOVE_DURATION = 1.5f;
         private const float START_MOVE_DURATION = MOVE_DURATION * 0.3f;
@@ -56,7 +54,7 @@ namespace Com.IsartDigital.WatchOut.UI
             currentTireSpeed = IDLE_TIRE_SPEED;
         }
 
-        private void StartMoveAnim()
+        protected override void PlayAnim()
         {
             idleParticles.Emitting = false;
             Tween lTween = CreateTween();

@@ -1,4 +1,6 @@
-﻿using Com.IsartDigital.Utils.Tweens;
+﻿using Com.IsartDigital.Utils.Effects;
+using Com.IsartDigital.Utils.Tweens;
+using Com.IsartDigital.WatchOut.Enums;
 using Com.IsartDigital.WatchOut.Managers;
 using Godot;
 using System;

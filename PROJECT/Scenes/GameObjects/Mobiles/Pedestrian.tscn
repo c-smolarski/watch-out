@@ -1,10 +1,36 @@
-[gd_scene load_steps=4 format=3 uid="uid://pv2egy82ph3n"]
+[gd_scene load_steps=9 format=3 uid="uid://pv2egy82ph3n"]
 
 [ext_resource type="PackedScene" uid="uid://bx6fqlpfkbitb" path="res://Scenes/GameObjects/Mobiles/MobileTemplate.tscn" id="1_o2rck"]
 [ext_resource type="Script" path="res://Scripts/GameObjects/Mobiles/Pedestrian.cs" id="2_vnpni"]
+[ext_resource type="Texture2D" uid="uid://br2hfebwco4ya" path="res://Assets/Particles/smoke_spritesheet.png" id="3_f5e82"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r0lm1"]
 radius = 20.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v4a0s"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 5
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_e3olj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_037xr"]
+curve = SubResource("Curve_e3olj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d0vys"]
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.2
+alpha_curve = SubResource("CurveTexture_037xr")
+anim_offset_min = 0.2
+anim_offset_max = 1.0
 
 [node name="Pedestrian" instance=ExtResource("1_o2rck")]
 collision_layer = 3
@@ -18,6 +44,14 @@ maxForwardSpeed = 250.0
 [node name="collider" type="CollisionShape2D" parent="." index="0"]
 shape = SubResource("CircleShape2D_r0lm1")
 disabled = true
+
+[node name="Particles" parent="." index="1"]
+material = SubResource("CanvasItemMaterial_v4a0s")
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_d0vys")
+texture = ExtResource("3_f5e82")
+speed_scale = 2.0
+explosiveness = 1.0
 
 [node name="body" type="Polygon2D" parent="polygons" index="0"]
 scale = Vector2(0.5, 0.5)

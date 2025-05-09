@@ -2,6 +2,8 @@
 using Com.IsartDigital.Utils.Tweens;
 using Godot;
 using System;
+using Com.IsartDigital.WatchOut.Managers;
+using Com.IsartDigital.WatchOut.Enums;
 
 // Author : Camille Smolarski
 
@@ -138,6 +140,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
 
         private void SucessAnim()
         {
+            GameManager.Vibrate(VibrationDuration.SHORT);
             Tween lTween = CreateTween();
             lTween.TweenProperty(sign, TweenProp.SCALE, sign.Scale * SUCCESS_ANIM_MULT, ANIM_DEFAULT_DURATION)
                 .SetTrans(Tween.TransitionType.Back)

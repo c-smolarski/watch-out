@@ -2,6 +2,7 @@
 using Com.IsartDigital.Utils.Tweens;
 using Godot;
 using System;
+using Com.IsartDigital.Utils;
 
 // Author : Camille Smolarski
 
@@ -41,7 +42,11 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
         protected override void OnAccident(Mobile pDriver)
         {
             base.OnAccident(pDriver);
+            if (!inputConnected)
+                return;
+
             DisconnectInputs();
+            GameManager.Shake(ScreenShakeForce.STRONG);
             SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelHardFailed, T_KEY_ACCIDENT);
         }
 
@@ -68,7 +73,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
             base.Appear();
             if (!IsInstanceValid(appearAnimStartPos))
             {
-                ConnectInputs();
+                OnPlayerAppeared();
                 return;
             }
 

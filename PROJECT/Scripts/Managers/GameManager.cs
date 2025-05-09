@@ -43,7 +43,7 @@ namespace Com.IsartDigital.WatchOut.Managers
             mainMenu?.QueueFree();
         }
 
-        public static void ShakeCamera(ScreenShakeForce pShakeForce)
+        public static void Shake(ScreenShakeForce pShakeForce)
         {
             switch (pShakeForce)
             {

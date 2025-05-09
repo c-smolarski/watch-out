@@ -39,10 +39,10 @@ namespace Com.IsartDigital.WatchOut.GameObjects
         public float Speed { get; private set; }
         protected bool IsMoving => Speed > 0;
         protected virtual GearMode SelectedGearMode { get; set; } = GearMode.PARKED;
+        protected GpuParticles2D ExhaustParticels { get; private set; }
         private Vector2 VelocityDirection => (GlobalPosition - lastPos).Normalized();
 
         private Vector2 polygonsScale, lastPos;
-        private GpuParticles2D exhaustParticels;
         private Node2D polygons;
         private bool collisionsEnabled, resetStartAtMaxSpeed;
         private float elapsedTime, flutterTime, baseRotation, maxSpeed, brakeForce;
@@ -50,7 +50,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects
         public override void _Ready()
         {
             base._Ready();
-            exhaustParticels = GetNode<GpuParticles2D>(EXHAUST_PARTICLES_PATH);
+            ExhaustParticels = GetNode<GpuParticles2D>(EXHAUST_PARTICLES_PATH);
             polygons = GetNode<Node2D>(POLYGONS_PATH);
             resetStartAtMaxSpeed = startAtMaxSpeed;
             lastPos = GlobalPosition;
@@ -85,7 +85,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects
 
         protected virtual void OnAccident(Mobile pDriver)
         {
-            animated = exhaustParticels.Emitting = false;
+            animated = ExhaustParticels.Emitting = false;
             polygons.Scale = polygonsScale;
         }
 

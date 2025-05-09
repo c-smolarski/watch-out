@@ -84,11 +84,14 @@ PackedElectricDashboard = ExtResource("4_lheqa")
 [node name="LevelManager" type="Node" parent="Managers"]
 script = ExtResource("4_183ov")
 
-[node name="GameManager" type="Node" parent="Managers" node_paths=PackedStringArray("GameContainer", "UIContainer", "mainMenu")]
+[node name="GameManager" type="Node" parent="Managers" node_paths=PackedStringArray("GameContainer", "UIContainer", "mainMenu", "lightShaker", "midShaker", "strongShaker")]
 script = ExtResource("1_uixe0")
 GameContainer = NodePath("../../GameContainer")
 UIContainer = NodePath("../../CanvasLayer/UIContainer")
 mainMenu = NodePath("../../CanvasLayer/UIContainer/MainMenu")
+lightShaker = NodePath("../../Shakers/lightShaker")
+midShaker = NodePath("../../Shakers/midShaker")
+strongShaker = NodePath("../../Shakers/strongShaker")
 PackedPedestrian = ExtResource("5_ukjh1")
 
 [node name="GameContainer" type="Node2D" parent="."]
@@ -262,10 +265,25 @@ mouse_filter = 2
 
 [node name="Shakers" type="Node" parent="."]
 
-[node name="lightShaker" parent="Shakers" instance=ExtResource("16_br75i")]
+[node name="lightShaker" parent="Shakers" node_paths=PackedStringArray("_targets") instance=ExtResource("16_br75i")]
+_targets = [NodePath("../../Camera2D")]
+duration = 0.15
+amplitude = Vector2(7.5, 7.5)
+duration_ = 0.0
+_duration = 0.0
 
-[node name="midShaker" parent="Shakers" instance=ExtResource("16_br75i")]
+[node name="midShaker" parent="Shakers" node_paths=PackedStringArray("_targets") instance=ExtResource("16_br75i")]
+_targets = [NodePath("../../Camera2D")]
+duration = 0.2
+amplitude = Vector2(15, 15)
+duration_ = 0.0
+_duration = 1.0
 
-[node name="strongShaker" parent="Shakers" instance=ExtResource("16_br75i")]
+[node name="strongShaker" parent="Shakers" node_paths=PackedStringArray("_targets") instance=ExtResource("16_br75i")]
+_targets = [NodePath("../../Camera2D")]
+duration = 0.3
+amplitude = Vector2(30, 30)
+duration_ = 0.0
+_duration = 0.2
 
 [node name="Camera2D" type="Camera2D" parent="."]

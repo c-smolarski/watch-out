@@ -25,6 +25,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
             base._Ready();
             collider = GetNode<CollisionShape2D>(COLLIDER_PATH);
             collider.SetDeferred(DISABLED, true);
+            ExhaustParticels.Emitting = false;
         }
 
         private void Init()
@@ -49,12 +50,14 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
         private void OnAppeared()
         {
             collider.SetDeferred(DISABLED, false);
+            ExhaustParticels.Emitting = true;
             StartMovingForward();
         }
 
         protected override void OnReachPathEnd()
         {
             StopMoving();
+            ExhaustParticels.Emitting = false;
             collider.SetDeferred(DISABLED, true);
             Tween lTween = CreateTween();
             lTween.TweenProperty(this, TweenProp.MODULATE_ALPHA, 0f, TIME_TO_APPEAR)

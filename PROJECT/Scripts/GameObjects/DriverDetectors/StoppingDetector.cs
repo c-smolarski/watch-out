@@ -2,6 +2,7 @@
 using Com.IsartDigital.Utils.Tweens;
 using Godot;
 using System;
+using Com.IsartDigital.WatchOut.Enums;
 
 // Author : Camille Smolarski
 
@@ -68,7 +69,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
         protected void PlayerSteppedOnWrongObject(Node2D pNode, string pMessage)
         {
             SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelSoftFailed, pMessage);
-
+            GameManager.Vibrate(VibrationDuration.MID);
             Tween lTween = CreateTween()
                 .SetTrans(Tween.TransitionType.Circ)
                 .SetEase(Tween.EaseType.Out);
