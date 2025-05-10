@@ -22,10 +22,12 @@ namespace Com.IsartDigital.WatchOut
 
         public bool SoftFailed { get; private set; }
         private bool hardFailed;
+        private Callable startCallable;
 
         public override void _Ready()
         {
             base._Ready();
+            startCallable = Callable.From(StartLevel);
             WinAreaInit();
             SignalBus.Instance.LevelSoftFailed += OnSoftFail;
             SignalBus.Instance.LevelHardFailed += OnHardFail;
@@ -42,7 +44,9 @@ namespace Com.IsartDigital.WatchOut
         {
             if (initialCameraPos == null)
             {
-                StartLevel();
+                LevelManager.Instance.Connect(
+                    LevelManager.SignalName.LevelLoaded,
+                    startCallable);
                 return;
             }
 
@@ -54,11 +58,14 @@ namespace Com.IsartDigital.WatchOut
                 .SetTrans(Tween.TransitionType.Cubic)
                 .SetEase(Tween.EaseType.InOut)
                 .SetDelay(cameraDelayBeforeMoving);
-            lTween.Connect(Tween.SignalName.Finished, Callable.From(StartLevel));
+            lTween.Connect(Tween.SignalName.Finished, startCallable);
         }
 
         private void StartLevel()
         {
+            if (LevelManager.Instance.IsConnected(LevelManager.SignalName.LevelLoaded, startCallable))
+                LevelManager.Instance.Disconnect(LevelManager.SignalName.LevelLoaded, startCallable);
+
             if (playerAutoAppear)
                 Player.Appear();
         }

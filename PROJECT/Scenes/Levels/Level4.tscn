@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://b6rkl7rwodstr"]
 
-[ext_resource type="PackedScene" uid="uid://cru5wgs3k3arj" path="res://Scenes/LevelTemplate.tscn" id="1_u07uo"]
-[ext_resource type="PackedScene" uid="uid://b0520itaestcm" path="res://Scenes/GameObjects/Stops/Crossing.tscn" id="2_2m0mr"]
-[ext_resource type="PackedScene" uid="uid://df4215fpxxyfq" path="res://Scenes/GameObjects/Mobiles/Cars/Player.tscn" id="3_suv11"]
+[ext_resource type="PackedScene" uid="uid://cru5wgs3k3arj" path="res://Scenes/LevelTemplate.tscn" id="1_66oe2"]
+[ext_resource type="PackedScene" uid="uid://b0520itaestcm" path="res://Scenes/GameObjects/Stops/Crossing.tscn" id="2_2d0ri"]
+[ext_resource type="PackedScene" uid="uid://df4215fpxxyfq" path="res://Scenes/GameObjects/Mobiles/Cars/Player.tscn" id="3_ldnq6"]
 
 [sub_resource type="Curve2D" id="Curve2D_27yuw"]
 _data = {
@@ -10,7 +10,7 @@ _data = {
 }
 point_count = 2
 
-[node name="Level2" node_paths=PackedStringArray("Player") instance=ExtResource("1_u07uo")]
+[node name="Level4" node_paths=PackedStringArray("Player") instance=ExtResource("1_66oe2")]
 AllocatedTime = 18.0
 Player = NodePath("GameObjects/Player")
 
@@ -27,9 +27,9 @@ rotation = 3.14159
 points = PackedVector2Array(0, 25, 0, 1800)
 width = 20.0
 
-[node name="Crossing" parent="GameObjects" index="0" instance=ExtResource("2_2m0mr")]
+[node name="Crossing" parent="GameObjects" index="0" instance=ExtResource("2_2d0ri")]
 
-[node name="Player" parent="GameObjects" index="1" node_paths=PackedStringArray("appearAnimStartPos", "pathFollow") instance=ExtResource("3_suv11")]
+[node name="Player" parent="GameObjects" index="1" node_paths=PackedStringArray("appearAnimStartPos", "pathFollow") instance=ExtResource("3_ldnq6")]
 position = Vector2(100, 1000)
 rotation = -1.5708
 appearAnimStartPos = NodePath("../../Marker2D")

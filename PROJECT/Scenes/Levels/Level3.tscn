@@ -1,0 +1,275 @@
+[gd_scene load_steps=14 format=3 uid="uid://bklu5mtgry3xg"]
+
+[ext_resource type="PackedScene" uid="uid://cru5wgs3k3arj" path="res://Scenes/LevelTemplate.tscn" id="1_5kswc"]
+[ext_resource type="PackedScene" uid="uid://crvrs1nkdxf8i" path="res://Scenes/Assets/ParkingSpot.tscn" id="2_r683c"]
+[ext_resource type="PackedScene" uid="uid://bl7jw454koo84" path="res://Scenes/GameObjects/Stops/StopSign.tscn" id="3_hkah2"]
+[ext_resource type="PackedScene" uid="uid://cu1jctaxsdr7v" path="res://Scenes/GameObjects/Mobiles/Cars/Car.tscn" id="4_8grnw"]
+[ext_resource type="PackedScene" uid="uid://df4215fpxxyfq" path="res://Scenes/GameObjects/Mobiles/Cars/Player.tscn" id="5_mn2b4"]
+[ext_resource type="PackedScene" uid="uid://d4ayklfykx1xj" path="res://Scenes/GameObjects/DriverDetector.tscn" id="6_0yusg"]
+[ext_resource type="PackedScene" uid="uid://bplviwo1bvotp" path="res://Scenes/GameObjects/Mobiles/Cars/CopCar.tscn" id="7_2eivw"]
+
+[sub_resource type="Curve2D" id="Curve2D_xwu57"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 100, 1000, 0, 200, 0, -200, 100, -200, 200, 0, -200, 0, -200, -500, 0, 0, 0, 0, -1000, -500)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_tho4s"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1000, -500, 0, 0, 0, 0, -1000, -500)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_i7px7"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -1000, -300, 0, 0, 0, 0, 1000, -300)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_6fse1"]
+_data = {
+"points": PackedVector2Array(0, -250, 0, 300, -3100, -850, 300, 0, 0, 0, -3500, -500, 0, 0, 0, 0, -5000, -500)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_ijicb"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 200, -3300, -1300, 0, -250, 0, 500, -3100, -850, -500, 0, 0, 0, -2350, -300, 0, 0, 0, 0, 1000, -300)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_e2cvd"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 200, -3100, -2500, 0, -250, 0, 350, -3100, -850, -450, 0, 0, 0, -2350, -300, 0, 0, 0, 0, 1000, -300)
+}
+point_count = 4
+
+[node name="Level3" node_paths=PackedStringArray("Player", "initialCameraPos") instance=ExtResource("1_5kswc")]
+AllocatedTime = 45.0
+Player = NodePath("GameObjects/Player")
+initialCameraPos = NodePath("CameraMarker")
+cameraDelayBeforeMoving = 6.0
+cameraMoveDuration = 2.5
+
+[node name="road" type="Node2D" parent="Assets" index="0"]
+
+[node name="RoadV" type="Polygon2D" parent="Assets/road" index="0"]
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-200, -200, -200, 1800, 200, 1800, 200, -200)
+
+[node name="Line" type="Line2D" parent="Assets/road/RoadV" index="0"]
+points = PackedVector2Array(0, 0, 0, 1800)
+width = 20.0
+
+[node name="RoadV2" type="Polygon2D" parent="Assets/road" index="1"]
+position = Vector2(-3000, -800)
+rotation = 3.14159
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-200, -200, -200, 1800, 200, 1800, 200, -200)
+
+[node name="Line3" type="Line2D" parent="Assets/road/RoadV2" index="0"]
+points = PackedVector2Array(0, 0, 0, 1800)
+width = 20.0
+
+[node name="RoadH" type="Polygon2D" parent="Assets/road" index="2"]
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-6000, -600, -6000, -200, 4000, -200, 4000, -600)
+
+[node name="lines" type="Node2D" parent="Assets" index="1"]
+
+[node name="Line2" type="Line2D" parent="Assets/lines" index="0"]
+position = Vector2(-250, -400)
+rotation = 1.5708
+points = PackedVector2Array(0, 20, 0, 2480)
+width = 20.0
+
+[node name="line4" type="Polygon2D" parent="Assets/lines" index="1"]
+position = Vector2(-3475, -400)
+rotation = 1.5708
+polygon = PackedVector2Array(10, -200, 10, 2000, -10, 2000, -10, -200)
+
+[node name="line3" type="Polygon2D" parent="Assets/lines" index="2"]
+position = Vector2(475, -400)
+rotation = -1.5708
+polygon = PackedVector2Array(10, -200, 10, 2000, -10, 2000, -10, -200)
+
+[node name="dots" type="Node2D" parent="Assets/lines" index="3"]
+position = Vector2(0, -400)
+
+[node name="dots" type="Polygon2D" parent="Assets/lines/dots" index="0"]
+position = Vector2(-200, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots2" type="Polygon2D" parent="Assets/lines/dots" index="1"]
+position = Vector2(-100, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots3" type="Polygon2D" parent="Assets/lines/dots" index="2"]
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots4" type="Polygon2D" parent="Assets/lines/dots" index="3"]
+position = Vector2(100, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots5" type="Polygon2D" parent="Assets/lines/dots" index="4"]
+position = Vector2(200, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots2" type="Node2D" parent="Assets/lines" index="4"]
+position = Vector2(-3000, -400)
+
+[node name="dots" type="Polygon2D" parent="Assets/lines/dots2" index="0"]
+position = Vector2(-200, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots2" type="Polygon2D" parent="Assets/lines/dots2" index="1"]
+position = Vector2(-100, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots3" type="Polygon2D" parent="Assets/lines/dots2" index="2"]
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots4" type="Polygon2D" parent="Assets/lines/dots2" index="3"]
+position = Vector2(100, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots5" type="Polygon2D" parent="Assets/lines/dots2" index="4"]
+position = Vector2(200, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="Parkspot" parent="Assets" index="2" instance=ExtResource("2_r683c")]
+position = Vector2(-3000, -1300)
+rotation = 3.14159
+
+[node name="Sign" parent="Assets/Parkspot" index="0"]
+position = Vector2(300, 450)
+
+[node name="StopSign" parent="GameObjects" index="0" instance=ExtResource("3_hkah2")]
+position = Vector2(100, -25)
+
+[node name="Car" parent="GameObjects" index="1" node_paths=PackedStringArray("pathFollow") instance=ExtResource("4_8grnw")]
+position = Vector2(1000, -500)
+rotation = 3.14159
+pathFollow = NodePath("../../Paths/CarPath/CarFollow")
+maxForwardSpeed = 1700.0
+
+[node name="Car2" parent="GameObjects" index="2" node_paths=PackedStringArray("pathFollow") instance=ExtResource("4_8grnw")]
+position = Vector2(-1000, -300)
+pathFollow = NodePath("../../Paths/CarPath2/Car2Follow")
+maxForwardSpeed = 1700.0
+
+[node name="Car3" parent="GameObjects" index="3" node_paths=PackedStringArray("pathFollow") instance=ExtResource("4_8grnw")]
+position = Vector2(-1000, -300)
+pathFollow = NodePath("../../Paths/CarPath2/Car3Follow")
+maxForwardSpeed = 1900.0
+
+[node name="Player" parent="GameObjects" index="4" node_paths=PackedStringArray("appearAnimStartPos", "pathFollow") instance=ExtResource("5_mn2b4")]
+position = Vector2(100, 1000)
+rotation = -1.5708
+appearAnimStartPos = NodePath("../../PlayerMarker")
+pathFollow = NodePath("../../Paths/PlayerPath/PlayerFollow")
+
+[node name="Introduction" type="Node2D" parent="GameObjects" index="5"]
+
+[node name="StopSign" parent="GameObjects/Introduction" index="0" instance=ExtResource("3_hkah2")]
+position = Vector2(-3100, -775)
+rotation = -3.14159
+OnlyDetectsPlayer = false
+
+[node name="DriverDetector" parent="GameObjects/Introduction" index="1" instance=ExtResource("6_0yusg")]
+position = Vector2(-3350, -500)
+OnlyDetectsPlayer = false
+
+[node name="Driver" parent="GameObjects/Introduction" index="2" node_paths=PackedStringArray("pathFollow") instance=ExtResource("4_8grnw")]
+position = Vector2(-3100, -850)
+rotation = 1.5708
+visibleOnReady = true
+pathFollow = NodePath("../../../Paths/Introduction/DriverPath/DriverFollow")
+autoRestartOnEnd = false
+startAtMaxSpeed = false
+maxForwardSpeed = 1700.0
+
+[node name="SpeedingDriver" parent="GameObjects/Introduction" index="3" node_paths=PackedStringArray("pathFollow") instance=ExtResource("4_8grnw")]
+position = Vector2(-3100, -2500)
+rotation = 1.5708
+pathFollow = NodePath("../../../Paths/Introduction/SpeedingDriverPath/SpeedingDriverFollow")
+maxForwardSpeed = 2100.0
+
+[node name="CopCar" parent="GameObjects/Introduction" index="4" node_paths=PackedStringArray("pathFollow") instance=ExtResource("7_2eivw")]
+position = Vector2(-3300, -1300)
+rotation = 1.5708
+visibleOnReady = true
+pathFollow = NodePath("../../../Paths/Introduction/CopPath/CopFollow")
+maxForwardSpeed = 2300.0
+
+[node name="PlayerPath" type="Path2D" parent="Paths" index="0"]
+curve = SubResource("Curve2D_xwu57")
+
+[node name="PlayerFollow" type="PathFollow2D" parent="Paths/PlayerPath" index="0"]
+position = Vector2(100, 1000)
+rotation = -1.5708
+loop = false
+
+[node name="CarPath" type="Path2D" parent="Paths" index="1"]
+curve = SubResource("Curve2D_tho4s")
+
+[node name="CarFollow" type="PathFollow2D" parent="Paths/CarPath" index="0"]
+position = Vector2(1000, -500)
+rotation = 3.14159
+loop = false
+
+[node name="CarPath2" type="Path2D" parent="Paths" index="2"]
+curve = SubResource("Curve2D_i7px7")
+
+[node name="Car2Follow" type="PathFollow2D" parent="Paths/CarPath2" index="0"]
+position = Vector2(-1000, -300)
+loop = false
+
+[node name="Car3Follow" type="PathFollow2D" parent="Paths/CarPath2" index="1"]
+position = Vector2(-1000, -300)
+loop = false
+
+[node name="Introduction" type="Node2D" parent="Paths" index="3"]
+
+[node name="DriverPath" type="Path2D" parent="Paths/Introduction" index="0"]
+curve = SubResource("Curve2D_6fse1")
+
+[node name="DriverFollow" type="PathFollow2D" parent="Paths/Introduction/DriverPath" index="0"]
+position = Vector2(-3100, -850)
+rotation = 1.5708
+loop = false
+
+[node name="CopPath" type="Path2D" parent="Paths/Introduction" index="1"]
+curve = SubResource("Curve2D_ijicb")
+
+[node name="CopFollow" type="PathFollow2D" parent="Paths/Introduction/CopPath" index="0"]
+position = Vector2(-3300, -1300)
+rotation = 1.5708
+loop = false
+
+[node name="SpeedingDriverPath" type="Path2D" parent="Paths/Introduction" index="2"]
+curve = SubResource("Curve2D_e2cvd")
+
+[node name="SpeedingDriverFollow" type="PathFollow2D" parent="Paths/Introduction/SpeedingDriverPath" index="0"]
+position = Vector2(-3100, -2500)
+rotation = 1.5708
+loop = false
+
+[node name="LevelEnd" parent="." index="3"]
+position = Vector2(-700, -500)
+
+[node name="PlayerMarker" type="Marker2D" parent="." index="4"]
+position = Vector2(100, 1600)
+
+[node name="CameraMarker" type="Marker2D" parent="." index="5"]
+position = Vector2(-3000, -775)
+
+[connection signal="DriverRunnedOver" from="GameObjects/StopSign" to="GameObjects/Car" method="StartMovingForward"]
+[connection signal="DriverRunnedOver" from="GameObjects/StopSign" to="GameObjects/Car2" method="StartMovingForward"]
+[connection signal="DriverSteppedOnLine" from="GameObjects/StopSign" to="GameObjects/Car3" method="StartMovingForward"]
+[connection signal="DriverRunnedOver" from="GameObjects/Introduction/StopSign" to="GameObjects/Introduction/CopCar" method="StartMovingForward"]
+[connection signal="DriverRunnedOver" from="GameObjects/Introduction/StopSign" to="GameObjects/Introduction/CopCar" method="TurnOnSirens"]
+[connection signal="DriverStopped" from="GameObjects/Introduction/StopSign" to="GameObjects/Introduction/Driver" method="StartMovingForward"]
+[connection signal="DriverDetected" from="GameObjects/Introduction/DriverDetector" to="GameObjects/Introduction/SpeedingDriver" method="StartMovingForward"]
+
+[editable path="Assets/Parkspot"]

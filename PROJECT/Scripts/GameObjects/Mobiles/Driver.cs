@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Godot;
+using System;
 
 // Author : Camille Smolarski
 
@@ -6,10 +7,11 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
 {
     public partial class Driver : Mobile
     {
+        [Export] private bool visibleOnReady;
         public override void _Ready()
         {
             base._Ready();
-            Visible = false;
+            Visible = visibleOnReady;
         }
 
         protected override void StartMoving(GearMode pDirection)

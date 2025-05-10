@@ -1,0 +1,88 @@
+[gd_scene load_steps=5 format=3 uid="uid://crvrs1nkdxf8i"]
+
+[ext_resource type="Shader" path="res://Resources/Shaders/Wave.gdshader" id="1_5y0gq"]
+[ext_resource type="FontFile" uid="uid://bt1wq1bv3boxj" path="res://Resources/Fonts/GonziExpanded.otf" id="2_kfo7p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8a65y"]
+shader = ExtResource("1_5y0gq")
+shader_parameter/height = 3.0
+shader_parameter/frequency = 20.0
+shader_parameter/speed = 3.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_21n2d"]
+font = ExtResource("2_kfo7p")
+font_size = 100
+
+[node name="Parkspot" type="Node2D"]
+
+[node name="Sign" type="Node2D" parent="."]
+material = SubResource("ShaderMaterial_8a65y")
+position = Vector2(300, -450)
+
+[node name="white" type="Polygon2D" parent="Sign"]
+use_parent_material = true
+polygon = PackedVector2Array(-65, -80, -80, -65, -80, 65, -65, 80, 65, 80, 80, 65, 80, -65, 65, -80)
+
+[node name="blue" type="Polygon2D" parent="Sign"]
+use_parent_material = true
+scale = Vector2(0.9, 0.9)
+color = Color(0, 0.313574, 0.725611, 1)
+polygon = PackedVector2Array(-65, -80, -80, -65, -80, 65, -65, 80, 65, 80, 80, 65, 80, -65, 65, -80)
+
+[node name="Label" type="Label" parent="Sign"]
+use_parent_material = true
+offset_left = -50.0
+offset_top = -35.0
+offset_right = 50.0
+offset_bottom = 65.0
+pivot_offset = Vector2(50, 50)
+text = "P"
+label_settings = SubResource("LabelSettings_21n2d")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Road" type="Node2D" parent="."]
+
+[node name="parking" type="Polygon2D" parent="Road"]
+position = Vector2(300, 0)
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-100, -150, -100, 150, 100, 150, 100, -150)
+
+[node name="line" type="Polygon2D" parent="Road/parking"]
+position = Vector2(90, 0)
+polygon = PackedVector2Array(-6, -150, 10, -150, 10, 150, -6, 150)
+
+[node name="parkingAngle" type="Polygon2D" parent="Road"]
+position = Vector2(300, -250)
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-100, -100, -100, 100, 100, 100, 75, 15, 40, -40, -15, -75)
+
+[node name="line" type="Polygon2D" parent="Road/parkingAngle"]
+polygon = PackedVector2Array(-100, -100, -100, -88, -22, -64, 28, -30, 60, 22, 84, 100, 100, 100, 75, 15, 40, -40, -15, -75)
+
+[node name="parkingAngle2" type="Polygon2D" parent="Road"]
+position = Vector2(300, 250)
+rotation = 1.5708
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-100, -100, -100, 100, 100, 100, 75, 15, 40, -40, -15, -75)
+
+[node name="line" type="Polygon2D" parent="Road/parkingAngle2"]
+polygon = PackedVector2Array(-100, -100, -100, -84, -22, -64, 28, -30, 60, 22, 84, 100, 100, 100, 75, 15, 40, -40, -15, -75)
+
+[node name="Dots" type="Node2D" parent="."]
+
+[node name="dots" type="Polygon2D" parent="Dots"]
+position = Vector2(210, -300)
+polygon = PackedVector2Array(-10, -50, 10, -44, 10, 50, -10, 50)
+
+[node name="dots2" type="Polygon2D" parent="Dots"]
+position = Vector2(210, -100)
+polygon = PackedVector2Array(-10, -50, 10, -50, 10, 50, -10, 50)
+
+[node name="dots3" type="Polygon2D" parent="Dots"]
+position = Vector2(210, 100)
+polygon = PackedVector2Array(-10, -50, 10, -50, 10, 50, -10, 50)
+
+[node name="dots4" type="Polygon2D" parent="Dots"]
+position = Vector2(210, 300)
+polygon = PackedVector2Array(-10, -50, 10, -50, 10, 44, -10, 50)

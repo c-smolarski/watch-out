@@ -4,6 +4,7 @@ using Godot;
 using System;
 using Com.IsartDigital.WatchOut.Managers;
 using Com.IsartDigital.WatchOut.Enums;
+using Com.IsartDigital.WatchOut.GameObjects.Mobiles.Drivers;
 
 // Author : Camille Smolarski
 
@@ -69,6 +70,8 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
             base.OnDriverLeft(pDriver);
             if (!pDriver.OverlapsArea(stopLine))
                 DriverStopsWaiting();
+            else
+                ShaderFadeOut();
         }
 
         private void OnDriverStepsOnLine(Area2D pArea)
@@ -87,20 +90,24 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
 
         private void OnDriverLeavesLine(Area2D pArea)
         {
-            if (pArea is not Mobile)
+            if (pArea is not Mobile || pArea.OverlapsArea(this))
                 return;
 
-            if (!pArea.OverlapsArea(this))
+            if (pArea is not Cop && !driverFinishedWaiting)
             {
-                if (driverFinishedWaiting)
-                    DriverStopsWaiting();
-                else
-                {
-                    EmitSignal(SignalName.DriverRunnedOver);
-                    if (pArea is Player)
-                        PlayerSteppedOnWrongObject(linePolygon, T_KEY_RUNNED_OVER);
-                }
+                EmitSignal(SignalName.DriverRunnedOver);
+                if (pArea is Player)
+                    PlayerSteppedOnWrongObject(linePolygon, T_KEY_RUNNED_OVER);
             }
+
+            DriverStopsWaiting();
+
+        }
+
+        private void DriverStopsWaiting()
+        {
+            driverFinishedWaiting = false;
+            ShaderFadeOut();
         }
 
         /*
@@ -120,23 +127,9 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
             SucessAnim();
         }
 
-        protected override void WaitTimerStopped()
-        {
-            base.WaitTimerStopped();
-            ResetShaderValues();
-        }
-
         /*
          * VISUALS METHODS
          */
-
-        private void DriverStopsWaiting()
-        {
-            driverFinishedWaiting = false;
-            shaderTween = CreateTween();
-            shaderTween.TweenProperty(this, nameof(ShaderAlpha), 0f, ANIM_DEFAULT_DURATION * 2f);
-            shaderTween.Connect(Tween.SignalName.Finished, Callable.From(ResetShaderValues));
-        }
 
         private void SucessAnim()
         {
@@ -148,6 +141,13 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
             lTween.TweenProperty(sign, TweenProp.SCALE, sign.Scale, ANIM_DEFAULT_DURATION * 2f)
                 .SetTrans(Tween.TransitionType.Bounce)
                 .SetEase(Tween.EaseType.Out);
+        }
+
+        private void ShaderFadeOut()
+        {
+            shaderTween = CreateTween();
+            shaderTween.TweenProperty(this, nameof(ShaderAlpha), 0f, ANIM_DEFAULT_DURATION * 2f);
+            shaderTween.Connect(Tween.SignalName.Finished, Callable.From(ResetShaderValues));
         }
 
         private void ResetShaderValues()

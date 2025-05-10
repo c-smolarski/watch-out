@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://bplviwo1bvotp"]
+
+[ext_resource type="PackedScene" uid="uid://bjx5sbyjja8ln" path="res://Scenes/GameObjects/Mobiles/Cars/CarTemplate.tscn" id="1_y4qdo"]
+[ext_resource type="Texture2D" uid="uid://qumy51e1j7yr" path="res://Assets/light.png" id="2_53ark"]
+[ext_resource type="Script" path="res://Scripts/GameObjects/Mobiles/Drivers/Cop.cs" id="2_x7pu6"]
+
+[node name="CopCar" node_paths=PackedStringArray("lights") instance=ExtResource("1_y4qdo")]
+script = ExtResource("2_x7pu6")
+lights = [NodePath("lights/blue"), NodePath("lights/red")]
+
+[node name="body" parent="polygons" index="5"]
+color = Color(0.0605303, 0.0605303, 0.0605303, 1)
+
+[node name="white" type="Polygon2D" parent="polygons" index="6"]
+polygon = PackedVector2Array(-45, -42, 0, -42, 20, -30, 20, 30, 0, 42, -50, 42, -75, 25, -75, -25)
+
+[node name="white2" type="Polygon2D" parent="polygons" index="7"]
+position = Vector2(80, -1)
+polygon = PackedVector2Array(-30, -20, 20, -22, 20, 22, -30, 20)
+
+[node name="white3" type="Polygon2D" parent="polygons" index="8"]
+position = Vector2(-70, 0)
+polygon = PackedVector2Array(-30, -20, 20, -22, 20, 22, -30, 20)
+
+[node name="lights" type="Polygon2D" parent="polygons" index="9"]
+color = Color(0.176471, 0.176471, 0.176471, 1)
+polygon = PackedVector2Array(-3, -20, 3, -20, 3, 20, -3, 20)
+
+[node name="blue" type="Polygon2D" parent="polygons/lights" index="0"]
+color = Color(0, 0, 0.607843, 1)
+polygon = PackedVector2Array(-3, 7, 3, 7, 3, 20, -3, 20)
+
+[node name="blue2" type="Polygon2D" parent="polygons/lights" index="1"]
+rotation = 3.14159
+color = Color(0.607843, 0, 0, 1)
+polygon = PackedVector2Array(-3, 7, 3, 7, 3, 20, -3, 20)
+
+[node name="lights" type="Node2D" parent="." index="3"]
+
+[node name="blue" type="PointLight2D" parent="lights" index="0"]
+position = Vector2(0, 15)
+enabled = false
+color = Color(1, 1, 0, 1)
+blend_mode = 1
+texture = ExtResource("2_53ark")
+texture_scale = 0.75
+
+[node name="red" type="PointLight2D" parent="lights" index="1"]
+position = Vector2(0, -15)
+enabled = false
+color = Color(0, 1, 1, 1)
+blend_mode = 1
+texture = ExtResource("2_53ark")
+texture_scale = 0.75

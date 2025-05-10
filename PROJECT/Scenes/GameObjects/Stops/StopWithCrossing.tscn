@@ -1,24 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://bgpqewp8hnlfy"]
+[gd_scene load_steps=4 format=3 uid="uid://c3h860vvg40xc"]
 
 [ext_resource type="PackedScene" uid="uid://bl7jw454koo84" path="res://Scenes/GameObjects/Stops/StopSign.tscn" id="1_pndho"]
 [ext_resource type="PackedScene" uid="uid://b0520itaestcm" path="res://Scenes/GameObjects/Stops/Crossing.tscn" id="2_2041n"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mv27b"]
+size = Vector2(200, 100)
+
 [node name="StopSign" instance=ExtResource("1_pndho")]
 
-[node name="road" parent="." index="0"]
-position = Vector2(-100, 0)
-
 [node name="roadPolygon" parent="road" index="0"]
-polygon = PackedVector2Array(-200, -200, -200, 100, 200, 100, 200, -200)
-
-[node name="stopLine" parent="." index="1"]
-position = Vector2(0, -175)
+polygon = PackedVector2Array(-200, -200, -200, 125, 200, 125, 200, -200)
 
 [node name="line" parent="." index="2"]
-position = Vector2(-100, 50)
+polygon = PackedVector2Array(10, -100, 10, 150, -10, 150, -10, -100)
 
 [node name="Crossing" parent="." index="4" instance=ExtResource("2_2041n")]
-position = Vector2(-100, -100)
+position = Vector2(-100, 0)
 
-[node name="StopLineArea" parent="." index="5"]
-position = Vector2(0, -175)
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." index="7"]
+position = Vector2(0, 100)
+shape = SubResource("RectangleShape2D_mv27b")

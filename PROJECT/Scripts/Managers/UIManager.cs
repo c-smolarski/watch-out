@@ -26,8 +26,8 @@ namespace Com.IsartDigital.WatchOut.Managers
         [Export] private PackedScene PackedElectricDashboard;
 
         private const float SKIP_DURATION = 10f;
-        private const float TRANS_IN_DURATION = 3f;
-        private const float TRANS_OUT_DURATION = TRANS_IN_DURATION * 0.3f;
+        private const float TRANS_IN_DURATION = 2.5f;
+        private const float TRANS_OUT_DURATION = 1f;
         private const float TOUCH_ICON_DELAY = 0.5f;
         private const float LABEL_DELAY = TRANS_IN_DURATION - TRANS_IN_DURATION / 6f;
 
