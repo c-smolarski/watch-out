@@ -88,7 +88,7 @@ PackedElectricDashboard = ExtResource("4_lheqa")
 script = ExtResource("1_uixe0")
 GameContainer = NodePath("../../GameContainer")
 UIContainer = NodePath("../../CanvasLayer/UIContainer")
-mainMenu = NodePath("../../CanvasLayer/UIContainer/MainMenu")
+mainMenu = NodePath("../../CanvasLayer/MenuContainer/MainMenu")
 lightShaker = NodePath("../../Shakers/lightShaker")
 midShaker = NodePath("../../Shakers/midShaker")
 strongShaker = NodePath("../../Shakers/strongShaker")
@@ -111,7 +111,15 @@ visible = false
 layout_mode = 1
 mouse_filter = 2
 
-[node name="MainMenu" parent="CanvasLayer/UIContainer" instance=ExtResource("7_tnuc6")]
+[node name="MenuContainer" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenu" parent="CanvasLayer/MenuContainer" instance=ExtResource("7_tnuc6")]
 layout_mode = 1
 
 [node name="TransitionContainer" type="Control" parent="CanvasLayer"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b3ngdvsif30jt"]
+[gd_scene load_steps=11 format=3 uid="uid://b3ngdvsif30jt"]
 
 [ext_resource type="PackedScene" uid="uid://cru5wgs3k3arj" path="res://Scenes/LevelTemplate.tscn" id="1_fkoe1"]
 [ext_resource type="PackedScene" uid="uid://crvrs1nkdxf8i" path="res://Scenes/Assets/ParkingSpot.tscn" id="2_3ial2"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b3htajddkday5" path="res://Scenes/UI/TouchIcon.tscn" id="4_0upt7"]
 [ext_resource type="Shader" path="res://Resources/Shaders/Wave.gdshader" id="5_mbpus"]
 [ext_resource type="FontFile" uid="uid://bt1wq1bv3boxj" path="res://Resources/Fonts/GonziExpanded.otf" id="6_rxwq3"]
+[ext_resource type="Script" path="res://Scripts/Components/ResolutionRescaler.cs" id="7_qqloa"]
 
 [sub_resource type="Curve2D" id="Curve2D_nng08"]
 _data = {
@@ -70,6 +71,7 @@ offset_left = -600.0
 offset_top = -700.0
 offset_right = -600.0
 offset_bottom = -700.0
+pivot_offset = Vector2(300, 0)
 startAnim = 4
 startAnimLoopTime = 1.0
 
@@ -84,3 +86,9 @@ text = "↓"
 label_settings = SubResource("LabelSettings_aj1at")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ResolutionRescaler" type="Node" parent="." index="6" node_paths=PackedStringArray("targets")]
+script = ExtResource("7_qqloa")
+targets = [NodePath("../Control/TouchIcon")]
+baseResolution = Vector2(1600, 2560)
+mode = 1

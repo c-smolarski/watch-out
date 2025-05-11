@@ -1,0 +1,94 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccrl8428a3fah"]
+
+[ext_resource type="Shader" path="res://Resources/Shaders/Wave.gdshader" id="1_7i3dw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ntxj"]
+shader = ExtResource("1_7i3dw")
+shader_parameter/height = 5.0
+shader_parameter/frequency = 30.0
+shader_parameter/speed = 1.25
+
+[node name="CrossingSign" type="Polygon2D"]
+material = SubResource("ShaderMaterial_5ntxj")
+position = Vector2(700, -2550)
+scale = Vector2(1.25, 1.25)
+polygon = PackedVector2Array(0, -100, 100, 75, -100, 75)
+
+[node name="red" type="Polygon2D" parent="."]
+use_parent_material = true
+scale = Vector2(0.9, 0.9)
+color = Color(0.745098, 0, 0, 1)
+polygon = PackedVector2Array(0, -100, 100, 77.5, -100, 77.5)
+
+[node name="white" type="Polygon2D" parent="red"]
+use_parent_material = true
+scale = Vector2(0.85, 0.85)
+polygon = PackedVector2Array(0, -100, 100, 80, -100, 80)
+
+[node name="Polygon2D" type="Polygon2D" parent="red/white"]
+use_parent_material = true
+position = Vector2(0, 58)
+color = Color(0.176471, 0.176471, 0.176471, 1)
+polygon = PackedVector2Array(-3, -20, 3, -20, 5, 20, -5, 20)
+
+[node name="Polygon2D2" type="Polygon2D" parent="red/white"]
+use_parent_material = true
+position = Vector2(20, 58)
+color = Color(0.176471, 0.176471, 0.176471, 1)
+polygon = PackedVector2Array(-8, -20, 0, -20, 5, 20, -5, 20)
+
+[node name="Polygon2D6" type="Polygon2D" parent="red/white"]
+use_parent_material = true
+position = Vector2(-20, 58)
+color = Color(0.176471, 0.176471, 0.176471, 1)
+polygon = PackedVector2Array(0, -20, 8, -20, 5, 20, -5, 20)
+
+[node name="Polygon2D3" type="Polygon2D" parent="red/white"]
+use_parent_material = true
+position = Vector2(40, 58)
+color = Color(0.176471, 0.176471, 0.176471, 1)
+polygon = PackedVector2Array(-10, -20, -3, -20, 5, 20, -5, 20)
+
+[node name="Polygon2D7" type="Polygon2D" parent="red/white"]
+use_parent_material = true
+position = Vector2(-40, 58)
+color = Color(0.176471, 0.176471, 0.176471, 1)
+polygon = PackedVector2Array(3, -20, 10, -20, 5, 20, -5, 20)
+
+[node name="Polygon2D4" type="Polygon2D" parent="red/white"]
+use_parent_material = true
+position = Vector2(60, 58)
+color = Color(0.176471, 0.176471, 0.176471, 1)
+polygon = PackedVector2Array(-13, -20, -6, -20, 5, 20, -5, 20)
+
+[node name="Polygon2D8" type="Polygon2D" parent="red/white"]
+use_parent_material = true
+position = Vector2(-60, 58)
+color = Color(0.176471, 0.176471, 0.176471, 1)
+polygon = PackedVector2Array(6, -20, 13, -20, 5, 20, -5, 20)
+
+[node name="Polygon2D5" type="Polygon2D" parent="red/white"]
+use_parent_material = true
+position = Vector2(80, 58)
+color = Color(0.176471, 0.176471, 0.176471, 1)
+polygon = PackedVector2Array(-16, -20, -9, -20, 5, 20, -5, 20)
+
+[node name="Polygon2D9" type="Polygon2D" parent="red/white"]
+use_parent_material = true
+position = Vector2(-80, 58)
+color = Color(0.176471, 0.176471, 0.176471, 1)
+polygon = PackedVector2Array(9, -20, 16, -20, 5, 20, -5, 20)
+
+[node name="Polygon2D10" type="Polygon2D" parent="red/white"]
+use_parent_material = true
+position = Vector2(0, -25)
+scale = Vector2(2, 2)
+color = Color(0.329159, 0.329158, 0.329158, 1)
+polygon = PackedVector2Array(4.32092, -0.462891, 11.5227, 4.11523, 14.8148, 9.05347, 15.6379, 14.8148, 13.1688, 14.8148, 12.3457, 9.87659, 9.87659, 6.58435, 4.93835, 4.11523, 3.70361, 4.93848, 3.29224, 15.6379, 4.11523, 19.7531, 11.5227, 28.8066, 18.1071, 32.9219, 21.3992, 37.8601, 9.05359, 31.2758, 0, 21.3992, -9.05347, 33.7449, -12.3457, 41.1523, -16.0496, 43.21, -12.3457, 32.0989, -4.93823, 20.5762, -3.29211, 14.8148, -2.46924, 6.17285, -8.64209, 11.1113, -16.0496, 7.40747, -16.0494, 4.47534, -9.25928, 8.17908, -1.85193, 0.771606)
+
+[node name="Polygon2D11" type="Polygon2D" parent="red/white"]
+use_parent_material = true
+position = Vector2(0, -35.8025)
+scale = Vector2(2, 2)
+color = Color(0.329159, 0.329158, 0.329158, 1)
+polygon = PackedVector2Array(-1.23462, -4.93823, 0.617188, -4.93823, 2.46912, -4.32092, 3.70361, -3.08643, 4.93823, -1.2345, 4.93823, 0.61731, 4.32092, 2.46924, 2.46912, 4.32104, 0.617188, 4.93835, -2.46924, 4.32104, -4.32104, 2.46924, -4.93835, 0.61731, -4.93835, -0.617188, -4.32104, -2.46912, -3.70374, -3.70361, -2.46924, -4.32092)

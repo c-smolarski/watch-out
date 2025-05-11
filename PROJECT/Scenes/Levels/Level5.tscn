@@ -1,13 +1,209 @@
-[gd_scene load_steps=3 format=3 uid="uid://d1ryasntr3jgk"]
+[gd_scene load_steps=11 format=3 uid="uid://d1ryasntr3jgk"]
 
 [ext_resource type="PackedScene" uid="uid://cru5wgs3k3arj" path="res://Scenes/LevelTemplate.tscn" id="1_kbyox"]
+[ext_resource type="PackedScene" uid="uid://ccrl8428a3fah" path="res://Assets/Signs/CrossingSign.tscn" id="2_dy5g3"]
 [ext_resource type="PackedScene" uid="uid://c3h860vvg40xc" path="res://Scenes/GameObjects/Stops/StopWithCrossing.tscn" id="2_oo7va"]
+[ext_resource type="PackedScene" uid="uid://df4215fpxxyfq" path="res://Scenes/GameObjects/Mobiles/Cars/Player.tscn" id="3_51x47"]
+[ext_resource type="PackedScene" uid="uid://bl7jw454koo84" path="res://Scenes/GameObjects/Stops/StopSign.tscn" id="3_t06le"]
+[ext_resource type="PackedScene" uid="uid://b0520itaestcm" path="res://Scenes/GameObjects/Stops/Crossing.tscn" id="4_a81y6"]
+[ext_resource type="PackedScene" uid="uid://d4ayklfykx1xj" path="res://Scenes/GameObjects/DriverDetector.tscn" id="4_mpv2k"]
+[ext_resource type="PackedScene" uid="uid://cu1jctaxsdr7v" path="res://Scenes/GameObjects/Mobiles/Cars/Car.tscn" id="6_30j08"]
 
-[node name="LevelTemplate" instance=ExtResource("1_kbyox")]
+[sub_resource type="Curve2D" id="Curve2D_tyrom"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 100, 150, 0, 0, 0, -150, 100, -100, -300, 0, 0, 0, 500, -300, 0, 0, 450, 0, 800, -300, 0, 450, 0, 0, 1500, -1000, 0, 0, 0, -200, 1500, -2000, 200, 0, 0, 0, 1175, -2325, 0, 0, -300, 0, 0, -2325, 0, 300, 0, 0, -500, -2800, 0, 0, 0, 0, -500, -3600)
+}
+point_count = 10
 
-[node name="RoadH" type="Polygon2D" parent="Assets" index="0"]
+[sub_resource type="Curve2D" id="Curve2D_o7qmi"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -1000, -300, 0, 0, 0, 0, 500, -300, 0, 0, 450, 0, 800, -300, 0, 450, 0, 0, 1500, -1000, 0, 0, 0, -200, 1500, -1950, -200, 0, 0, 0, 2000, -2125, 0, 0, -300, 0, 5000, -2125)
+}
+point_count = 7
+
+[node name="Level5" node_paths=PackedStringArray("Player") instance=ExtResource("1_kbyox")]
+Player = NodePath("GameObjects/Cars/Player")
+
+[node name="Roads" type="Node2D" parent="Assets" index="0"]
+
+[node name="RoadH" type="Polygon2D" parent="Assets/Roads" index="0"]
 color = Color(0.176419, 0.176419, 0.176419, 1)
-polygon = PackedVector2Array(-4000, -600, -4000, -200, 4000, -200, 4000, -600)
+polygon = PackedVector2Array(-4000, -600, -4000, -200, 800, -200, 800, -600)
 
-[node name="StopSign" parent="GameObjects" index="0" instance=ExtResource("2_oo7va")]
+[node name="Line" type="Line2D" parent="Assets/Roads/RoadH" index="0"]
+position = Vector2(-250, -400)
+rotation = 1.5708
+points = PackedVector2Array(0, 20, 0, 3500)
+width = 20.0
+
+[node name="dots" type="Node2D" parent="Assets/Roads/RoadH" index="1"]
+position = Vector2(0, -400)
+
+[node name="dots" type="Polygon2D" parent="Assets/Roads/RoadH/dots" index="0"]
+position = Vector2(-200, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots2" type="Polygon2D" parent="Assets/Roads/RoadH/dots" index="1"]
+position = Vector2(-100, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots3" type="Polygon2D" parent="Assets/Roads/RoadH/dots" index="2"]
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots4" type="Polygon2D" parent="Assets/Roads/RoadH/dots" index="3"]
+position = Vector2(100, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots5" type="Polygon2D" parent="Assets/Roads/RoadH/dots" index="4"]
+position = Vector2(200, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="Line2" type="Line2D" parent="Assets/Roads/RoadH" index="2"]
+position = Vector2(250, -400)
+rotation = -1.5708
+points = PackedVector2Array(0, 20, 0, 550)
+width = 20.0
+
+[node name="RoadV" type="Polygon2D" parent="Assets/Roads" index="1"]
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-200, -200, -200, 1800, 200, 1800, 200, -200)
+
+[node name="Line" type="Line2D" parent="Assets/Roads/RoadV" index="0"]
+points = PackedVector2Array(0, 0, 0, 1800)
+width = 20.0
+
+[node name="RoadV2" type="Polygon2D" parent="Assets/Roads" index="2"]
+position = Vector2(1400, -1200)
+rotation = -3.14159
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-200, -200, -200, 600, 200, 600, 200, -200)
+
+[node name="Line" type="Line2D" parent="Assets/Roads/RoadV2" index="0"]
+points = PackedVector2Array(0, -200, 0, 600)
+width = 20.0
+
+[node name="RoadAngle" type="Polygon2D" parent="Assets/Roads" index="3"]
+position = Vector2(1400, -400)
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-305, -305, -259, -363, -231, -421, -214, -476, -203, -531, -200, -600, 200, -600, 193, -467, 164, -324, 122, -205, 55, -90, -12, -12, -90, 55, -205, 122, -324, 164, -467, 193, -600, 200, -600, -200, -554, -201, -497, -208, -422, -230, -355, -266)
+
+[node name="Line" type="Line2D" parent="Assets/Roads/RoadAngle" index="0"]
+points = PackedVector2Array(0, -600, 0, -477, -25, -370, -82, -240, -150, -150, -246, -77, -370, -25, -487, -5, -600, 0)
+width = 20.0
+
+[node name="RoadAngle2" type="Polygon2D" parent="Assets/Roads" index="4"]
+position = Vector2(-600, -2225)
+rotation = 1.5708
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-305, -305, -259, -363, -231, -421, -214, -476, -203, -531, -200, -600, 200, -600, 193, -467, 164, -324, 122, -205, 55, -90, -12, -12, -90, 55, -205, 122, -324, 164, -467, 193, -600, 200, -600, -200, -554, -201, -497, -208, -422, -230, -355, -266)
+
+[node name="Line" type="Line2D" parent="Assets/Roads/RoadAngle2" index="0"]
+points = PackedVector2Array(0, -600, 0, -477, -25, -370, -82, -240, -150, -150, -246, -77, -370, -25, -487, -5, -600, 0)
+width = 20.0
+
+[node name="RoadH2" type="Polygon2D" parent="Assets/Roads" index="5"]
+position = Vector2(1400, -1825)
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-1400, -600, -1400, -200, 4000, -200, 4000, -600)
+
+[node name="Line" type="Line2D" parent="Assets/Roads/RoadH2" index="0"]
+position = Vector2(-250, -400)
+rotation = 1.5708
+points = PackedVector2Array(0, 20, 0, 1150)
+width = 20.0
+
+[node name="dots" type="Node2D" parent="Assets/Roads/RoadH2" index="1"]
+position = Vector2(0, -400)
+
+[node name="dots" type="Polygon2D" parent="Assets/Roads/RoadH2/dots" index="0"]
+position = Vector2(-200, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots2" type="Polygon2D" parent="Assets/Roads/RoadH2/dots" index="1"]
+position = Vector2(-100, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots3" type="Polygon2D" parent="Assets/Roads/RoadH2/dots" index="2"]
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots4" type="Polygon2D" parent="Assets/Roads/RoadH2/dots" index="3"]
+position = Vector2(100, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots5" type="Polygon2D" parent="Assets/Roads/RoadH2/dots" index="4"]
+position = Vector2(200, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="Line2" type="Line2D" parent="Assets/Roads/RoadH2" index="2"]
+position = Vector2(250, -400)
+rotation = -1.5708
+points = PackedVector2Array(0, 20, 0, 3750)
+width = 20.0
+
+[node name="RoadV3" type="Polygon2D" parent="Assets/Roads" index="6"]
+position = Vector2(-600, -3025)
+rotation = -3.14159
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-200, -200, -200, 600, 200, 600, 200, -200)
+
+[node name="Line" type="Line2D" parent="Assets/Roads/RoadV3" index="0"]
+points = PackedVector2Array(0, -200, 0, 600)
+width = 20.0
+
+[node name="Signs" type="Node2D" parent="Assets" index="1"]
+
+[node name="CrossingSign" parent="Assets/Signs" index="0" instance=ExtResource("2_dy5g3")]
+position = Vector2(900, -2550)
+
+[node name="Obstacles" type="Node2D" parent="GameObjects" index="0"]
+
+[node name="StopSignWithCrossing" parent="GameObjects/Obstacles" index="0" instance=ExtResource("2_oo7va")]
 position = Vector2(100, -25)
+
+[node name="DriverDetector" parent="GameObjects/Obstacles" index="1" instance=ExtResource("4_mpv2k")]
+position = Vector2(1500, -1775)
+DetectsPlayer = false
+DetectsNPC = true
+
+[node name="StopSign" parent="GameObjects/Obstacles" index="2" instance=ExtResource("3_t06le")]
+position = Vector2(1500, -1850)
+DetectsNPC = true
+
+[node name="Crossing" parent="GameObjects/Obstacles" index="3" instance=ExtResource("4_a81y6")]
+position = Vector2(200, -2225)
+rotation = 1.5708
+
+[node name="Cars" type="Node2D" parent="GameObjects" index="1"]
+
+[node name="Player" parent="GameObjects/Cars" index="0" node_paths=PackedStringArray("pathFollow") instance=ExtResource("3_51x47")]
+position = Vector2(100, 150)
+rotation = -1.5708
+cameraFollowPlayer = true
+pathFollow = NodePath("../../../Paths/PlayerPath/PlayerFollow")
+
+[node name="Car" parent="GameObjects/Cars" index="1" node_paths=PackedStringArray("pathFollow") instance=ExtResource("6_30j08")]
+position = Vector2(-1000, -300)
+pathFollow = NodePath("../../../Paths/DriverPath/DriverFollow")
+maxForwardSpeed = 500.0
+
+[node name="PlayerPath" type="Path2D" parent="Paths" index="0"]
+curve = SubResource("Curve2D_tyrom")
+
+[node name="PlayerFollow" type="PathFollow2D" parent="Paths/PlayerPath" index="0"]
+position = Vector2(100, 150)
+rotation = -1.5708
+loop = false
+
+[node name="DriverPath" type="Path2D" parent="Paths" index="1"]
+curve = SubResource("Curve2D_o7qmi")
+
+[node name="DriverFollow" type="PathFollow2D" parent="Paths/DriverPath" index="0"]
+position = Vector2(-1000, -300)
+loop = false
+
+[node name="LevelEnd" parent="." index="3"]
+position = Vector2(-400, -2500)
+
+[connection signal="DriverStopped" from="GameObjects/Obstacles/StopSignWithCrossing" to="GameObjects/Cars/Car" method="StartMovingForward"]
+[connection signal="DriverDetected" from="GameObjects/Obstacles/DriverDetector" to="GameObjects/Cars/Car" method="Brake"]
+[connection signal="DriverStopped" from="GameObjects/Obstacles/StopSign" to="GameObjects/Cars/Car" method="StartMovingForward"]

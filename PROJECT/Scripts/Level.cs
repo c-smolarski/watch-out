@@ -89,6 +89,7 @@ namespace Com.IsartDigital.WatchOut
             if (pArea is not GameObjects.Mobiles.Player)
                 return;
 
+            Player.StopCameraFollow();
             SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelCompleted);
         }
 

@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mv27b"]
 size = Vector2(200, 100)
 
-[node name="StopSign" instance=ExtResource("1_pndho")]
+[node name="StopSignWithCrossing" instance=ExtResource("1_pndho")]
 
 [node name="roadPolygon" parent="road" index="0"]
 polygon = PackedVector2Array(-200, -200, -200, 125, 200, 125, 200, -200)

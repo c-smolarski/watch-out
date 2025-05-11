@@ -54,8 +54,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
         public override void _Ready()
         {
             base._Ready();
-            if (OnlyDetectsPlayer)
-                stopLine.CollisionLayer = stopLine.CollisionMask = Player.COLLISION_LAYER;
+            CollisionInit(stopLine);
             stopLine.AreaEntered += OnDriverStepsOnLine;
             stopLine.AreaExited += OnDriverLeavesLine;
             redSignBG.Material = signShader = (ShaderMaterial)redSignBG.Material.Duplicate();

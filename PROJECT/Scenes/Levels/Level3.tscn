@@ -174,11 +174,13 @@ pathFollow = NodePath("../../Paths/PlayerPath/PlayerFollow")
 [node name="StopSign" parent="GameObjects/Introduction" index="0" instance=ExtResource("3_hkah2")]
 position = Vector2(-3100, -775)
 rotation = -3.14159
-OnlyDetectsPlayer = false
+DetectsPlayer = false
+DetectsNPC = true
 
 [node name="DriverDetector" parent="GameObjects/Introduction" index="1" instance=ExtResource("6_0yusg")]
 position = Vector2(-3350, -500)
-OnlyDetectsPlayer = false
+DetectsPlayer = false
+DetectsNPC = true
 
 [node name="Driver" parent="GameObjects/Introduction" index="2" node_paths=PackedStringArray("pathFollow") instance=ExtResource("4_8grnw")]
 position = Vector2(-3100, -850)

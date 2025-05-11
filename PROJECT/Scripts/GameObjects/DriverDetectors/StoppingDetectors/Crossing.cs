@@ -34,6 +34,12 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
             SpawnPedestrian();
         }
 
+        protected override void CollisionsDictInit(ref Dictionary<uint, bool> pCollisionDict)
+        {
+            base.CollisionsDictInit(ref pCollisionDict);
+            pCollisionDict.Add(Pedestrian.COLLISION_LAYER, true);
+        }
+
         protected override void OnDriverEntered(Mobile pDriver)
         {
             base.OnDriverEntered(pDriver);

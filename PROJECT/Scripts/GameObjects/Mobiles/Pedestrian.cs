@@ -13,10 +13,10 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
     {
         [Export] private float minForwardSpeed = 100f;
 
+        public const uint COLLISION_LAYER = 4;
+        private const float TIME_TO_APPEAR = 2f;
         private const string COLLIDER_PATH = "collider";
         private const string DISABLED = "disabled";
-
-        private const float TIME_TO_APPEAR = 2f;
 
         private CollisionShape2D collider;
 
@@ -26,6 +26,13 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
             collider = GetNode<CollisionShape2D>(COLLIDER_PATH);
             collider.SetDeferred(DISABLED, true);
             ExhaustParticels.Emitting = false;
+        }
+
+        protected override void OnHit(Area2D pArea)
+        {
+            if (pArea is Pedestrian)
+                return;
+            base.OnHit(pArea);
         }
 
         private void Init()

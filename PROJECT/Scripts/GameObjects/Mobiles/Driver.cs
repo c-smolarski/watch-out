@@ -8,6 +8,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
     public partial class Driver : Mobile
     {
         [Export] private bool visibleOnReady;
+
         public override void _Ready()
         {
             base._Ready();
@@ -18,6 +19,11 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
         {
             Visible = true;
             base.StartMoving(pDirection);
+        }
+
+        private void Brake()
+        {
+            StartBraking(EngineBrakeForce);
         }
 
         protected override void OnReachPathEnd()

@@ -67,13 +67,10 @@ namespace Com.IsartDigital.WatchOut.Managers
             LoadLevel(CurrentLevelNumber);
         }
 
-        private async void LoadLevel(int pLevelNumber)
+        private void LoadLevel(int pLevelNumber)
         {
-            if (CurrentLevel != null)
-            {
-                CurrentLevel.QueueFree();
-                await ToSignal(CurrentLevel, Level.SignalName.TreeExited);
-            }
+            if (IsInstanceValid(CurrentLevel))
+                CurrentLevel.Free();
 
             CurrentLevel = NodeCreator.CreateNode<Level>(
                 GD.Load<PackedScene>(

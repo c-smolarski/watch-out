@@ -22,6 +22,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects
         [Export] protected float EmergencyBrakeForce { get; private set; } = 0.005f;
         #endregion
 
+        public const uint NPC_COLLISION_LAYER = 3;
         public const float MIN_SPEED_THRESHOLD = 50f;
         private const float ACCEL_CURVE_POW = 1.5f;
         private const string POLYGONS_PATH = "polygons";
@@ -140,7 +141,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects
             Move(pDelta);
         }
 
-        private void Move(float pDelta)
+        protected virtual void Move(float pDelta)
         {
             if (!pathFollow.Loop && pathFollow.ProgressRatio >= 1)
                 OnReachPathEnd();

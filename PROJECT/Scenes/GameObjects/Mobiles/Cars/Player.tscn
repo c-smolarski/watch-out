@@ -11,3 +11,6 @@ autoRestartOnEnd = false
 
 [node name="body" parent="polygons" index="5"]
 color = Color(0.6, 0.160784, 0, 1)
+
+[node name="AudioListener2D" type="AudioListener2D" parent="." index="3"]
+current = true
