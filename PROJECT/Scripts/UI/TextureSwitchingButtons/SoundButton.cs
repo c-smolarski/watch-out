@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using Com.IsartDigital.WatchOut.Utils.Paths;
+using Godot;
 using System;
 
 // Author : Camille Smolarski
@@ -7,12 +8,10 @@ namespace Com.IsartDigital.WatchOut.UI.TextureSwitchingButtons
 {
     public partial class SoundButton : TextureSwitchingButton
     {
-        private const string MASTER_BUS = "Master";
-
         protected override void OnPress()
         {
             base.OnPress();
-            int lBusIndx = AudioServer.GetBusIndex(MASTER_BUS);
+            int lBusIndx = AudioServer.GetBusIndex(SoundPath.MAIN_SOUND_BUS);
             AudioServer.SetBusMute(lBusIndx, !AudioServer.IsBusMute(lBusIndx));
         }
     }
