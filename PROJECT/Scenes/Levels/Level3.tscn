@@ -269,8 +269,8 @@ position = Vector2(-3000, -775)
 [connection signal="DriverRunnedOver" from="GameObjects/StopSign" to="GameObjects/Car" method="StartMovingForward"]
 [connection signal="DriverRunnedOver" from="GameObjects/StopSign" to="GameObjects/Car2" method="StartMovingForward"]
 [connection signal="DriverSteppedOnLine" from="GameObjects/StopSign" to="GameObjects/Car3" method="StartMovingForward"]
-[connection signal="DriverRunnedOver" from="GameObjects/Introduction/StopSign" to="GameObjects/Introduction/CopCar" method="StartMovingForward"]
 [connection signal="DriverRunnedOver" from="GameObjects/Introduction/StopSign" to="GameObjects/Introduction/CopCar" method="TurnOnSirens"]
+[connection signal="DriverRunnedOver" from="GameObjects/Introduction/StopSign" to="GameObjects/Introduction/CopCar" method="StartMovingForward"]
 [connection signal="DriverStopped" from="GameObjects/Introduction/StopSign" to="GameObjects/Introduction/Driver" method="StartMovingForward"]
 [connection signal="DriverDetected" from="GameObjects/Introduction/DriverDetector" to="GameObjects/Introduction/SpeedingDriver" method="StartMovingForward"]
 

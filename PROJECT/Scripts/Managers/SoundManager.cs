@@ -12,12 +12,12 @@ namespace Com.IsartDigital.WatchOut.Managers
     {
         [ExportCategory("Musics")]
         [Export] public AudioStreamOggVorbis MusicMainMenu { get; private set; }
+        [ExportCategory("Ambients")]
+        [Export] public AudioStreamOggVorbis StreetLoop { get; private set; }
         [ExportCategory("SFX")]
         [Export] public AudioStreamOggVorbis Sirens { get; private set; }
         [Export] public AudioStreamOggVorbis Horn { get; private set; }
         [Export] public AudioStreamOggVorbis Accident { get; private set; }
-        [ExportGroup("Ambients")]
-        [Export] public AudioStreamOggVorbis StreetLoop { get; private set; }
 
         private const float MUSIC_TRANSITION_TIME = 1.5f;
 
@@ -92,7 +92,7 @@ namespace Com.IsartDigital.WatchOut.Managers
             return true;
         }
 
-        private AudioStreamPlayer Play(AudioStreamOggVorbis pStream, bool pIsLooping = false, string pBus = SoundPath.MAIN_SOUND_BUS)
+        public AudioStreamPlayer Play(AudioStreamOggVorbis pStream, bool pIsLooping = false, string pBus = SoundPath.MAIN_SOUND_BUS)
         {
             AudioStreamPlayer lPlayer = new();
             pStream.Loop = pIsLooping;

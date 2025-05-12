@@ -17,7 +17,6 @@ namespace Com.IsartDigital.WatchOut.Managers
         [Export] private ScoreTimer scoreTimer;
         [ExportGroup("Menus")]
         [Export] private Control menuContainer;
-        [Export] private Control mainMenu;
         [ExportGroup("Transition")]
         [Export] private ColorRect transitionRect;
         [Export] private Label accidentLabel;
@@ -56,6 +55,7 @@ namespace Com.IsartDigital.WatchOut.Managers
         }
 
         private Control dashboard;
+        private Control mainMenu;
         private Tween currentTrans;
         private Action transOutAction;
         private ShaderMaterial transRectShaderMat;
@@ -80,6 +80,7 @@ namespace Com.IsartDigital.WatchOut.Managers
             SignalBus.Instance.LevelHardFailed += OnLevelHardFail;
 
             TransitionInit();
+            LoadMainMenu();
         }
 
         private void OnGameStart()
@@ -234,6 +235,7 @@ namespace Com.IsartDigital.WatchOut.Managers
         public void LoadMainMenu()
         {
             mainMenu = NodeCreator.CreateNode<Control>(packedMainMenu, menuContainer);
+            SoundManager.PlayMusic(SoundManager.Instance.MusicMainMenu, SoundManager.Instance);
         }
 
         public void SetTransLabelsTextDefault()

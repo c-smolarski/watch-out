@@ -1,4 +1,6 @@
-﻿using Godot;
+﻿using Com.IsartDigital.WatchOut.Managers;
+using Com.IsartDigital.WatchOut.Utils.Paths;
+using Godot;
 using System;
 
 // Author : Camille Smolarski
@@ -12,8 +14,13 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles.Drivers
         [Export] private float lightTime = 0.75f;
         [Export] private bool sirensOnReady;
 
+        private const float TIME_TO_MIN_VOLUME = 1.5f;
+
         private int lightIdx;
+        private bool muteSirens;
         private Tween lightsTween;
+        private AudioStreamPlayer sirens;
+        private float elapsedTime;
 
         public override void _Ready()
         {
@@ -22,9 +29,37 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles.Drivers
                 TurnOnSirens();
         }
 
+        public override void _Process(double pDelta)
+        {
+            base._Process(pDelta);
+            if (muteSirens)
+            {
+                if (!IsInstanceValid(sirens))
+                {
+                    muteSirens = false;
+                    sirens = null;
+                    return;
+                }
+
+                elapsedTime += (float)pDelta;
+                float lValue = Mathf.Clamp(1 - elapsedTime / TIME_TO_MIN_VOLUME, 0, 1);
+
+                sirens.VolumeDb = Mathf.LinearToDb(lValue);
+
+                if (lValue == default)
+                {
+                    muteSirens = false;
+                    sirens.QueueFree();
+                    sirens = null;
+                }
+
+            }
+        }
+
         protected override void OnReachPathEnd()
         {
             base.OnReachPathEnd();
+            muteSirens = true;
             TurnOffSirens();
         }
 
@@ -32,6 +67,9 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles.Drivers
         {
             if (IsInstanceValid(lightsTween))
                 TurnOffSirens();
+
+            if (sirens == null)
+                sirens = SoundManager.Instance.Play(SoundManager.Instance.Sirens, true, SoundPath.SFX_SOUND_BUS);
 
             lightsTween = CreateTween();
             lightsTween.TweenProperty(lights[lightIdx], (string)PointLight2D.PropertyName.Enabled, true, default);

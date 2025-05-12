@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://d0c4suyvuber7"]
+[gd_scene load_steps=31 format=3 uid="uid://d0c4suyvuber7"]
 
 [ext_resource type="Script" path="res://Scripts/Managers/SoundManager.cs" id="1_dvtqm"]
 [ext_resource type="Script" path="res://Scripts/Managers/UIManager.cs" id="1_jr131"]
@@ -9,11 +9,16 @@
 [ext_resource type="PackedScene" uid="uid://pv2egy82ph3n" path="res://Scenes/GameObjects/Mobiles/Pedestrian.tscn" id="5_ukjh1"]
 [ext_resource type="Shader" path="res://Resources/Shaders/TransitionLabel.gdshader" id="6_ef20s"]
 [ext_resource type="PackedScene" uid="uid://tvfcp1usf1e3" path="res://Scenes/UI/ScoreTimer.tscn" id="6_lwkgc"]
+[ext_resource type="AudioStream" uid="uid://cdoktk4ndwbwb" path="res://Sounds/Musics/musicloop.ogg" id="6_yneic"]
 [ext_resource type="FontFile" uid="uid://cfcvv2m65kn8x" path="res://Resources/Fonts/dealerplate_california.otf" id="7_m041i"]
 [ext_resource type="PackedScene" uid="uid://dt2gvk56ve6e6" path="res://Scenes/UI/MainMenu.tscn" id="7_tnuc6"]
+[ext_resource type="AudioStream" uid="uid://ghm1u2ucq7a" path="res://Sounds/Ambience/streetloop.ogg" id="7_x78ln"]
+[ext_resource type="AudioStream" uid="uid://c6tygmpw0shqp" path="res://Sounds/SFX/policesiren.ogg" id="8_hyl5o"]
 [ext_resource type="Script" path="res://Scripts/Components/ResolutionRescaler.cs" id="8_lx12m"]
 [ext_resource type="Shader" path="res://Resources/Shaders/Wave.gdshader" id="8_qc7ey"]
 [ext_resource type="FontFile" uid="uid://bt1wq1bv3boxj" path="res://Resources/Fonts/GonziExpanded.otf" id="9_lp8ec"]
+[ext_resource type="AudioStream" uid="uid://cukpn187q3ai2" path="res://Sounds/SFX/horn.ogg" id="9_sdqku"]
+[ext_resource type="AudioStream" uid="uid://b1ja271ph6w3k" path="res://Sounds/SFX/accident.ogg" id="10_b2rvq"]
 [ext_resource type="FontFile" uid="uid://bg5g2r0po66u4" path="res://Resources/Fonts/GonziExpandedLight.otf" id="10_ypeor"]
 [ext_resource type="PackedScene" uid="uid://b3htajddkday5" path="res://Scenes/UI/TouchIcon.tscn" id="12_ak6xg"]
 [ext_resource type="PackedScene" uid="uid://du0cl7xgfhbkh" path="res://Scenes/Utils/shaker.tscn" id="16_br75i"]
@@ -72,16 +77,20 @@ font_color = Color(0, 0, 0, 1)
 
 [node name="SoundManager" type="Node" parent="Managers"]
 script = ExtResource("1_dvtqm")
+MusicMainMenu = ExtResource("6_yneic")
+StreetLoop = ExtResource("7_x78ln")
+Sirens = ExtResource("8_hyl5o")
+Horn = ExtResource("9_sdqku")
+Accident = ExtResource("10_b2rvq")
 
 [node name="LevelManager" type="Node" parent="Managers"]
 script = ExtResource("4_183ov")
 
-[node name="UIManager" type="Node" parent="Managers" node_paths=PackedStringArray("touchIcon", "scoreTimer", "menuContainer", "mainMenu", "transitionRect", "accidentLabel", "transLabelContainer", "successLabel", "successMessageLabel", "scoreLabel")]
+[node name="UIManager" type="Node" parent="Managers" node_paths=PackedStringArray("touchIcon", "scoreTimer", "menuContainer", "transitionRect", "accidentLabel", "transLabelContainer", "successLabel", "successMessageLabel", "scoreLabel")]
 script = ExtResource("1_jr131")
 touchIcon = NodePath("../../CanvasLayer/TransitionContainer/TouchIcon")
 scoreTimer = NodePath("../../CanvasLayer/UIContainer/ScoreTimer")
 menuContainer = NodePath("../../CanvasLayer/MenuContainer")
-mainMenu = NodePath("../../CanvasLayer/MenuContainer/MainMenu")
 transitionRect = NodePath("../../CanvasLayer/TransitionContainer/TransitionRect")
 accidentLabel = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/accidentLabel")
 transLabelContainer = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels")
@@ -124,9 +133,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="MainMenu" parent="CanvasLayer/MenuContainer" instance=ExtResource("7_tnuc6")]
-layout_mode = 1
 
 [node name="TransitionContainer" type="Control" parent="CanvasLayer"]
 layout_mode = 3

@@ -15,7 +15,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
 
         private const float FLUTTER_PER_SECOND = 10f;
         private const float FLUTTER_SCALE = 0.3f;
-        private const float ACCIDENT_SMOKE_DELAY = 0.5f;
+        private const float ACCIDENT_DELAY = 0.5f;
 
         private const string POLYGONS_PATH = "polygons";
         private const string ACCIDENT_PARTICLES_PATH = "accidentParticles";
@@ -64,14 +64,21 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
                 Speed = maxForwardSpeed;
                 Direction *= -Mathf.Sign(MathS.Dot(VelocityDirection, (pMobile.GlobalPosition - GlobalPosition).Normalized()));
                 explosionParticles.Emitting = true;
-                GetTree().CreateTimer(ACCIDENT_SMOKE_DELAY, false).Connect(
+                GetTree().CreateTimer(ACCIDENT_DELAY, false).Connect(
                     Timer.SignalName.Timeout,
-                    Callable.From(() => accidentParticles.Emitting = true));
+                    Callable.From(AccidentJuiciness));
             }
 
+            SoundManager.Instance.PlaySFX(SoundManager.Instance.Accident, ACCIDENT_DELAY);
             StartBraking(EmergencyBrakeForce);
             animated = MoveParticles.Emitting = false;
             polygons.Scale = polygonsScale;
+        }
+
+        private void AccidentJuiciness()
+        {
+            accidentParticles.Emitting = true;
+            SoundManager.Instance.PlaySFX(SoundManager.Instance.Horn, ACCIDENT_DELAY);
         }
 
         protected override void StartMovingForward()
