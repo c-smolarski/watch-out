@@ -65,11 +65,13 @@ position = Vector2(100, -1400)
 [node name="Control" type="Control" parent="." index="5"]
 layout_mode = 3
 anchors_preset = 0
+offset_left = -200.0
+offset_right = -200.0
 
 [node name="TouchIcon" parent="Control" index="0" instance=ExtResource("4_0upt7")]
-offset_left = -600.0
+offset_left = -375.0
 offset_top = -700.0
-offset_right = -600.0
+offset_right = -375.0
 offset_bottom = -700.0
 pivot_offset = Vector2(300, 0)
 startAnim = 4
@@ -78,9 +80,9 @@ startAnimLoopTime = 1.0
 [node name="Label" type="Label" parent="Control/TouchIcon" index="4"]
 material = SubResource("ShaderMaterial_8a65y")
 layout_mode = 0
-offset_left = -25.0
+offset_left = -50.0
 offset_top = 275.0
-offset_right = 350.0
+offset_right = 325.0
 offset_bottom = 675.0
 text = "↓"
 label_settings = SubResource("LabelSettings_aj1at")

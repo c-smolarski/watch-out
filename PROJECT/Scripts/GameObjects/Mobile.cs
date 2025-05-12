@@ -6,68 +6,40 @@ using System;
 
 namespace Com.IsartDigital.WatchOut.GameObjects
 {
-    public partial class Mobile : GameObject
+    public abstract partial class Mobile : GameObject
     {
         #region Exports
         [Export] protected PathFollow2D pathFollow;
-        [Export] private bool autoRestartOnEnd = true;
-        [Export] private bool animated = true;
-        [ExportGroup("Physics")]
-        [Export] private bool startAtMaxSpeed = default;
+        [Export] private bool autoResetPosOnEnd = true;
+        [ExportGroup("Speed")]
+        [Export] private bool startAtMaxSpeed;
         [Export] protected float maxForwardSpeed = 750f;
         [Export] private float maxBackwardSpeed = 250f;
         [Export] protected float TimeToMaxSpeed { get; private set; } = 1.5f;
-        [Export] protected float EngineBrakeForce { get; private set; } = 0.1f;
-        [Export] protected float ManualBrakeForce { get; private set; } = 0.015f;
-        [Export] protected float EmergencyBrakeForce { get; private set; } = 0.005f;
         #endregion
 
         public const uint NPC_COLLISION_LAYER = 3;
         public const float MIN_SPEED_THRESHOLD = 50f;
         private const float ACCEL_CURVE_POW = 1.5f;
-        private const string POLYGONS_PATH = "polygons";
-        private const string EXHAUST_PARTICLES_PATH = "Particles";
 
-        public enum GearMode
-        {
-            PARKED = -2,
-            REVERSE = -1,
-            NEUTRAL = 0,
-            DRIVE = 1
-        }
+        private const string MOVE_PARTICLES_PATH = "Particles";
 
-        public int Direction { get; private set; }
-        public float Speed { get; private set; }
+        public int Direction { get; protected set; }
+        public float Speed { get; protected set; }
+        public Vector2 VelocityDirection => (GlobalPosition - lastPos).Normalized();
         protected bool IsMoving => Speed > 0;
-        protected virtual GearMode SelectedGearMode { get; set; } = GearMode.PARKED;
-        protected GpuParticles2D ExhaustParticels { get; private set; }
-        private Vector2 VelocityDirection => (GlobalPosition - lastPos).Normalized();
+        protected GpuParticles2D MoveParticles { get; private set; }
 
-        private Vector2 polygonsScale, lastPos;
-        private Node2D polygons;
+        private Vector2 lastPos;
         private bool collisionsEnabled, resetStartAtMaxSpeed;
-        private float elapsedTime, flutterTime, baseRotation, maxSpeed, brakeForce;
+        private float elapsedTime, flutterTime, maxSpeed;
 
         public override void _Ready()
         {
             base._Ready();
-            ExhaustParticels = GetNode<GpuParticles2D>(EXHAUST_PARTICLES_PATH);
-            polygons = GetNode<Node2D>(POLYGONS_PATH);
+            MoveParticles = GetNode<GpuParticles2D>(MOVE_PARTICLES_PATH);
             resetStartAtMaxSpeed = startAtMaxSpeed;
             lastPos = GlobalPosition;
-            polygonsScale = polygons.Scale;
-        }
-
-        public override void _Process(double pDelta)
-        {
-            base._Process(pDelta);
-            if (animated)
-            {
-                flutterTime += (float)pDelta;
-                if (flutterTime > 0.1f)
-                    flutterTime = default;
-                polygons.Scale = polygonsScale + Vector2.One * 0.3f * flutterTime;
-            }
         }
 
         protected override void OnHit(Area2D pArea)
@@ -75,41 +47,32 @@ namespace Com.IsartDigital.WatchOut.GameObjects
             if (pArea is not Mobile || !collisionsEnabled  || !((Mobile)pArea).collisionsEnabled)
                 return;
 
-            Speed = maxForwardSpeed;
-            Direction *= -Mathf.Sign(MathS.Dot(VelocityDirection, (pArea.GlobalPosition - GlobalPosition).Normalized()));
-            StartBraking(EmergencyBrakeForce);
-            OnAccident((Mobile) pArea);
+            OnAccident((Mobile)pArea);
         }
 
         public virtual void Appear()
         { }
 
-        protected virtual void OnAccident(Mobile pDriver)
+        protected abstract void OnAccident(Mobile pMobile);
+
+        protected virtual void StartMovingForward()
         {
-            animated = ExhaustParticels.Emitting = false;
-            polygons.Scale = polygonsScale;
+            StartMoving(true);
         }
 
-        protected void StartMovingForward()
+        protected virtual void StartMovingBackward()
         {
-            StartMoving(GearMode.DRIVE);
+            StartMoving(false);
         }
 
-        protected void StartMovingBackward()
+        protected void StartMoving(bool pForward)
         {
-            StartMoving(GearMode.REVERSE);
-        }
-
-        protected virtual void StartMoving(GearMode pDirection)
-        {
-            if (pDirection != GearMode.DRIVE && pDirection != GearMode.REVERSE)
-                throw new Exception("Invalid direction.");
-
-            if (Direction == (int)GearMode.REVERSE)
+            int lNewDirection = pForward ? 1 : -1;
+            if (Direction != lNewDirection)
                 StopMoving();
 
-            Direction = (int)(SelectedGearMode = pDirection);
-            maxSpeed = SelectedGearMode == GearMode.DRIVE ? maxForwardSpeed : maxBackwardSpeed;
+            Direction = lNewDirection;
+            maxSpeed = pForward ? maxForwardSpeed : maxBackwardSpeed;
 
             if (Speed < MIN_SPEED_THRESHOLD)
                 Speed = MIN_SPEED_THRESHOLD;
@@ -150,39 +113,18 @@ namespace Com.IsartDigital.WatchOut.GameObjects
 
             lastPos = GlobalPosition;
             GlobalPosition = pathFollow.GlobalPosition;
-            GlobalRotation = pathFollow.GlobalRotation - baseRotation;
+            GlobalRotation = pathFollow.GlobalRotation;
         }
 
         protected virtual void OnReachPathEnd()
         {
-            if(autoRestartOnEnd)
+            if(autoResetPosOnEnd)
                 StopAndReset();
         }
 
-        protected void StartBraking(float pForce)
-        {
-            doAction = Brake;
-            brakeForce = pForce;
-            if (pForce == EngineBrakeForce)
-                SelectedGearMode = GearMode.NEUTRAL;
-        }
 
-        private void Brake(float pDelta)
+        protected virtual void StopMoving()
         {
-            Speed *= Mathf.Pow(brakeForce, pDelta);
-            if (Speed < MIN_SPEED_THRESHOLD)
-            {
-                StopMoving();
-                if (brakeForce == ManualBrakeForce)
-                    StartMovingBackward();
-                return;
-            }
-            Move(pDelta);
-        }
-
-        protected void StopMoving()
-        {
-            SelectedGearMode = GearMode.PARKED;
             Speed = Direction = default;
             doAction = null;
         }

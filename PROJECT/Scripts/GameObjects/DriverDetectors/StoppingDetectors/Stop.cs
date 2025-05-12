@@ -64,10 +64,10 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
          * EVENTS METHODS
          */
 
-        protected override void OnDriverLeft(Mobile pDriver)
+        protected override void OnDriverLeft(Vehicle pVehicle)
         {
-            base.OnDriverLeft(pDriver);
-            if (!pDriver.OverlapsArea(stopLine))
+            base.OnDriverLeft(pVehicle);
+            if (!pVehicle.OverlapsArea(stopLine))
                 DriverStopsWaiting();
             else
                 ShaderFadeOut();
@@ -75,10 +75,10 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
 
         private void OnDriverStepsOnLine(Area2D pArea)
         {
-            if (pArea is not Mobile)
+            if (pArea is not Vehicle)
                 return;
 
-            bool lAreaGoingReverse = ((Mobile)pArea).Direction == (int)Mobile.GearMode.REVERSE;
+            bool lAreaGoingReverse = ((Vehicle)pArea).Direction == (int)Vehicle.GearMode.REVERSE;
             if (!driverFinishedWaiting || lAreaGoingReverse)
             {
                 EmitSignal(SignalName.DriverSteppedOnLine);
@@ -89,7 +89,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
 
         private void OnDriverLeavesLine(Area2D pArea)
         {
-            if (pArea is not Mobile || pArea.OverlapsArea(this))
+            if (pArea is not Vehicle || pArea.OverlapsArea(this))
                 return;
 
             if (pArea is not Cop && !driverFinishedWaiting)

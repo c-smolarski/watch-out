@@ -28,25 +28,25 @@ namespace Com.IsartDigital.WatchOut.GameObjects
 
         protected override void OnHit(Area2D pArea)
         {
-            if (pArea is not Mobile || pArea is Pedestrian || detectedDriver != null)
+            if (pArea is not Vehicle || detectedDriver != null)
                 return;
             EmitSignal(SignalName.DriverDetected);
-            OnDriverEntered((Mobile)pArea);
+            OnDriverEntered((Vehicle)pArea);
         }
 
         private void OnAreaLeft(Area2D pArea)
         {
-            if (pArea is not Mobile || pArea is Pedestrian || pArea != detectedDriver)
+            if (pArea is not Vehicle || pArea != detectedDriver)
                 return;
-            OnDriverLeft((Mobile)pArea);
+            OnDriverLeft((Vehicle)pArea);
         }
 
-        protected virtual void OnDriverEntered(Mobile pDriver)
+        protected virtual void OnDriverEntered(Vehicle pVehicle)
         {
-            detectedDriver = pDriver;
+            detectedDriver = pVehicle;
         }
 
-        protected virtual void OnDriverLeft(Mobile pDriver)
+        protected virtual void OnDriverLeft(Vehicle pVehicle)
         {
             detectedDriver = null;
         }

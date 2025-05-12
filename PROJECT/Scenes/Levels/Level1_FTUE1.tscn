@@ -58,11 +58,13 @@ position = Vector2(100, 1600)
 [node name="Control" type="Control" parent="." index="5"]
 layout_mode = 3
 anchors_preset = 0
+offset_left = 200.0
+offset_right = 200.0
 
 [node name="TouchIcon" parent="Control" index="0" instance=ExtResource("3_r3xtw")]
-offset_left = 300.0
+offset_left = 100.0
 offset_top = -700.0
-offset_right = 300.0
+offset_right = 100.0
 offset_bottom = -700.0
 startAnim = 2
 startAnimLoopTime = 1.0
@@ -70,10 +72,10 @@ startAnimLoopTime = 1.0
 [node name="Label" type="Label" parent="Control/TouchIcon" index="4"]
 material = SubResource("ShaderMaterial_8a65y")
 layout_mode = 0
-offset_left = 15.0
-offset_top = 400.0
-offset_right = 390.0
-offset_bottom = 800.0
+offset_left = -20.0
+offset_top = 375.0
+offset_right = 355.0
+offset_bottom = 775.0
 text = "GAS !
 GAS !
 GAS !"
@@ -83,6 +85,6 @@ vertical_alignment = 1
 
 [node name="ResolutionRescaler" type="Node" parent="." index="6" node_paths=PackedStringArray("targets")]
 script = ExtResource("6_nneu0")
-targets = [NodePath("../Control/TouchIcon")]
+targets = [NodePath("../Control")]
 baseResolution = Vector2(1600, 2560)
 mode = 1

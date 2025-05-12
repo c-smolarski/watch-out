@@ -5,7 +5,7 @@ using System;
 
 namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
 {
-    public partial class Driver : Mobile
+    public partial class Driver : Vehicle
     {
         [Export] private bool visibleOnReady;
 

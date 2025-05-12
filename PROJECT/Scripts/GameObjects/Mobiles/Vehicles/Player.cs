@@ -9,7 +9,7 @@ using Com.IsartDigital.WatchOut.Utils;
 
 namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
 {
-    public partial class Player : Mobile
+    public partial class Player : Vehicle
     {
         [Signal] public delegate void ChangedGearModeEventHandler(int pNewGear);
 
@@ -182,7 +182,9 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
 
             DisconnectInputs();
             GameManager.Shake(ScreenShakeForce.STRONG);
-            SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelHardFailed, T_KEY_ACCIDENT);
+            GetTree().CreateTimer(1f, false).Connect(
+                Timer.SignalName.Timeout,
+                Callable.From(()=> SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelHardFailed, T_KEY_ACCIDENT)));
         }
 
         protected override void Dispose(bool pDisposing)

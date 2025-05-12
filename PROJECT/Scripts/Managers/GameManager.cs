@@ -13,7 +13,6 @@ namespace Com.IsartDigital.WatchOut.Managers
         [ExportGroup("Nodes")]
         [Export] public Node2D GameContainer { get; private set; }
         [Export] public Control UIContainer { get; private set; }
-        [Export] private Control mainMenu;
         [ExportSubgroup("Shaker")]
         [Export] private Shaker lightShaker;
         [Export] private Shaker midShaker;
@@ -35,12 +34,6 @@ namespace Com.IsartDigital.WatchOut.Managers
             Instance = this;
             #endregion
             OS.RequestPermissions();
-            SignalBus.Instance.GameStarted += OnGameStart;
-        }
-
-        private void OnGameStart()
-        {
-            mainMenu?.QueueFree();
         }
 
         public static void Shake(ScreenShakeForce pShakeForce)

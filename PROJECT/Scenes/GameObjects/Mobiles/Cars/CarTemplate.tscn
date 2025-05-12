@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bjx5sbyjja8ln"]
+[gd_scene load_steps=16 format=3 uid="uid://bjx5sbyjja8ln"]
 
 [ext_resource type="PackedScene" uid="uid://bx6fqlpfkbitb" path="res://Scenes/GameObjects/Mobiles/MobileTemplate.tscn" id="1_cng0f"]
 [ext_resource type="Texture2D" uid="uid://br2hfebwco4ya" path="res://Assets/Particles/smoke_spritesheet.png" id="2_sjou5"]
@@ -40,6 +40,31 @@ anim_offset_max = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bi547"]
 size = Vector2(200, 100)
+
+[sub_resource type="Curve" id="Curve_7t7fe"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.724138, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_3pi1y"]
+offsets = PackedFloat32Array(0, 0.605714, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.851938, 0.500405, 3.85046e-07, 1, 0.85098, 0.501961, 0, 0.219608)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d8pot"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 5
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_t6mg7"]
+_data = [Vector2(0, 0.15), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_jk8ui"]
+offsets = PackedFloat32Array(0.531429, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_h6mi3"]
+colors = PackedColorArray(0.674815, 0.674815, 0.674815, 1, 0.470075, 0.470076, 0.470076, 1)
 
 [node name="Mobile" instance=ExtResource("1_cng0f")]
 
@@ -86,3 +111,38 @@ polygon = PackedVector2Array(-100, -42, -100, 39.9633, -84, 50, 84.3654, 50, 96,
 [node name="windshield" type="Polygon2D" parent="polygons" index="6"]
 color = Color(0.304669, 0.492207, 0.688503, 1)
 polygon = PackedVector2Array(20, -30, 20, 30, 50, 35, 50, -35)
+
+[node name="explosionParticles" type="CPUParticles2D" parent="." index="3"]
+emitting = false
+amount = 100
+lifetime = 1.25
+one_shot = true
+speed_scale = 1.5
+explosiveness = 0.9
+randomness = 0.5
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 75.0
+initial_velocity_max = 200.0
+scale_amount_max = 3.5
+scale_amount_curve = SubResource("Curve_7t7fe")
+color_ramp = SubResource("Gradient_3pi1y")
+
+[node name="accidentParticles" type="CPUParticles2D" parent="." index="4"]
+material = SubResource("CanvasItemMaterial_d8pot")
+position = Vector2(79, 0)
+emitting = false
+amount = 10
+lifetime = 1.5
+speed_scale = 0.75
+texture = ExtResource("2_sjou5")
+emission_shape = 3
+emission_rect_extents = Vector2(10, 35)
+gravity = Vector2(0, -80)
+scale_amount_min = 0.65
+scale_amount_max = 0.8
+scale_amount_curve = SubResource("Curve_t6mg7")
+color_ramp = SubResource("Gradient_jk8ui")
+color_initial_ramp = SubResource("Gradient_h6mi3")
+anim_offset_min = 0.2
+anim_offset_max = 1.0

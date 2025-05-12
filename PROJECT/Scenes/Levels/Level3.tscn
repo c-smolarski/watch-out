@@ -187,7 +187,7 @@ position = Vector2(-3100, -850)
 rotation = 1.5708
 visibleOnReady = true
 pathFollow = NodePath("../../../Paths/Introduction/DriverPath/DriverFollow")
-autoRestartOnEnd = false
+autoResetPosOnEnd = false
 startAtMaxSpeed = false
 maxForwardSpeed = 1700.0
 

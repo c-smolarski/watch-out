@@ -1,5 +1,6 @@
-[gd_scene load_steps=25 format=3 uid="uid://d0c4suyvuber7"]
+[gd_scene load_steps=26 format=3 uid="uid://d0c4suyvuber7"]
 
+[ext_resource type="Script" path="res://Scripts/Managers/SoundManager.cs" id="1_dvtqm"]
 [ext_resource type="Script" path="res://Scripts/Managers/UIManager.cs" id="1_jr131"]
 [ext_resource type="Script" path="res://Scripts/Managers/GameManager.cs" id="1_uixe0"]
 [ext_resource type="Script" path="res://Scripts/Managers/LevelManager.cs" id="4_183ov"]
@@ -69,26 +70,31 @@ font_color = Color(0, 0, 0, 1)
 
 [node name="Managers" type="Node" parent="."]
 
+[node name="SoundManager" type="Node" parent="Managers"]
+script = ExtResource("1_dvtqm")
+
 [node name="LevelManager" type="Node" parent="Managers"]
 script = ExtResource("4_183ov")
 
-[node name="UIManager" type="Node" parent="Managers" node_paths=PackedStringArray("transitionRect", "touchIcon", "scoreTimer", "accidentLabel", "transLabelContainer", "successLabel", "successMessageLabel", "scoreLabel")]
+[node name="UIManager" type="Node" parent="Managers" node_paths=PackedStringArray("touchIcon", "scoreTimer", "menuContainer", "mainMenu", "transitionRect", "accidentLabel", "transLabelContainer", "successLabel", "successMessageLabel", "scoreLabel")]
 script = ExtResource("1_jr131")
-transitionRect = NodePath("../../CanvasLayer/TransitionContainer/TransitionRect")
 touchIcon = NodePath("../../CanvasLayer/TransitionContainer/TouchIcon")
 scoreTimer = NodePath("../../CanvasLayer/UIContainer/ScoreTimer")
+menuContainer = NodePath("../../CanvasLayer/MenuContainer")
+mainMenu = NodePath("../../CanvasLayer/MenuContainer/MainMenu")
+transitionRect = NodePath("../../CanvasLayer/TransitionContainer/TransitionRect")
 accidentLabel = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/accidentLabel")
 transLabelContainer = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels")
 successLabel = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels/successLabel")
 successMessageLabel = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels/transitionLabel")
 scoreLabel = NodePath("../../CanvasLayer/TransitionContainer/LabelsContainer/transitionLabels/scoreLabel")
+packedMainMenu = ExtResource("7_tnuc6")
 PackedElectricDashboard = ExtResource("4_lheqa")
 
-[node name="GameManager" type="Node" parent="Managers" node_paths=PackedStringArray("GameContainer", "UIContainer", "mainMenu", "lightShaker", "midShaker", "strongShaker")]
+[node name="GameManager" type="Node" parent="Managers" node_paths=PackedStringArray("GameContainer", "UIContainer", "lightShaker", "midShaker", "strongShaker")]
 script = ExtResource("1_uixe0")
 GameContainer = NodePath("../../GameContainer")
 UIContainer = NodePath("../../CanvasLayer/UIContainer")
-mainMenu = NodePath("../../CanvasLayer/MenuContainer/MainMenu")
 lightShaker = NodePath("../../Shakers/lightShaker")
 midShaker = NodePath("../../Shakers/midShaker")
 strongShaker = NodePath("../../Shakers/strongShaker")

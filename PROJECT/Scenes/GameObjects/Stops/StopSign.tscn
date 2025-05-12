@@ -92,5 +92,5 @@ position = Vector2(0, -75)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StopLineArea"]
 shape = SubResource("RectangleShape2D_ioapf")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="collider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_mv27b")

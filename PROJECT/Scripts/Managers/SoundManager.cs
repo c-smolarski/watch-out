@@ -11,11 +11,13 @@ namespace Com.IsartDigital.WatchOut.Managers
     public partial class SoundManager : Node
     {
         [ExportCategory("Musics")]
-        [Export] private AudioStreamOggVorbis musicMainMenu;
-        //[ExportCategory("SFX")]
+        [Export] public AudioStreamOggVorbis MusicMainMenu { get; private set; }
+        [ExportCategory("SFX")]
+        [Export] public AudioStreamOggVorbis Sirens { get; private set; }
+        [Export] public AudioStreamOggVorbis Horn { get; private set; }
+        [Export] public AudioStreamOggVorbis Accident { get; private set; }
         [ExportGroup("Ambients")]
-        [Export] private AudioStreamOggVorbis streetLoop;
-        //[ExportGroup("UI")]
+        [Export] public AudioStreamOggVorbis StreetLoop { get; private set; }
 
         private const float MUSIC_TRANSITION_TIME = 1.5f;
 

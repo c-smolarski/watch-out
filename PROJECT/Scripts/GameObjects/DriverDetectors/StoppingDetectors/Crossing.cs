@@ -40,10 +40,10 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
             pCollisionDict.Add(Pedestrian.COLLISION_LAYER, true);
         }
 
-        protected override void OnDriverEntered(Mobile pDriver)
+        protected override void OnDriverEntered(Vehicle pVehicle)
         {
-            base.OnDriverEntered(pDriver);
-            if (pDriver is Player)
+            base.OnDriverEntered(pVehicle);
+            if (pVehicle is Player)
             {
                 List<Area2D> lAreaList = GetOverlappingAreas().ToList();
                 if (otherPartsOfCrossing != null)

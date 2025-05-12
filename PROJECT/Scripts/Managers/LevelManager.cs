@@ -35,7 +35,7 @@ namespace Com.IsartDigital.WatchOut.Managers
 
         private void OnGameStart()
         {
-            CurrentLevelNumber = default;
+            CurrentLevelNumber = 2;
             LoadNextLevel(); 
         }
 
@@ -59,7 +59,8 @@ namespace Com.IsartDigital.WatchOut.Managers
 
         private void LoadNextLevel()
         {
-            LoadLevel(CurrentLevelNumber + 1);
+            if (!LoadLevel(CurrentLevelNumber + 1))
+                UIManager.Instance.LoadMainMenu();
         }
 
         private void ReloadLevel()
@@ -67,24 +68,26 @@ namespace Com.IsartDigital.WatchOut.Managers
             LoadLevel(CurrentLevelNumber);
         }
 
-        private void LoadLevel(int pLevelNumber)
+        private bool LoadLevel(int pLevelNumber)
         {
             if (IsInstanceValid(CurrentLevel))
                 CurrentLevel.Free();
 
+            string lFilePath = FilePath.FetchFilePathFromFolder(FilePath.LEVELS_FOLDER, pLevelNumber - 1);
+
+            if (lFilePath == null)
+                return false;
+
             CurrentLevel = NodeCreator.CreateNode<Level>(
-                GD.Load<PackedScene>(
-                    FilePath.FetchFilePathFromFolder(
-                        FilePath.LEVELS_FOLDER,
-                        pLevelNumber - 1)),
+                GD.Load<PackedScene>(lFilePath),
                 GameManager.Instance.GameContainer);
 
+            CurrentLevelNumber = pLevelNumber;
             UIManager.Instance.CreateDashboard(CurrentLevel.Player.GearBox);
 
-            CurrentLevelNumber = pLevelNumber;
             isLoadingLevel = false;
-
             EmitSignal(SignalName.LevelLoaded);
+            return true;
         }
 
         protected override void Dispose(bool pDisposing)

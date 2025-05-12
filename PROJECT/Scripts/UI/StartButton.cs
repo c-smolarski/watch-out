@@ -1,6 +1,4 @@
-﻿using Com.IsartDigital.Utils.Effects;
-using Com.IsartDigital.Utils.Tweens;
-using Com.IsartDigital.WatchOut.Enums;
+﻿using Com.IsartDigital.Utils.Tweens;
 using Com.IsartDigital.WatchOut.Managers;
 using Godot;
 using System;
@@ -61,6 +59,8 @@ namespace Com.IsartDigital.WatchOut.Scripts.UI
 
             GetTree().CreateTimer(startDelay, false)
                 .Connect(Timer.SignalName.Timeout, Callable.From(OnStart));
+
+            UIManager.Instance.SetTransLabelsTextDefault();
         }
 
         private void OnStart()

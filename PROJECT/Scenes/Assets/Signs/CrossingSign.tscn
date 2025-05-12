@@ -10,8 +10,6 @@ shader_parameter/speed = 1.25
 
 [node name="CrossingSign" type="Polygon2D"]
 material = SubResource("ShaderMaterial_5ntxj")
-position = Vector2(700, -2550)
-scale = Vector2(1.25, 1.25)
 polygon = PackedVector2Array(0, -100, 100, 75, -100, 75)
 
 [node name="red" type="Polygon2D" parent="."]

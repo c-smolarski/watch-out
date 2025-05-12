@@ -15,24 +15,31 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
 
         public const uint COLLISION_LAYER = 4;
         private const float TIME_TO_APPEAR = 2f;
+        private const float ACCIDENT_FRICTION = 0.98f;
+        private const float ACCIDENT_SPEED_THRESHOLD = 10f;
         private const string COLLIDER_PATH = "collider";
         private const string DISABLED = "disabled";
 
         private CollisionShape2D collider;
+        private float accidentSpeed;
+        private Vector2 accidentDirection;
 
         public override void _Ready()
         {
             base._Ready();
             collider = GetNode<CollisionShape2D>(COLLIDER_PATH);
             collider.SetDeferred(DISABLED, true);
-            ExhaustParticels.Emitting = false;
+            MoveParticles.Emitting = false;
         }
 
-        protected override void OnHit(Area2D pArea)
+        public override void _Process(double pDelta)
         {
-            if (pArea is Pedestrian)
-                return;
-            base.OnHit(pArea);
+            base._Process(pDelta);
+            if (accidentSpeed > ACCIDENT_SPEED_THRESHOLD)
+            {
+                Position += accidentDirection * accidentSpeed * (float)pDelta;
+                accidentSpeed *= ACCIDENT_FRICTION;
+            }
         }
 
         private void Init()
@@ -57,14 +64,14 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
         private void OnAppeared()
         {
             collider.SetDeferred(DISABLED, false);
-            ExhaustParticels.Emitting = true;
+            MoveParticles.Emitting = true;
             StartMovingForward();
         }
 
         protected override void OnReachPathEnd()
         {
             StopMoving();
-            ExhaustParticels.Emitting = false;
+            MoveParticles.Emitting = false;
             collider.SetDeferred(DISABLED, true);
             Tween lTween = CreateTween();
             lTween.TweenProperty(this, TweenProp.MODULATE_ALPHA, 0f, TIME_TO_APPEAR)
@@ -74,9 +81,21 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
                 Callable.From(QueueFree));
         }
 
-        protected override void OnAccident(Mobile pDriver)
+        protected override void OnHit(Area2D pArea)
         {
-            base.OnAccident(pDriver);
+            if (pArea is Pedestrian)
+                return;
+            base.OnHit(pArea);
+        }
+
+        protected override void OnAccident(Mobile pMobile)
+        {
+            StopMoving();
+            if (pMobile is Vehicle)
+            {
+                accidentSpeed = pMobile.Speed;
+                accidentDirection = pMobile.VelocityDirection;
+            }
         }
 
         public static Pedestrian Create(Crossing pCrossing)

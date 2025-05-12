@@ -3,6 +3,7 @@ using Com.IsartDigital.Utils.Tweens;
 using Godot;
 using System;
 using Com.IsartDigital.WatchOut.Enums;
+using Com.IsartDigital.WatchOut.GameObjects.Mobiles;
 
 // Author : Camille Smolarski
 
@@ -18,16 +19,16 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
 
         private float elapsedTime;
 
-        protected override void OnDriverEntered(Mobile pDriver)
+        protected override void OnDriverEntered(Vehicle pVehicle)
         {
-            base.OnDriverEntered(pDriver);
+            base.OnDriverEntered(pVehicle);
             StartWaitTimer();
 
         }
 
-        protected override void OnDriverLeft(Mobile pDriver)
+        protected override void OnDriverLeft(Vehicle pVehicle)
         {
-            base.OnDriverLeft(pDriver);
+            base.OnDriverLeft(pVehicle);
             StopWaitTimer();
         }
 

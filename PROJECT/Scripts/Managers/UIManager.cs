@@ -12,33 +12,42 @@ namespace Com.IsartDigital.WatchOut.Managers
 {
     public partial class UIManager : Node
     {
-        [Export] private ColorRect transitionRect;
+        #region Exports
         [Export] private TouchIcon touchIcon;
         [Export] private ScoreTimer scoreTimer;
-        [ExportGroup("Transition Labels")]
+        [ExportGroup("Menus")]
+        [Export] private Control menuContainer;
+        [Export] private Control mainMenu;
+        [ExportGroup("Transition")]
+        [Export] private ColorRect transitionRect;
         [Export] private Label accidentLabel;
         [Export] private Control transLabelContainer;
         [Export] private Label successLabel;
         [Export] private Label successMessageLabel;
         [Export] private Label scoreLabel;
         [ExportGroup("PackedScenes")]
+        [Export] private PackedScene packedMainMenu;
         [Export] private PackedScene PackedManualDashboard;
         [Export] private PackedScene PackedElectricDashboard;
+        #endregion
 
+        #region Consts
         private const float SKIP_DURATION = 10f;
         private const float TRANS_IN_DURATION = 2.5f;
         private const float TRANS_OUT_DURATION = 1f;
         private const float TOUCH_ICON_DELAY = 0.5f;
-        private const float LABEL_DELAY = TRANS_IN_DURATION - TRANS_IN_DURATION / 6f;
+        private const float LABEL_DELAY = TRANS_IN_DURATION - TRANS_IN_DURATION / 4f;
 
         private const string T_KEY_SUCCESS = "LABEL_SUCCESS";
         private const string T_KEY_FAILED = "LABEL_FAILED";
+        private const string T_KEY_WELCOME = "LABEL_WELCOME";
         private const string T_KEY_LEVEL_MESSAGE = "MESSAGE_LEVEL";
         private const string SCORE_PREFIX = "SCORE : ";
 
         private const string RECT_VIEWPORT_SIZE_SHADER_PARAM = "viewportSize";
         private const string RECT_CIRCLE_RATIO_SHADER_PARAM = "circleRatio";
-        
+        #endregion
+
         public static UIManager Instance { get; private set; }
         private float TransitionCircleSize
         {
@@ -64,12 +73,18 @@ namespace Com.IsartDigital.WatchOut.Managers
             Instance = this;
             #endregion
 
+            SignalBus.Instance.GameStarted += OnGameStart;
             InputManager.Instance.Tap += OnTap;
             SignalBus.Instance.LevelCompleted += OnLevelComplete;
             SignalBus.Instance.LevelSoftFailed += OnLevelSoftFail;
             SignalBus.Instance.LevelHardFailed += OnLevelHardFail;
 
             TransitionInit();
+        }
+
+        private void OnGameStart()
+        {
+            mainMenu?.QueueFree();
         }
 
         private void OnTap(int pNTap)
@@ -144,12 +159,7 @@ namespace Com.IsartDigital.WatchOut.Managers
                 .SetParallel();
             lTween.TweenProperty(this, nameof(TransitionCircleSize), 1f, TRANS_IN_DURATION)
                 .From(0f);
-
-            if (pHardFail)
-                lTween.TweenProperty(accidentLabel, TweenProp.MODULATE_ALPHA, 1f, TRANS_IN_DURATION).SetDelay(LABEL_DELAY);
-            else
-                lTween.TweenProperty(transLabelContainer, TweenProp.MODULATE_ALPHA, 1f, TRANS_IN_DURATION).SetDelay(LABEL_DELAY);
-
+            lTween.TweenProperty(pHardFail ? accidentLabel : transLabelContainer, TweenProp.MODULATE_ALPHA, 1f, TRANS_IN_DURATION).SetDelay(LABEL_DELAY);
             lTween.TweenProperty(touchIcon, TweenProp.MODULATE_ALPHA, 1f, TOUCH_ICON_DELAY)
                 .SetDelay(LABEL_DELAY + TRANS_IN_DURATION)
                 .Connect(
@@ -217,8 +227,25 @@ namespace Com.IsartDigital.WatchOut.Managers
             dashboard = NodeCreator.CreateNode<Control>(lScene, GameManager.Instance.UIContainer);
         }
 
+        /*
+         * MAIN MENU METHODS
+         */
+
+        public void LoadMainMenu()
+        {
+            mainMenu = NodeCreator.CreateNode<Control>(packedMainMenu, menuContainer);
+        }
+
+        public void SetTransLabelsTextDefault()
+        {
+            successLabel.Text = Tr(T_KEY_WELCOME);
+            successMessageLabel.Text = Tr(T_KEY_LEVEL_MESSAGE + 1);
+            scoreLabel.Visible = default;
+        }
+
         protected override void Dispose(bool pDisposing)
         {
+            SignalBus.Instance.GameStarted -= OnGameStart;
             InputManager.Instance.Tap -= OnTap;
             SignalBus.Instance.LevelCompleted -= OnLevelComplete;
             SignalBus.Instance.LevelSoftFailed -= OnLevelSoftFail;

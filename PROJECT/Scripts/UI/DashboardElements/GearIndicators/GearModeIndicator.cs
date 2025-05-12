@@ -1,4 +1,4 @@
-﻿using Com.IsartDigital.WatchOut.GameObjects;
+﻿using Com.IsartDigital.WatchOut.GameObjects.Mobiles;
 using System;
 
 // Author : Camille Smolarski
@@ -15,7 +15,7 @@ namespace Com.IsartDigital.WatchOut.UI.DashboardElements.GearIndicators
 
         protected override void OnPlayerGearChange(int pNewGear)
         {
-            Mobile.GearMode lGearMode = (Mobile.GearMode)pNewGear;
+            Vehicle.GearMode lGearMode = (Vehicle.GearMode)pNewGear;
             GearLabel.Text = lGearMode.ToString()[..1];
         }
 
