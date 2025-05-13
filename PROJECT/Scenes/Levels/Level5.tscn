@@ -162,7 +162,7 @@ scale = Vector2(1.25, 1.25)
 position = Vector2(100, -25)
 
 [node name="DriverDetector" parent="GameObjects/Obstacles" index="1" instance=ExtResource("4_mpv2k")]
-position = Vector2(1500, -1775)
+position = Vector2(1500, -1675)
 DetectsPlayer = false
 DetectsNPC = true
 

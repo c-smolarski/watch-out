@@ -20,7 +20,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects
 
         public const uint NPC_COLLISION_LAYER = 3;
         public const float MIN_SPEED_THRESHOLD = 50f;
-        private const float ACCEL_CURVE_POW = 1.5f;
+        private const float ACCEL_CURVE_POW = 1.25f;
 
         private const string MOVE_PARTICLES_PATH = "Particles";
 

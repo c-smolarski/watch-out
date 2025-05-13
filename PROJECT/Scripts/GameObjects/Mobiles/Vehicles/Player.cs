@@ -46,9 +46,13 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
         {
             base._Ready();
             Visible = false;
+            camera = GetViewport().GetCamera2D();
             SignalBus.Instance.LevelCompleted += OnLevelComplete;
+
             if (cameraFollowPlayer)
-                CameraInit();
+                InitCameraFollow();
+            else
+                ResetCamera();
         }
 
         /*
@@ -75,7 +79,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
 
         private void OnInputHold(int pNPrevTap)
         {
-            if (pNPrevTap == 0)
+            if (pNPrevTap == default)
                 StartMovingForward();
             else if (IsMoving)
                 StartBraking(ManualBrakeForce);
@@ -129,9 +133,8 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
          * CAMERA FOLLOW METHODS
          */
 
-        private void CameraInit()
+        private void InitCameraFollow()
         {
-            camera = GetViewport().GetCamera2D();
             camera.PositionSmoothingEnabled = true;
             camera.PositionSmoothingSpeed = cameraFollowSpeed;
         }

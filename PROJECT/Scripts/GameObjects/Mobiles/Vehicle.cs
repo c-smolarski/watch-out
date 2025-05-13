@@ -9,7 +9,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
     {
         [Export] private bool animated = true;
         [ExportGroup("Brakes")]
-        [Export] protected float EngineBrakeForce { get; private set; } = 0.1f;
+        [Export] protected float EngineBrakeForce { get; private set; } = 0.2f;
         [Export] protected float ManualBrakeForce { get; private set; } = 0.015f;
         [Export] protected float EmergencyBrakeForce { get; private set; } = 0.005f;
 

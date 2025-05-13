@@ -23,6 +23,12 @@ namespace Com.IsartDigital.WatchOut.UI
             Icon = textures[TexIndex];
         }
 
+        private void Disable()
+        {
+            Disabled = true;
+            MouseFilter = MouseFilterEnum.Ignore;
+        }
+
         protected override void Dispose(bool pDisposing)
         {
             Pressed -= OnPress;

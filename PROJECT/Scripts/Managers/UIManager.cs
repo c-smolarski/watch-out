@@ -74,7 +74,7 @@ namespace Com.IsartDigital.WatchOut.Managers
             #endregion
 
             SignalBus.Instance.GameStarted += OnGameStart;
-            InputManager.Instance.Tap += OnTap;
+            InputManager.Instance.Touched += OnTouch;
             SignalBus.Instance.LevelCompleted += OnLevelComplete;
             SignalBus.Instance.LevelSoftFailed += OnLevelSoftFail;
             SignalBus.Instance.LevelHardFailed += OnLevelHardFail;
@@ -88,7 +88,7 @@ namespace Com.IsartDigital.WatchOut.Managers
             mainMenu?.QueueFree();
         }
 
-        private void OnTap(int pNTap)
+        private void OnTouch()
         {
             if (listeningTaps)
             {
@@ -185,16 +185,23 @@ namespace Com.IsartDigital.WatchOut.Managers
 
         private void StartTransOut()
         {
+            transitionRect.MouseFilter = Control.MouseFilterEnum.Stop;
             Tween lTween = CreateTween()
                 .SetParallel();
             lTween.TweenProperty(accidentLabel, TweenProp.MODULATE_ALPHA, 0f, TRANS_OUT_DURATION);
             lTween.TweenProperty(transLabelContainer, TweenProp.MODULATE_ALPHA, 0f, TRANS_OUT_DURATION);
             lTween.TweenProperty(this, nameof(TransitionCircleSize), 0f, TRANS_OUT_DURATION);
 
-            lTween.TweenProperty(touchIcon, TweenProp.MODULATE_ALPHA, 0f, TOUCH_ICON_DELAY)
-                .Connect(
-                    PropertyTweener.SignalName.Finished,
-                    Callable.From(touchIcon.Stop));
+            lTween.TweenProperty(touchIcon, TweenProp.MODULATE_ALPHA, 0f, TOUCH_ICON_DELAY);
+            lTween.Connect(
+                    Tween.SignalName.Finished,
+                    Callable.From(OnTransOutFinished));
+        }
+
+        private void OnTransOutFinished()
+        {
+            transitionRect.MouseFilter = Control.MouseFilterEnum.Ignore;
+            touchIcon.Stop();
         }
 
         /*
@@ -248,7 +255,7 @@ namespace Com.IsartDigital.WatchOut.Managers
         protected override void Dispose(bool pDisposing)
         {
             SignalBus.Instance.GameStarted -= OnGameStart;
-            InputManager.Instance.Tap -= OnTap;
+            InputManager.Instance.Touched -= OnTouch;
             SignalBus.Instance.LevelCompleted -= OnLevelComplete;
             SignalBus.Instance.LevelSoftFailed -= OnLevelSoftFail;
             SignalBus.Instance.LevelHardFailed -= OnLevelHardFail;

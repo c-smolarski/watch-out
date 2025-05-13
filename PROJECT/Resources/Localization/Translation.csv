@@ -8,6 +8,8 @@ MESSAGE_LEVEL1;Let's start with the basics…;Commençons par les bases…
 MESSAGE_LEVEL2;Now let's take a step back.;Maintenant prenons un peu de recul.
 MESSAGE_LEVEL3;Woah, what's hapenning over there?;Oh ! Mais que se passe-t-il là bas?
 MESSAGE_LEVEL4;That was close! We're lucky nobody was crossing the road.;On a eu chaud, heureusement que personne ne traversait la route.
+MESSAGE_LEVEL5;Some challenge is coming!;Un peu de challenge arrive !
+MESSAGE_LEVEL6;You triumphed from all the challenges!;Tu as relevé tous les défis !
 CROSSING_STOPPED_ON;Stopping on zebra lines is prohibited.;Il est interdit de s'arrêter sur un passage piéton.
 CROSSING_PEDESTRIAN_WALKING;You have to wait for pedestrians to finish crossing.;Tu dois attendre que les piétons aient fini de traverser avant de passer.
 STOP_STEPPED_ON;Don't forget to stop before the stop line.;N'oublie pas de t'arrêter avant la ligne d'un stop

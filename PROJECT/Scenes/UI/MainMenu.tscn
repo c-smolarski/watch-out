@@ -539,3 +539,5 @@ _duration = 0.1
 
 [connection signal="pressed" from="StartButton" to="Logo/WatchSign" method="PlayAnim"]
 [connection signal="pressed" from="StartButton" to="Logo/Car" method="PlayAnim"]
+[connection signal="pressed" from="StartButton" to="LocalizationButton" method="Disable"]
+[connection signal="pressed" from="StartButton" to="soundButton" method="Disable"]

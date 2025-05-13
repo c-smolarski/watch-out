@@ -7,6 +7,7 @@ namespace Com.IsartDigital.WatchOut.Managers
 {
     public partial class InputManager : Node
     {
+        [Signal] public delegate void TouchedEventHandler();
         [Signal] public delegate void TapEventHandler(int pNTap);
         [Signal] public delegate void StartedHoldingEventHandler(int pNPrevTap);
         [Signal] public delegate void StoppedHoldingEventHandler();
@@ -15,7 +16,7 @@ namespace Com.IsartDigital.WatchOut.Managers
         private const float TAP_THRESHOLD = 0.3f;
 
         public static InputManager Instance { get; private set; }
-        public static bool Holding { get; private set; } = false;
+        public static bool IsHolding { get; private set; } = false;
         public static bool Activated
         {
             set
@@ -53,8 +54,11 @@ namespace Com.IsartDigital.WatchOut.Managers
         public override void _Input(InputEvent pEvent)
         {
             base._Input(pEvent);
-            if (pEvent.IsActionPressed(CLICK) && !Holding)
+            if (pEvent.IsActionPressed(CLICK) && !IsHolding)
+            {
                 StartPressedTimer();
+                EmitSignal(SignalName.Touched);
+            }
             else if (pEvent.IsActionReleased(CLICK))
                 ClickReleased();
         }
@@ -70,7 +74,7 @@ namespace Com.IsartDigital.WatchOut.Managers
             elapsedTime += pDelta;
             if (elapsedTime >= TAP_THRESHOLD)
             {
-                Holding = true;
+                IsHolding = true;
                 EmitSignal(SignalName.StartedHolding, nPrevTap);
                 StopTimer();
             }
@@ -78,7 +82,7 @@ namespace Com.IsartDigital.WatchOut.Managers
 
         private void ClickReleased()
         {
-            if (!Holding)
+            if (!IsHolding)
                 StartReleasedTimer();
             else
                 StopHolding();
@@ -104,7 +108,7 @@ namespace Com.IsartDigital.WatchOut.Managers
 
         private void StopHolding()
         {
-            Holding = false;
+            IsHolding = false;
             nPrevTap = default;
             EmitSignal(SignalName.StoppedHolding);
         }
@@ -119,7 +123,7 @@ namespace Com.IsartDigital.WatchOut.Managers
         {
             if (Instance == this)
             {
-                Holding = false;
+                IsHolding = false;
                 Instance = null;
             }
             base.Dispose(pDisposing);
