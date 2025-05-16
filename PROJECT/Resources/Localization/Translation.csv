@@ -14,4 +14,5 @@ CROSSING_STOPPED_ON;Stopping on zebra lines is prohibited.;Il est interdit de s'
 CROSSING_PEDESTRIAN_WALKING;You have to wait for pedestrians to finish crossing.;Tu dois attendre que les piétons aient fini de traverser avant de passer.
 STOP_STEPPED_ON;Don't forget to stop before the stop line.;N'oublie pas de t'arrêter avant la ligne d'un stop
 STOP_BACKED_ON;You can't back on a stop line.;On ne peut pas reculer sur une ligne de stop.
-STOP_RUNNED_OVER;Dangerous ! Stop before a stop line.;Danger! Il faut toujours s'arrêter devant un stop.
+STOP_RUNNED_OVER;Dangerous! Stop before a stop line.;Danger ! Il faut toujours s'arrêter devant un stop.
+FTUE_HOLD;Hold!;Maintiens !

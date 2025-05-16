@@ -11,7 +11,7 @@
 
 [sub_resource type="Curve2D" id="Curve2D_tyrom"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 100, 150, 0, 0, 0, -150, 100, -100, -300, 0, 0, 0, 500, -300, 0, 0, 450, 0, 800, -300, 0, 450, 0, 0, 1500, -1000, 0, 0, 0, -200, 1500, -2000, 200, 0, 0, 0, 1175, -2325, 0, 0, -300, 0, 0, -2325, 0, 300, 0, 0, -500, -2800, 0, 0, 0, 0, -500, -3600)
+"points": PackedVector2Array(0, 0, 0, 0, 100, 150, 0, 0, 0, -150, 100, -100, -300, 0, 0, 0, 500, -300, 0, 0, 450, 0, 800, -300, 0, 450, 0, 0, 1500, -1000, 0, 0, 0, -200, 1500, -2000, 200, 0, 0, 0, 1175, -2325, 0, 0, -300, 0, 0, -2325, 0, 300, 0, 0, -500, -2800, 0, 0, 0, 0, -500, -4000)
 }
 point_count = 10
 
@@ -23,6 +23,7 @@ point_count = 7
 
 [node name="Level5" node_paths=PackedStringArray("Player") instance=ExtResource("1_kbyox")]
 Player = NodePath("GameObjects/Cars/Player")
+winDelay = 2.0
 
 [node name="Roads" type="Node2D" parent="Assets" index="0"]
 
@@ -176,9 +177,10 @@ rotation = 1.5708
 
 [node name="Cars" type="Node2D" parent="GameObjects" index="1"]
 
-[node name="Player" parent="GameObjects/Cars" index="0" node_paths=PackedStringArray("pathFollow") instance=ExtResource("3_51x47")]
+[node name="Player" parent="GameObjects/Cars" index="0" node_paths=PackedStringArray("appearAnimStartPos", "pathFollow") instance=ExtResource("3_51x47")]
 position = Vector2(100, 150)
 rotation = -1.5708
+appearAnimStartPos = NodePath("../../../Marker2D")
 cameraFollowPlayer = true
 pathFollow = NodePath("../../../Paths/PlayerPath/PlayerFollow")
 
@@ -205,6 +207,9 @@ loop = false
 [node name="LevelEnd" parent="." index="3"]
 position = Vector2(-400, -2500)
 
-[connection signal="DriverStopped" from="GameObjects/Obstacles/StopSignWithCrossing" to="GameObjects/Cars/Car" method="StartMovingForward"]
+[node name="Marker2D" type="Marker2D" parent="." index="4"]
+position = Vector2(100, 500)
+
+[connection signal="DriverDetected" from="GameObjects/Obstacles/StopSignWithCrossing" to="GameObjects/Cars/Car" method="StartMovingForward"]
 [connection signal="DriverDetected" from="GameObjects/Obstacles/DriverDetector" to="GameObjects/Cars/Car" method="Brake"]
 [connection signal="DriverStopped" from="GameObjects/Obstacles/StopSign" to="GameObjects/Cars/Car" method="StartMovingForward"]

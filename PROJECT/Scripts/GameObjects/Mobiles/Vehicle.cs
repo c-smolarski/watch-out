@@ -93,6 +93,9 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
 
         protected virtual void StartMoving(GearMode pDirection)
         {
+            if (!MoveParticles.Emitting)
+                return;
+
             if (pDirection != GearMode.DRIVE && pDirection != GearMode.REVERSE)
                 throw new Exception("Invalid direction.");
 

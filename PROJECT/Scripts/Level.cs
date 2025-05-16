@@ -13,6 +13,9 @@ namespace Com.IsartDigital.WatchOut
         [Export] public float AllocatedTime { get; private set; }
         [Export] public Player Player { get; private set; }
         [Export] private bool playerAutoAppear = true;
+
+        [ExportGroup("Win")]
+        [Export] private float winDelay = 1f;
         [Export] private Area2D winArea;
 
         [ExportGroup("Camera")]
@@ -27,6 +30,7 @@ namespace Com.IsartDigital.WatchOut
         public override void _Ready()
         {
             base._Ready();
+            GetViewport().GetCamera2D().GlobalPosition = default;
             startCallable = Callable.From(StartLevel);
             WinAreaInit();
             SignalBus.Instance.LevelSoftFailed += OnSoftFail;
@@ -89,8 +93,11 @@ namespace Com.IsartDigital.WatchOut
             if (pArea is not GameObjects.Mobiles.Player)
                 return;
 
-            Player.StopCameraFollow();
-            SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelCompleted);
+            Player.OnLevelEnd();
+
+            GetTree().CreateTimer(winDelay, false).Connect(
+                Timer.SignalName.Timeout,
+                Callable.From(() => SignalBus.Instance.EmitSignal(SignalBus.SignalName.LevelCompleted)));
         }
 
         protected override void Dispose(bool pDisposing)

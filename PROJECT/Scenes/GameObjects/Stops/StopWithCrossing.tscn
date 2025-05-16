@@ -14,8 +14,11 @@ polygon = PackedVector2Array(-200, -200, -200, 125, 200, 125, 200, -200)
 [node name="line" parent="." index="2"]
 polygon = PackedVector2Array(10, -100, 10, 150, -10, 150, -10, -100)
 
-[node name="Crossing" parent="." index="4" instance=ExtResource("2_2041n")]
+[node name="Crossing" parent="." index="3" instance=ExtResource("2_2041n")]
 position = Vector2(-100, 0)
+
+[node name="sign" parent="." index="4"]
+position = Vector2(260, 150)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." index="7"]
 position = Vector2(0, 100)

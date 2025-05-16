@@ -8,7 +8,8 @@ namespace Com.IsartDigital.WatchOut.Managers
     public partial class InputManager : Node
     {
         [Signal] public delegate void TouchedEventHandler();
-        [Signal] public delegate void TapEventHandler(int pNTap);
+        [Signal] public delegate void TapEventHandler();
+        [Signal] public delegate void MultipleTapsEventHandler(int pNTap);
         [Signal] public delegate void StartedHoldingEventHandler(int pNPrevTap);
         [Signal] public delegate void StoppedHoldingEventHandler();
 
@@ -91,6 +92,7 @@ namespace Com.IsartDigital.WatchOut.Managers
         private void StartReleasedTimer()
         {
             StopTimer();
+            EmitSignal(SignalName.Tap);
             nPrevTap++;
             clickTimer = ReleasedTimer;
         }
@@ -100,7 +102,7 @@ namespace Com.IsartDigital.WatchOut.Managers
             elapsedTime += pDelta;
             if(elapsedTime >= TAP_THRESHOLD)
             {
-                EmitSignal(SignalName.Tap, nPrevTap);
+                EmitSignal(SignalName.MultipleTaps, nPrevTap);
                 StopTimer();
                 nPrevTap = default;
             }

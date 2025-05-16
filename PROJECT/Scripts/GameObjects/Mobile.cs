@@ -71,6 +71,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects
             if (Direction != lNewDirection)
                 StopMoving();
 
+            elapsedTime = default;
             Direction = lNewDirection;
             maxSpeed = pForward ? maxForwardSpeed : maxBackwardSpeed;
 
@@ -89,7 +90,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects
             doAction = Accelerate;
         }
 
-        private void Accelerate(float pDelta)
+        protected void Accelerate(float pDelta)
         {
             elapsedTime += pDelta;
             Speed += maxSpeed * pDelta * Mathf.Pow(elapsedTime / TimeToMaxSpeed, ACCEL_CURVE_POW);
@@ -125,6 +126,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects
 
         protected virtual void StopMoving()
         {
+            elapsedTime = default;
             Speed = Direction = default;
             doAction = null;
         }

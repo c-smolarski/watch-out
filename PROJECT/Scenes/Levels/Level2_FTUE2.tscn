@@ -22,11 +22,12 @@ shader_parameter/speed = 3.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_aj1at"]
 font = ExtResource("6_rxwq3")
-font_size = 300
+font_size = 65
 font_color = Color(0.176471, 0.176471, 0.176471, 1)
 
 [node name="FTUE2" node_paths=PackedStringArray("Player") instance=ExtResource("1_fkoe1")]
 Player = NodePath("GameObjects/Player")
+winDelay = 0.1
 
 [node name="Road" type="Node2D" parent="Assets" index="0"]
 
@@ -65,32 +66,33 @@ position = Vector2(100, -1400)
 [node name="Control" type="Control" parent="." index="5"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -200.0
-offset_right = -200.0
+offset_left = -100.0
+offset_right = -100.0
 
 [node name="TouchIcon" parent="Control" index="0" instance=ExtResource("4_0upt7")]
-offset_left = -375.0
-offset_top = -700.0
-offset_right = -375.0
-offset_bottom = -700.0
+offset_left = -500.0
+offset_top = 350.0
+offset_right = -500.0
+offset_bottom = 350.0
 pivot_offset = Vector2(300, 0)
-startAnim = 4
+startAnim = 2
 startAnimLoopTime = 1.0
 
 [node name="Label" type="Label" parent="Control/TouchIcon" index="4"]
 material = SubResource("ShaderMaterial_8a65y")
 layout_mode = 0
-offset_left = -50.0
-offset_top = 275.0
-offset_right = 325.0
-offset_bottom = 675.0
-text = "↓"
+offset_left = -300.0
+offset_top = 200.0
+offset_right = 500.0
+offset_bottom = 600.0
+pivot_offset = Vector2(400, 200)
+text = "FTUE_HOLD"
 label_settings = SubResource("LabelSettings_aj1at")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ResolutionRescaler" type="Node" parent="." index="6" node_paths=PackedStringArray("targets")]
 script = ExtResource("7_qqloa")
-targets = [NodePath("../Control/TouchIcon")]
+targets = [NodePath("../Control")]
 baseResolution = Vector2(1600, 2560)
 mode = 1

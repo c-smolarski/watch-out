@@ -66,16 +66,17 @@ offset_left = 100.0
 offset_top = -700.0
 offset_right = 100.0
 offset_bottom = -700.0
-startAnim = 2
-startAnimLoopTime = 1.0
+startAnim = 3
+startAnimLoopTime = 0.0
 
 [node name="Label" type="Label" parent="Control/TouchIcon" index="4"]
 material = SubResource("ShaderMaterial_8a65y")
 layout_mode = 0
-offset_left = -20.0
+offset_left = -100.0
 offset_top = 375.0
-offset_right = 355.0
+offset_right = 400.0
 offset_bottom = 775.0
+pivot_offset = Vector2(250, 200)
 text = "GAS !
 GAS !
 GAS !"

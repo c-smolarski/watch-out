@@ -14,7 +14,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
         [Export] private Area2D[] otherPartsOfCrossing;
         [Export] public Path2D Path { get; private set; }
 
-        private const float PATH_EMPTY_THRESHOLD = 0.75f;
+        private const float PATH_EMPTY_THRESHOLD = 0.6f;
         private const float SPAWN_TIME_THRESHOLD = 3f;
         private const float STOP_TIME = 1.5f;
 

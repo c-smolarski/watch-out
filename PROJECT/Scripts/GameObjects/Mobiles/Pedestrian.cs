@@ -1,7 +1,6 @@
 ﻿using Com.IsartDigital.WatchOut.GameObjects.DriverDetectors;
 using Com.IsartDigital.WatchOut.Managers;
 using Com.IsartDigital.WatchOut.Utils;
-using Com.IsartDigital.Utils.Tweens;
 using Godot;
 using System;
 
@@ -14,7 +13,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
         [Export] private float minForwardSpeed = 100f;
 
         public const uint COLLISION_LAYER = 4;
-        private const float TIME_TO_APPEAR = 2f;
+        private const float MODULATE_PATH_DIVIDER = 3f;
         private const float ACCIDENT_FRICTION = 0.98f;
         private const float ACCIDENT_SPEED_THRESHOLD = 10f;
         private const string COLLIDER_PATH = "collider";
@@ -37,7 +36,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
             base._Process(pDelta);
             if (accidentSpeed > ACCIDENT_SPEED_THRESHOLD)
             {
-                Position += accidentDirection * accidentSpeed * (float)pDelta;
+                GlobalPosition += accidentDirection * accidentSpeed * (float)pDelta;
                 accidentSpeed *= ACCIDENT_FRICTION;
             }
         }
@@ -53,32 +52,24 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
         public override void Appear()
         {
             base.Appear();
-            Tween lTween = CreateTween();
-            lTween.TweenProperty(this, TweenProp.MODULATE_ALPHA, 1f, TIME_TO_APPEAR)
-                .From(0f);
-            lTween.Connect(
-                Tween.SignalName.Finished,
-                Callable.From(OnAppeared));
-        }
-
-        private void OnAppeared()
-        {
             collider.SetDeferred(DISABLED, false);
+            SetModulateAlpha(0f);
             MoveParticles.Emitting = true;
             StartMovingForward();
         }
 
+        protected override void Move(float pDelta)
+        {
+            base.Move(pDelta);
+            SetModulateAlpha(
+                pathFollow.ProgressRatio < 1f / MODULATE_PATH_DIVIDER ? pathFollow.ProgressRatio * MODULATE_PATH_DIVIDER :
+                pathFollow.ProgressRatio > 1f - (1f / MODULATE_PATH_DIVIDER) ? (1f - pathFollow.ProgressRatio) * MODULATE_PATH_DIVIDER : 1f
+            );
+        }
+
         protected override void OnReachPathEnd()
         {
-            StopMoving();
-            MoveParticles.Emitting = false;
-            collider.SetDeferred(DISABLED, true);
-            Tween lTween = CreateTween();
-            lTween.TweenProperty(this, TweenProp.MODULATE_ALPHA, 0f, TIME_TO_APPEAR)
-                .From(1f);
-            lTween.Connect(
-                Tween.SignalName.Finished,
-                Callable.From(QueueFree));
+            QueueFree();
         }
 
         protected override void OnHit(Area2D pArea)
@@ -96,6 +87,13 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
                 accidentSpeed = pMobile.Speed;
                 accidentDirection = pMobile.VelocityDirection;
             }
+        }
+
+        private void SetModulateAlpha(float pValue)
+        {
+            Color lColor = Modulate;
+            lColor.A = pValue;
+            Modulate = lColor;
         }
 
         public static Pedestrian Create(Crossing pCrossing)

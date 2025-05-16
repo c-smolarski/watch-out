@@ -24,6 +24,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
         public const uint COLLISION_LAYER = 2;
         public const float APPEAR_FADE_DURATION = 1.5f;
         private const float CAMERA_OFFSET_ROT = -MathF.PI * 0.5f;
+        private const float TAP_DELAY = 0.5f;
         private const string T_KEY_ACCIDENT = "MESSAGE_ACCIDENT";
 
         public enum GearBoxType
@@ -40,19 +41,26 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
         }
 
         private Camera2D camera;
-        private bool inputConnected;
+        private bool inputConnected, isTapTiming;
+        private float elapsedTime;
 
         public override void _Ready()
         {
             base._Ready();
             Visible = false;
             camera = GetViewport().GetCamera2D();
-            SignalBus.Instance.LevelCompleted += OnLevelComplete;
 
             if (cameraFollowPlayer)
                 InitCameraFollow();
             else
                 ResetCamera();
+        }
+
+        public override void _Process(double pDelta)
+        {
+            base._Process(pDelta);
+            if (isTapTiming)
+                TapTimer((float)pDelta);
         }
 
         /*
@@ -64,6 +72,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
             if (inputConnected)
                 return;
             inputConnected = true;
+            InputManager.Instance.Tap += OnTap;
             InputManager.Instance.StartedHolding += OnInputHold;
             InputManager.Instance.StoppedHolding += OnInputRelease;
         }
@@ -73,15 +82,39 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
             if (!inputConnected)
                 return;
             inputConnected = false;
+            InputManager.Instance.Tap -= OnTap;
             InputManager.Instance.StartedHolding -= OnInputHold;
             InputManager.Instance.StoppedHolding -= OnInputRelease;
         }
 
+        private void OnTap()
+        {
+            elapsedTime = default;
+            if (doAction == Accelerate || doAction == Move)
+                return;
+            StartMovingForward();
+            isTapTiming = true;
+        }
+
+        private void TapTimer(float pDelta)
+        {
+            elapsedTime += pDelta;
+            if (elapsedTime > TAP_DELAY)
+            {
+                StartBraking(EngineBrakeForce);
+                ResetTapTimer();
+            }
+        }
+
+        private void ResetTapTimer()
+        {
+            isTapTiming = default;
+            elapsedTime = default;
+        }
+
         private void OnInputHold(int pNPrevTap)
         {
-            if (pNPrevTap == default)
-                StartMovingForward();
-            else if (IsMoving)
+            if (IsMoving)
                 StartBraking(ManualBrakeForce);
             else
                 StartMovingBackward();
@@ -170,9 +203,11 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
          * LEVEL END METHODS
          */
 
-        private void OnLevelComplete()
+        public void OnLevelEnd()
         {
+            StopCameraFollow();
             DisconnectInputs();
+            ResetTapTimer();
             if (!stopOnLevelEnd)
                 StartMovingForward();
         }
@@ -192,9 +227,8 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
 
         protected override void Dispose(bool pDisposing)
         {
-            if (cameraFollowPlayer)
+            if(camera != null)
                 ResetCamera();
-            SignalBus.Instance.LevelCompleted -= OnLevelComplete;
             DisconnectInputs();
             base.Dispose(pDisposing);
         }
