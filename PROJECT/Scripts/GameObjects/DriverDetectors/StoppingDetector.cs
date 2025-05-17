@@ -17,22 +17,24 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
 
         protected abstract float StopTime { get; }
 
+        protected bool startTimerOnDriverDetected = true;
         private float elapsedTime;
 
         protected override void OnDriverEntered(Vehicle pVehicle)
         {
             base.OnDriverEntered(pVehicle);
-            StartWaitTimer();
-
+            if (startTimerOnDriverDetected)
+                StartWaitTimer();
         }
 
         protected override void OnDriverLeft(Vehicle pVehicle)
         {
             base.OnDriverLeft(pVehicle);
-            StopWaitTimer();
+            if (startTimerOnDriverDetected)
+                StopWaitTimer();
         }
 
-        private void StartWaitTimer()
+        protected virtual void StartWaitTimer()
         {
             StopWaitTimer();
             doAction = WaitTimer;
@@ -44,8 +46,8 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
             if (elapsedTime > StopTime)
             {
                 EmitSignal(SignalName.DriverStopped);
-                WaitTimerCompleted();
                 StopWaitTimer();
+                WaitTimerCompleted();
             }
         }
 
@@ -64,8 +66,6 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
 
         protected virtual void WaitTimerStopped()
         { }
-
-
 
         protected void PlayerSteppedOnWrongObject(Node2D pNode, string pMessage)
         {

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c3h860vvg40xc"]
 
-[ext_resource type="PackedScene" uid="uid://bl7jw454koo84" path="res://Scenes/GameObjects/Stops/StopSign.tscn" id="1_pndho"]
-[ext_resource type="PackedScene" uid="uid://b0520itaestcm" path="res://Scenes/GameObjects/Stops/Crossing.tscn" id="2_2041n"]
+[ext_resource type="PackedScene" uid="uid://bl7jw454koo84" path="res://Scenes/GameObjects/Obstacles/StopSign.tscn" id="1_pndho"]
+[ext_resource type="PackedScene" uid="uid://b0520itaestcm" path="res://Scenes/GameObjects/Obstacles/Crossing.tscn" id="2_2041n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mv27b"]
 size = Vector2(200, 100)

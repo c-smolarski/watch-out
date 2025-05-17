@@ -38,7 +38,8 @@ collision_mask = 9
 script = ExtResource("2_vnpni")
 autoResetPosOnEnd = false
 startAtMaxSpeed = true
-maxForwardSpeed = 250.0
+maxForwardSpeed = 175.0
+maxBackwardSpeed = 175.0
 
 [node name="collider" type="CollisionShape2D" parent="." index="0"]
 shape = SubResource("CircleShape2D_r0lm1")

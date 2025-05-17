@@ -35,7 +35,7 @@ namespace Com.IsartDigital.WatchOut.Managers
 
         private void OnGameStart()
         {
-            CurrentLevelNumber = default;
+            CurrentLevelNumber = 5;
             LoadNextLevel();
             SoundManager.PlayMusic(SoundManager.Instance.StreetLoop, SoundManager.Instance);
         }

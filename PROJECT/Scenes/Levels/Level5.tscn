@@ -2,10 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://cru5wgs3k3arj" path="res://Scenes/LevelTemplate.tscn" id="1_kbyox"]
 [ext_resource type="PackedScene" uid="uid://ccrl8428a3fah" path="res://Scenes/Assets/Signs/CrossingSign.tscn" id="2_dy5g3"]
-[ext_resource type="PackedScene" uid="uid://c3h860vvg40xc" path="res://Scenes/GameObjects/Stops/StopWithCrossing.tscn" id="2_oo7va"]
+[ext_resource type="PackedScene" uid="uid://c3h860vvg40xc" path="res://Scenes/GameObjects/Obstacles/StopWithCrossing.tscn" id="2_oo7va"]
 [ext_resource type="PackedScene" uid="uid://df4215fpxxyfq" path="res://Scenes/GameObjects/Mobiles/Cars/Player.tscn" id="3_51x47"]
-[ext_resource type="PackedScene" uid="uid://bl7jw454koo84" path="res://Scenes/GameObjects/Stops/StopSign.tscn" id="3_t06le"]
-[ext_resource type="PackedScene" uid="uid://b0520itaestcm" path="res://Scenes/GameObjects/Stops/Crossing.tscn" id="4_a81y6"]
+[ext_resource type="PackedScene" uid="uid://bl7jw454koo84" path="res://Scenes/GameObjects/Obstacles/StopSign.tscn" id="3_t06le"]
+[ext_resource type="PackedScene" uid="uid://b0520itaestcm" path="res://Scenes/GameObjects/Obstacles/Crossing.tscn" id="4_a81y6"]
 [ext_resource type="PackedScene" uid="uid://d4ayklfykx1xj" path="res://Scenes/GameObjects/DriverDetector.tscn" id="4_mpv2k"]
 [ext_resource type="PackedScene" uid="uid://cu1jctaxsdr7v" path="res://Scenes/GameObjects/Mobiles/Cars/Car.tscn" id="6_30j08"]
 
@@ -161,6 +161,9 @@ scale = Vector2(1.25, 1.25)
 
 [node name="StopSignWithCrossing" parent="GameObjects/Obstacles" index="0" instance=ExtResource("2_oo7va")]
 position = Vector2(100, -25)
+tKeySteppedOn = "n/a"
+tKeyRunnedOver = "n/a"
+tKeyBackedOn = "n/a"
 
 [node name="DriverDetector" parent="GameObjects/Obstacles" index="1" instance=ExtResource("4_mpv2k")]
 position = Vector2(1500, -1675)

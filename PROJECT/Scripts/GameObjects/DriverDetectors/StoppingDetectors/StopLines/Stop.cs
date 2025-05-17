@@ -1,34 +1,22 @@
-﻿using Com.IsartDigital.WatchOut.GameObjects.Mobiles;
+﻿using Com.IsartDigital.WatchOut.Enums;
+using Com.IsartDigital.WatchOut.GameObjects.Mobiles;
+using Com.IsartDigital.WatchOut.Managers;
 using Com.IsartDigital.Utils.Tweens;
 using Godot;
 using System;
-using Com.IsartDigital.WatchOut.Managers;
-using Com.IsartDigital.WatchOut.Enums;
-using Com.IsartDigital.WatchOut.GameObjects.Mobiles.Drivers;
 
 // Author : Camille Smolarski
 
-namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
+namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors.StoppingDetectors.StopLines
 {
-    public partial class Stop : StoppingDetector
+    public partial class Stop : StoppingLine
     {
-        #region Signals
-        [Signal] public delegate void DriverSteppedOnLineEventHandler();
-        [Signal] public delegate void DriverRunnedOverEventHandler();
-        #endregion
-
         #region Exports
-        [Export] private Area2D stopLine;
-        [Export] private Polygon2D linePolygon;
         [Export] private Node2D sign;
         [Export] private Polygon2D redSignBG;
         #endregion
 
         #region Consts
-        private const string T_KEY_STEPPED_ON = "STOP_STEPPED_ON";
-        private const string T_KEY_BACKED_ON = "STOP_BACKED_ON";
-        private const string T_KEY_RUNNED_OVER = "STOP_RUNNED_OVER";
-
         private const string SIGN_SHADER_ALPHA_PARAM = "mixAlpha";
         private const string SIGN_SHADER_ANGLE_PARAM = "angle";
         private const int SIGN_SHADER_ANGLE_MAX_VALUE = 360;
@@ -47,16 +35,12 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
             set => signShader.SetShaderParameter(SIGN_SHADER_ALPHA_PARAM, value);
         }
 
-        private bool driverFinishedWaiting;
         private Tween shaderTween;
         private ShaderMaterial signShader;
 
         public override void _Ready()
         {
             base._Ready();
-            CollisionInit(stopLine);
-            stopLine.AreaEntered += OnDriverStepsOnLine;
-            stopLine.AreaExited += OnDriverLeavesLine;
             redSignBG.Material = signShader = (ShaderMaterial)redSignBG.Material.Duplicate();
         }
 
@@ -67,45 +51,21 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
         protected override void OnDriverLeft(Vehicle pVehicle)
         {
             base.OnDriverLeft(pVehicle);
-            if (!pVehicle.OverlapsArea(stopLine))
+            if (!pVehicle.OverlapsArea(Line))
                 DriverStopsWaiting();
             else
                 ShaderFadeOut();
         }
 
-        private void OnDriverStepsOnLine(Area2D pArea)
+        protected override void OnDriverLeavesLine(Area2D pArea)
         {
-            if (pArea is not Vehicle)
-                return;
-
-            bool lAreaGoingReverse = ((Vehicle)pArea).Direction == (int)Vehicle.GearMode.REVERSE;
-            if (!driverFinishedWaiting || lAreaGoingReverse)
-            {
-                EmitSignal(SignalName.DriverSteppedOnLine);
-                if(pArea is Player)
-                    PlayerSteppedOnWrongObject(linePolygon, lAreaGoingReverse ? T_KEY_BACKED_ON : T_KEY_STEPPED_ON);
-            }
-        }
-
-        private void OnDriverLeavesLine(Area2D pArea)
-        {
-            if (pArea is not Vehicle || pArea.OverlapsArea(this))
-                return;
-
-            if (pArea is not Cop && !driverFinishedWaiting)
-            {
-                EmitSignal(SignalName.DriverRunnedOver);
-                if (pArea is Player)
-                    PlayerSteppedOnWrongObject(linePolygon, T_KEY_RUNNED_OVER);
-            }
-
+            base.OnDriverLeavesLine(pArea);
             DriverStopsWaiting();
-
         }
 
         private void DriverStopsWaiting()
         {
-            driverFinishedWaiting = false;
+            driverCanGo = false;
             ShaderFadeOut();
         }
 
@@ -122,7 +82,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
         protected override void WaitTimerCompleted()
         {
             base.WaitTimerCompleted();
-            driverFinishedWaiting = true;
+            driverCanGo = true;
             SucessAnim();
         }
 
@@ -158,16 +118,6 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors
                 shaderTween.Kill();
                 shaderTween = null;
             }
-        }
-
-        protected override void Dispose(bool pDisposing)
-        {
-            if (IsInstanceValid(stopLine))
-            {
-                stopLine.AreaEntered -= OnDriverStepsOnLine;
-                stopLine.AreaExited -= OnDriverLeavesLine;
-            }
-            base.Dispose(pDisposing);
         }
 
     }
