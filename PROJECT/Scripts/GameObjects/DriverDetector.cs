@@ -14,8 +14,6 @@ namespace Com.IsartDigital.WatchOut.GameObjects
         [Export] protected bool DetectsPlayer = true;
         [Export] protected bool DetectsNPC = false;
 
-        protected Dictionary<uint, bool> collisionLayersDict;
-
         protected Mobile detectedDriver;
 
         public override void _Ready()
@@ -56,16 +54,6 @@ namespace Com.IsartDigital.WatchOut.GameObjects
             pCollisionDict = new() {
                 { Player.COLLISION_LAYER, DetectsPlayer},
                 { Mobile.NPC_COLLISION_LAYER, DetectsNPC}};
-        }
-
-        protected void CollisionInit(Area2D pArea)
-        {
-            pArea.CollisionLayer = pArea.CollisionMask = default;
-            foreach (uint lLayer in collisionLayersDict.Keys)
-            {
-                pArea.SetCollisionLayerValue((int)lLayer, collisionLayersDict[lLayer]);
-                pArea.SetCollisionMaskValue((int)lLayer, collisionLayersDict[lLayer]);
-            }
         }
 
         protected override void Dispose(bool pDisposing)

@@ -26,12 +26,13 @@ namespace Com.IsartDigital.WatchOut.GameObjects
 
         public int Direction { get; protected set; }
         public float Speed { get; protected set; }
+        public bool CollisionsEnabled { get; private set; }
         public Vector2 VelocityDirection => (GlobalPosition - lastPos).Normalized();
         protected bool IsMoving => Speed > 0;
         protected GpuParticles2D MoveParticles { get; private set; }
 
         private Vector2 lastPos;
-        private bool collisionsEnabled, resetStartAtMaxSpeed;
+        private bool resetStartAtMaxSpeed;
         private float elapsedTime, flutterTime, maxSpeed;
 
         public override void _Ready()
@@ -44,7 +45,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects
 
         protected override void OnHit(Area2D pArea)
         {
-            if (pArea is not Mobile || !collisionsEnabled  || !((Mobile)pArea).collisionsEnabled)
+            if (pArea is not Mobile || !CollisionsEnabled  || !((Mobile)pArea).CollisionsEnabled)
                 return;
 
             OnAccident((Mobile)pArea);
@@ -84,8 +85,8 @@ namespace Com.IsartDigital.WatchOut.GameObjects
                 startAtMaxSpeed = false;
             }
 
-            if (!collisionsEnabled)
-                collisionsEnabled = true;
+            if (!CollisionsEnabled)
+                CollisionsEnabled = true;
 
             doAction = Accelerate;
         }
@@ -133,7 +134,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects
 
         private void StopAndReset()
         {
-            collisionsEnabled = false;
+            CollisionsEnabled = false;
             startAtMaxSpeed = resetStartAtMaxSpeed;
             pathFollow.ProgressRatio = default;
             StopMoving();

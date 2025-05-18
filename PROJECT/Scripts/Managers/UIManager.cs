@@ -98,7 +98,7 @@ namespace Com.IsartDigital.WatchOut.Managers
                     currentTrans = null;
                     return;
                 }
-
+                scoreTimer.Visible = false;
                 listeningTaps = false;
                 GameManager.Vibrate(VibrationDuration.SHORT);
                 StartTransOut();

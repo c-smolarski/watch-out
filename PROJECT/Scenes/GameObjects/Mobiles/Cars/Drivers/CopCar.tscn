@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bplviwo1bvotp"]
 
-[ext_resource type="PackedScene" uid="uid://bjx5sbyjja8ln" path="res://Scenes/GameObjects/Mobiles/Cars/CarTemplate.tscn" id="1_y4qdo"]
+[ext_resource type="PackedScene" uid="uid://1jhjwv04aqks" path="res://Scenes/GameObjects/Mobiles/Cars/Drivers/DriverTemplate.tscn" id="1_y4qdo"]
 [ext_resource type="Texture2D" uid="uid://qumy51e1j7yr" path="res://Assets/light.png" id="2_53ark"]
 [ext_resource type="Script" path="res://Scripts/GameObjects/Mobiles/Vehicles/Drivers/Cop.cs" id="2_x7pu6"]
 

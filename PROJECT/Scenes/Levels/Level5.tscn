@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bl7jw454koo84" path="res://Scenes/GameObjects/Obstacles/StopSign.tscn" id="3_t06le"]
 [ext_resource type="PackedScene" uid="uid://b0520itaestcm" path="res://Scenes/GameObjects/Obstacles/Crossing.tscn" id="4_a81y6"]
 [ext_resource type="PackedScene" uid="uid://d4ayklfykx1xj" path="res://Scenes/GameObjects/DriverDetector.tscn" id="4_mpv2k"]
-[ext_resource type="PackedScene" uid="uid://cu1jctaxsdr7v" path="res://Scenes/GameObjects/Mobiles/Cars/Car.tscn" id="6_30j08"]
+[ext_resource type="PackedScene" uid="uid://cu1jctaxsdr7v" path="res://Scenes/GameObjects/Mobiles/Cars/Drivers/Car.tscn" id="6_30j08"]
 
 [sub_resource type="Curve2D" id="Curve2D_tyrom"]
 _data = {
@@ -22,6 +22,7 @@ _data = {
 point_count = 7
 
 [node name="Level5" node_paths=PackedStringArray("Player") instance=ExtResource("1_kbyox")]
+AllocatedTime = 240.0
 Player = NodePath("GameObjects/Cars/Player")
 winDelay = 2.0
 

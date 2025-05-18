@@ -56,6 +56,13 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles.Drivers
             }
         }
 
+        protected override void OnAccident(Mobile pMobile)
+        {
+            TurnOffSirens();
+            muteSirens = true;
+            base.OnAccident(pMobile);
+        }
+
         protected override void OnReachPathEnd()
         {
             base.OnReachPathEnd();
@@ -65,8 +72,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles.Drivers
 
         private void TurnOnSirens()
         {
-            if (IsInstanceValid(lightsTween))
-                TurnOffSirens();
+            TurnOffSirens();
 
             if (sirens == null)
                 sirens = SoundManager.Instance.Play(SoundManager.Instance.Sirens, true, SoundPath.SFX_SOUND_BUS);
@@ -83,13 +89,22 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles.Drivers
 
         private void TurnOffSirens()
         {
-            lightsTween.Kill();
+            if (IsInstanceValid(lightsTween))
+                lightsTween.Kill();
             lightsTween = null;
+
             foreach (PointLight2D lLight in lights)
             {
                 lLight.Energy = default;
                 lLight.Enabled = false;
             }
+        }
+
+        protected override void Dispose(bool pDisposing)
+        {
+            if (IsInstanceValid(sirens) && sirens.Playing)
+                sirens.QueueFree();
+            base.Dispose(pDisposing);
         }
     }
 }

@@ -3,10 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://cru5wgs3k3arj" path="res://Scenes/LevelTemplate.tscn" id="1_5kswc"]
 [ext_resource type="PackedScene" uid="uid://crvrs1nkdxf8i" path="res://Scenes/Assets/ParkingSpot.tscn" id="2_r683c"]
 [ext_resource type="PackedScene" uid="uid://bl7jw454koo84" path="res://Scenes/GameObjects/Obstacles/StopSign.tscn" id="3_hkah2"]
-[ext_resource type="PackedScene" uid="uid://cu1jctaxsdr7v" path="res://Scenes/GameObjects/Mobiles/Cars/Car.tscn" id="4_8grnw"]
+[ext_resource type="PackedScene" uid="uid://cu1jctaxsdr7v" path="res://Scenes/GameObjects/Mobiles/Cars/Drivers/Car.tscn" id="4_8grnw"]
 [ext_resource type="PackedScene" uid="uid://df4215fpxxyfq" path="res://Scenes/GameObjects/Mobiles/Cars/Player.tscn" id="5_mn2b4"]
 [ext_resource type="PackedScene" uid="uid://d4ayklfykx1xj" path="res://Scenes/GameObjects/DriverDetector.tscn" id="6_0yusg"]
-[ext_resource type="PackedScene" uid="uid://bplviwo1bvotp" path="res://Scenes/GameObjects/Mobiles/Cars/CopCar.tscn" id="7_2eivw"]
+[ext_resource type="PackedScene" uid="uid://bplviwo1bvotp" path="res://Scenes/GameObjects/Mobiles/Cars/Drivers/CopCar.tscn" id="7_2eivw"]
 
 [sub_resource type="Curve2D" id="Curve2D_xwu57"]
 _data = {
@@ -75,69 +75,67 @@ width = 20.0
 color = Color(0.176419, 0.176419, 0.176419, 1)
 polygon = PackedVector2Array(-6000, -600, -6000, -200, 4000, -200, 4000, -600)
 
-[node name="lines" type="Node2D" parent="Assets" index="1"]
+[node name="dots" type="Node2D" parent="Assets/road/RoadH" index="0"]
+position = Vector2(0, -400)
 
-[node name="Line2" type="Line2D" parent="Assets/lines" index="0"]
+[node name="dots" type="Polygon2D" parent="Assets/road/RoadH/dots" index="0"]
+position = Vector2(-200, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots2" type="Polygon2D" parent="Assets/road/RoadH/dots" index="1"]
+position = Vector2(-100, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots3" type="Polygon2D" parent="Assets/road/RoadH/dots" index="2"]
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots4" type="Polygon2D" parent="Assets/road/RoadH/dots" index="3"]
+position = Vector2(100, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="dots5" type="Polygon2D" parent="Assets/road/RoadH/dots" index="4"]
+position = Vector2(200, 0)
+polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
+
+[node name="Line2" type="Line2D" parent="Assets/road/RoadH" index="1"]
 position = Vector2(-250, -400)
 rotation = 1.5708
 points = PackedVector2Array(0, 20, 0, 2480)
 width = 20.0
 
-[node name="line4" type="Polygon2D" parent="Assets/lines" index="1"]
+[node name="line4" type="Polygon2D" parent="Assets/road/RoadH" index="2"]
 position = Vector2(-3475, -400)
 rotation = 1.5708
 polygon = PackedVector2Array(10, -200, 10, 2000, -10, 2000, -10, -200)
 
-[node name="line3" type="Polygon2D" parent="Assets/lines" index="2"]
+[node name="line3" type="Polygon2D" parent="Assets/road/RoadH" index="3"]
 position = Vector2(475, -400)
 rotation = -1.5708
 polygon = PackedVector2Array(10, -200, 10, 2000, -10, 2000, -10, -200)
 
-[node name="dots" type="Node2D" parent="Assets/lines" index="3"]
-position = Vector2(0, -400)
-
-[node name="dots" type="Polygon2D" parent="Assets/lines/dots" index="0"]
-position = Vector2(-200, 0)
-polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
-
-[node name="dots2" type="Polygon2D" parent="Assets/lines/dots" index="1"]
-position = Vector2(-100, 0)
-polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
-
-[node name="dots3" type="Polygon2D" parent="Assets/lines/dots" index="2"]
-polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
-
-[node name="dots4" type="Polygon2D" parent="Assets/lines/dots" index="3"]
-position = Vector2(100, 0)
-polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
-
-[node name="dots5" type="Polygon2D" parent="Assets/lines/dots" index="4"]
-position = Vector2(200, 0)
-polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
-
-[node name="dots2" type="Node2D" parent="Assets/lines" index="4"]
+[node name="dots2" type="Node2D" parent="Assets/road/RoadH" index="4"]
 position = Vector2(-3000, -400)
 
-[node name="dots" type="Polygon2D" parent="Assets/lines/dots2" index="0"]
+[node name="dots" type="Polygon2D" parent="Assets/road/RoadH/dots2" index="0"]
 position = Vector2(-200, 0)
 polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
 
-[node name="dots2" type="Polygon2D" parent="Assets/lines/dots2" index="1"]
+[node name="dots2" type="Polygon2D" parent="Assets/road/RoadH/dots2" index="1"]
 position = Vector2(-100, 0)
 polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
 
-[node name="dots3" type="Polygon2D" parent="Assets/lines/dots2" index="2"]
+[node name="dots3" type="Polygon2D" parent="Assets/road/RoadH/dots2" index="2"]
 polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
 
-[node name="dots4" type="Polygon2D" parent="Assets/lines/dots2" index="3"]
+[node name="dots4" type="Polygon2D" parent="Assets/road/RoadH/dots2" index="3"]
 position = Vector2(100, 0)
 polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
 
-[node name="dots5" type="Polygon2D" parent="Assets/lines/dots2" index="4"]
+[node name="dots5" type="Polygon2D" parent="Assets/road/RoadH/dots2" index="4"]
 position = Vector2(200, 0)
 polygon = PackedVector2Array(30, -10, 30, 10, -30, 10, -30, -10)
 
-[node name="Parkspot" parent="Assets" index="2" instance=ExtResource("2_r683c")]
+[node name="Parkspot" parent="Assets" index="1" instance=ExtResource("2_r683c")]
 position = Vector2(-3000, -1300)
 rotation = 3.14159
 
@@ -150,16 +148,22 @@ position = Vector2(100, -25)
 [node name="Car" parent="GameObjects" index="1" node_paths=PackedStringArray("pathFollow") instance=ExtResource("4_8grnw")]
 position = Vector2(1000, -500)
 rotation = 3.14159
+stopForPlayer = false
+stopForNPC = false
 pathFollow = NodePath("../../Paths/CarPath/CarFollow")
 maxForwardSpeed = 1700.0
 
 [node name="Car2" parent="GameObjects" index="2" node_paths=PackedStringArray("pathFollow") instance=ExtResource("4_8grnw")]
 position = Vector2(-1000, -300)
+stopForPlayer = false
+stopForNPC = false
 pathFollow = NodePath("../../Paths/CarPath2/Car2Follow")
 maxForwardSpeed = 1700.0
 
 [node name="Car3" parent="GameObjects" index="3" node_paths=PackedStringArray("pathFollow") instance=ExtResource("4_8grnw")]
 position = Vector2(-1000, -300)
+stopForPlayer = false
+stopForNPC = false
 pathFollow = NodePath("../../Paths/CarPath2/Car3Follow")
 maxForwardSpeed = 1900.0
 
@@ -194,6 +198,8 @@ maxForwardSpeed = 1700.0
 [node name="SpeedingDriver" parent="GameObjects/Introduction" index="3" node_paths=PackedStringArray("pathFollow") instance=ExtResource("4_8grnw")]
 position = Vector2(-3100, -2500)
 rotation = 1.5708
+stopForPlayer = false
+stopForNPC = false
 pathFollow = NodePath("../../../Paths/Introduction/SpeedingDriverPath/SpeedingDriverFollow")
 maxForwardSpeed = 2100.0
 
@@ -201,6 +207,8 @@ maxForwardSpeed = 2100.0
 position = Vector2(-3300, -1300)
 rotation = 1.5708
 visibleOnReady = true
+stopForPlayer = false
+stopForNPC = false
 pathFollow = NodePath("../../../Paths/Introduction/CopPath/CopFollow")
 maxForwardSpeed = 2300.0
 

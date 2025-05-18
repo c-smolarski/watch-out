@@ -1,102 +1,188 @@
-[gd_scene load_steps=5 format=3 uid="uid://ct3v526af63gs"]
+[gd_scene load_steps=9 format=3 uid="uid://ct3v526af63gs"]
 
 [ext_resource type="PackedScene" uid="uid://cru5wgs3k3arj" path="res://Scenes/LevelTemplate.tscn" id="1_4tp2e"]
 [ext_resource type="PackedScene" uid="uid://c5mjaa64b4qwj" path="res://Scenes/GameObjects/Obstacles/TrafficLight.tscn" id="2_g6n88"]
+[ext_resource type="PackedScene" uid="uid://cu1jctaxsdr7v" path="res://Scenes/GameObjects/Mobiles/Cars/Drivers/Car.tscn" id="4_720y1"]
 [ext_resource type="PackedScene" uid="uid://df4215fpxxyfq" path="res://Scenes/GameObjects/Mobiles/Cars/Player.tscn" id="7_n1qdx"]
 
 [sub_resource type="Curve2D" id="Curve2D_tyrom"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 100, 150, 0, 0, 0, -150, 100, -100, -300, 0, 0, 0, 500, -300, 0, 0, 450, 0, 800, -300, 0, 450, 0, 0, 1500, -1000, 0, 0, 0, -200, 1500, -2000, 200, 0, 0, 0, 1175, -2325, 0, 0, -300, 0, 0, -2325, 0, 300, 0, 0, -500, -2800, 0, 0, 0, 0, -500, -4000)
+"points": PackedVector2Array(0, 0, 0, 0, 100, 1000, 0, 0, 0, 0, 100, -1700)
 }
-point_count = 10
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_gpgco"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -1500, 100, 0, 0, 550, 0, 400, 100, 0, 200, 0, -500, 1025, -600, -100, 0, 0, 0, 1500, -1100)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_efop0"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -100, -1700, 0, 0, 0, 150, -100, -300, 150, 0, 0, 0, -300, -100, 0, 0, 0, 0, -1000, -100)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_5tcw5"]
+_data = {
+"points": PackedVector2Array(54.2142, -113.209, -55, 115, 860, -915, 0, -100, 0, 550, 805, -650, 150, 0, -300, 0, 300, -100, 0, -300, 0, 0, -100, 300, 0, 0, 0, 0, -100, 2000)
+}
+point_count = 5
 
 [node name="Level6" node_paths=PackedStringArray("Player") instance=ExtResource("1_4tp2e")]
 Player = NodePath("GameObjects/Cars/Player")
-winDelay = 2.0
+winDelay = 0.5
 
 [node name="Roads" type="Node2D" parent="Assets" index="0"]
 
-[node name="RoadH" type="Polygon2D" parent="Assets/Roads" index="0"]
-position = Vector2(-1265, 0)
+[node name="center" type="Polygon2D" parent="Assets/Roads" index="0"]
 color = Color(0.176419, 0.176419, 0.176419, 1)
-polygon = PackedVector2Array(-4000, -600, -4000, -200, 800, -200, 800, -600)
+polygon = PackedVector2Array(-200, -200, -200, 200, 200, 200, 200, -200)
 
-[node name="Line" type="Line2D" parent="Assets/Roads/RoadH" index="0"]
-position = Vector2(-250, -400)
-rotation = 1.5708
-points = PackedVector2Array(0, 20, 0, 3500)
-width = 20.0
-
-[node name="Line2" type="Line2D" parent="Assets/Roads/RoadH" index="1"]
-position = Vector2(250, -400)
-rotation = -1.5708
-points = PackedVector2Array(0, 20, 0, 550)
-width = 20.0
-
-[node name="RoadV" type="Polygon2D" parent="Assets/Roads" index="1"]
-position = Vector2(0, 780)
-color = Color(0.176419, 0.176419, 0.176419, 1)
-polygon = PackedVector2Array(-200, -200, -200, 1800, 200, 1800, 200, -200)
-
-[node name="Line" type="Line2D" parent="Assets/Roads/RoadV" index="0"]
-points = PackedVector2Array(0, 0, 0, 1800)
-width = 20.0
-
-[node name="RoadV2" type="Polygon2D" parent="Assets/Roads" index="2"]
-position = Vector2(1400, -1200)
+[node name="top" type="Polygon2D" parent="Assets/Roads" index="1"]
+position = Vector2(0, -400)
 rotation = -3.14159
 color = Color(0.176419, 0.176419, 0.176419, 1)
-polygon = PackedVector2Array(-200, -200, -200, 600, 200, 600, 200, -200)
+polygon = PackedVector2Array(-200, -200, -200, 1600, 200, 1600, 200, -200)
 
-[node name="Line" type="Line2D" parent="Assets/Roads/RoadV2" index="0"]
-points = PackedVector2Array(0, -200, 0, 600)
+[node name="Line" type="Line2D" parent="Assets/Roads/top" index="0"]
+points = PackedVector2Array(0, -200, 0, 1600)
 width = 20.0
 
-[node name="RoadAngle" type="Polygon2D" parent="Assets/Roads" index="3"]
-position = Vector2(1400, -400)
+[node name="right" type="Node2D" parent="Assets/Roads" index="2"]
+
+[node name="RoadAngle" type="Polygon2D" parent="Assets/Roads/right" index="0"]
+position = Vector2(920, 0)
 color = Color(0.176419, 0.176419, 0.176419, 1)
 polygon = PackedVector2Array(-305, -305, -259, -363, -231, -421, -214, -476, -203, -531, -200, -600, 200, -600, 193, -467, 164, -324, 122, -205, 55, -90, -12, -12, -90, 55, -205, 122, -324, 164, -467, 193, -600, 200, -600, -200, -554, -201, -497, -208, -422, -230, -355, -266)
 
-[node name="Line" type="Line2D" parent="Assets/Roads/RoadAngle" index="0"]
+[node name="Line" type="Line2D" parent="Assets/Roads/right/RoadAngle" index="0"]
 points = PackedVector2Array(0, -600, 0, -477, -25, -370, -82, -240, -150, -150, -246, -77, -370, -25, -487, -5, -600, 0)
+width = 20.0
+
+[node name="RoadAngle2" type="Polygon2D" parent="Assets/Roads/right" index="1"]
+position = Vector2(920, -1200)
+rotation = -3.14159
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-305, -305, -259, -363, -231, -421, -214, -476, -203, -531, -200, -600, 200, -600, 193, -467, 164, -324, 122, -205, 55, -90, -12, -12, -90, 55, -205, 122, -324, 164, -467, 193, -600, 200, -600, -200, -554, -201, -497, -208, -422, -230, -355, -266)
+
+[node name="Line" type="Line2D" parent="Assets/Roads/right/RoadAngle2" index="0"]
+points = PackedVector2Array(0, -600, 0, -477, -25, -370, -82, -240, -150, -150, -246, -77, -370, -25, -487, -5, -600, 0)
+width = 20.0
+
+[node name="bottom" type="Polygon2D" parent="Assets/Roads" index="3"]
+position = Vector2(0, 200)
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-200, 0, -200, 1800, 200, 1800, 200, 0)
+
+[node name="Line" type="Line2D" parent="Assets/Roads/bottom" index="0"]
+points = PackedVector2Array(0, 0, 0, 1800)
+width = 20.0
+
+[node name="left" type="Polygon2D" parent="Assets/Roads" index="4"]
+position = Vector2(-300, 0)
+color = Color(0.176419, 0.176419, 0.176419, 1)
+polygon = PackedVector2Array(-1500, -200, -1500, 200, 0, 200, 0, -200)
+
+[node name="Line" type="Line2D" parent="Assets/Roads/left" index="0"]
+rotation = 1.5708
+points = PackedVector2Array(0, 20, 0, 1500)
 width = 20.0
 
 [node name="Signs" type="Node2D" parent="Assets" index="1"]
 
 [node name="Obstacles" type="Node2D" parent="GameObjects" index="0"]
 
-[node name="StopSign" parent="GameObjects/Obstacles" index="0" instance=ExtResource("2_g6n88")]
-position = Vector2(100, -25)
+[node name="TrafficLight" parent="GameObjects/Obstacles" index="0" instance=ExtResource("2_g6n88")]
+position = Vector2(100, 300)
 
-[node name="StopSign2" parent="GameObjects/Obstacles" index="1" node_paths=PackedStringArray("backgroundLight", "redLight", "orangeLight", "greenLight", "Line", "linePolygon") instance=ExtResource("2_g6n88")]
-position = Vector2(-400, -300)
+[node name="TrafficLightTop" parent="GameObjects/Obstacles" index="1" instance=ExtResource("2_g6n88")]
+position = Vector2(-100, -300)
+rotation = 3.14159
+showBgLight = false
+DetectsPlayer = false
+DetectsNPC = true
+
+[node name="TrafficLightLeft" parent="GameObjects/Obstacles" index="2" instance=ExtResource("2_g6n88")]
+position = Vector2(-300, 100)
 rotation = 1.5708
-backgroundLight = NodePath("../StopSign/light/light")
-redLight = NodePath("../StopSign/light/red")
-orangeLight = NodePath("../StopSign/light/orange")
-greenLight = NodePath("../StopSign/light/green")
-Line = NodePath("../StopSign/StopLineArea")
-linePolygon = NodePath("../StopSign/line")
+startGreen = true
+greenLightDuration = 4.0
+redLightDuration = 8.0
+showBgLight = false
+DetectsPlayer = false
+DetectsNPC = true
+
+[node name="TrafficLightRight" parent="GameObjects/Obstacles" index="3" instance=ExtResource("2_g6n88")]
+position = Vector2(300, -100)
+rotation = -1.5708
+startGreen = true
+greenLightDuration = 4.0
+redLightDuration = 8.0
+showBgLight = false
+DetectsPlayer = false
+DetectsNPC = true
 
 [node name="Cars" type="Node2D" parent="GameObjects" index="1"]
 
 [node name="Player" parent="GameObjects/Cars" index="0" node_paths=PackedStringArray("appearAnimStartPos", "pathFollow") instance=ExtResource("7_n1qdx")]
-position = Vector2(100, 150)
+position = Vector2(100, 1000)
 rotation = -1.5708
 appearAnimStartPos = NodePath("../../../Marker2D")
-cameraFollowPlayer = true
 pathFollow = NodePath("../../../Paths/PlayerPath/PlayerFollow")
+
+[node name="TopCar" parent="GameObjects/Cars" index="1" node_paths=PackedStringArray("pathFollow") instance=ExtResource("4_720y1")]
+position = Vector2(-100, -1700)
+rotation = 1.5708
+visibleOnReady = true
+pathFollow = NodePath("../../../Paths/TopCarPath/CarFollow")
+maxForwardSpeed = 500.0
+
+[node name="LeftCar" parent="GameObjects/Cars" index="2" node_paths=PackedStringArray("pathFollow") instance=ExtResource("4_720y1")]
+position = Vector2(-1500, 100)
+visibleOnReady = true
+startOnReady = true
+pathFollow = NodePath("../../../Paths/LeftCarPath/CarFollow")
+maxForwardSpeed = 700.0
+
+[node name="RightCar" parent="GameObjects/Cars" index="3" node_paths=PackedStringArray("pathFollow") instance=ExtResource("4_720y1")]
+position = Vector2(860, -915)
+rotation = 2.00713
+visibleOnReady = true
+startOnReady = true
+pathFollow = NodePath("../../../Paths/RightCarPath/CarFollow")
+maxForwardSpeed = 500.0
 
 [node name="PlayerPath" type="Path2D" parent="Paths" index="0"]
 curve = SubResource("Curve2D_tyrom")
 
 [node name="PlayerFollow" type="PathFollow2D" parent="Paths/PlayerPath" index="0"]
-position = Vector2(100, 150)
+position = Vector2(100, 1000)
 rotation = -1.5708
 loop = false
 
+[node name="LeftCarPath" type="Path2D" parent="Paths" index="1"]
+curve = SubResource("Curve2D_gpgco")
+
+[node name="CarFollow" type="PathFollow2D" parent="Paths/LeftCarPath" index="0"]
+position = Vector2(-1500, 100)
+
+[node name="TopCarPath" type="Path2D" parent="Paths" index="2"]
+curve = SubResource("Curve2D_efop0")
+
+[node name="CarFollow" type="PathFollow2D" parent="Paths/TopCarPath" index="0"]
+position = Vector2(-100, -1700)
+rotation = 1.5708
+
+[node name="RightCarPath" type="Path2D" parent="Paths" index="3"]
+curve = SubResource("Curve2D_5tcw5")
+
+[node name="CarFollow" type="PathFollow2D" parent="Paths/RightCarPath" index="0"]
+position = Vector2(860, -915)
+rotation = 2.0169
+
 [node name="LevelEnd" parent="." index="3"]
-position = Vector2(-400, -2500)
+position = Vector2(100, -700)
 
 [node name="Marker2D" type="Marker2D" parent="." index="4"]
-position = Vector2(100, 500)
+position = Vector2(100, 1600)

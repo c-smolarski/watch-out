@@ -9,10 +9,15 @@ MESSAGE_LEVEL2;Now let's take a step back.;Maintenant prenons un peu de recul.
 MESSAGE_LEVEL3;Woah, what's hapenning over there?;Oh ! Mais que se passe-t-il là bas?
 MESSAGE_LEVEL4;That was close! We're lucky nobody was crossing the road.;On a eu chaud, heureusement que personne ne traversait la route.
 MESSAGE_LEVEL5;Some challenge is coming!;Un peu de challenge arrive !
-MESSAGE_LEVEL6;You triumphed from all the challenges!;Tu as relevé tous les défis !
+MESSAGE_LEVEL6;Will you do well with traffic lights?;Voyons comment tu te débrouilles avec des feux rouges.
+MESSAGE_LEVEL7;Let's recap!;Faisons un petit récap' !
+MESSAGE_LEVEL8;You triumphed from all the challenges!;Tu as relevé tous les défis !
 CROSSING_STOPPED_ON;Stopping on zebra lines is prohibited.;Il est interdit de s'arrêter sur un passage piéton.
 CROSSING_PEDESTRIAN_WALKING;You have to wait for pedestrians to finish crossing.;Tu dois attendre que les piétons aient fini de traverser avant de passer.
 STOP_STEPPED_ON;Don't forget to stop before the stop line.;N'oublie pas de t'arrêter avant la ligne d'un stop
 STOP_BACKED_ON;You can't back on a stop line.;On ne peut pas reculer sur une ligne de stop.
 STOP_RUNNED_OVER;Dangerous! Stop before a stop line.;Danger ! Il faut toujours s'arrêter devant un stop.
+TRAFFIC_STEPPED_ON;You have to wait behind the dots.;Tu dois attendre derrière les pointillés.
+TRAFFIC_BACKED_ON;You can't back on traffic light dots.;Tu ne peux pas reculer sur les pointillés des feux de signalisation.
+TRAFFIC_RUNNED_OVER;Hey ! Red means you have to stop!;Tu dois t'arrêter quand le feux est rouge !
 FTUE_HOLD;Hold!;Maintiens !

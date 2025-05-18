@@ -15,6 +15,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors.StoppingDetector
         [Export] private float greenLightDuration = 8f;
         [Export] private float redLightDuration = 4f;
         [ExportGroup("Lights")]
+        [Export] private bool showBgLight = true;
         [Export] private Node2D backgroundLight;
         [Export] private Polygon2D redLight;
         [Export] private Polygon2D orangeLight;
@@ -22,6 +23,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors.StoppingDetector
         #endregion
 
         #region Consts
+        private const string SHADER_ALPHA_PARAM = "alpha";
         private const string SHADER_ANGLE_PARAM = "angle";
         private const string SHADER_COLOR_PARAM = "color";
         private const string SHADER_PREV_COLOR_PARAM = "prev_color";
@@ -42,7 +44,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors.StoppingDetector
         }
         #endregion
 
-        public bool IsRed => currentLight == redLight;
+        public bool IsGreen => currentLight == greenLight;
         protected override float StopTime => lightTime;
 
         private static readonly Color offModulate = new(0.4f, 0.4f, 0.4f);
@@ -55,6 +57,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors.StoppingDetector
         {
             base._Ready();
             backgroundLight.Material = lightShader = (ShaderMaterial)backgroundLight.Material.Duplicate();
+            lightShader.SetShaderParameter(SHADER_ALPHA_PARAM, showBgLight ? 1 : 0);
             startTimerOnDriverDetected = false;
             currentLight = startGreen ? greenLight : redLight;
             driverCanGo = startGreen;
@@ -96,7 +99,7 @@ namespace Com.IsartDigital.WatchOut.GameObjects.DriverDetectors.StoppingDetector
         private void SetShaderColor()
         {
             ShaderPrevColor = currentLight.Color;
-            lightShader.SetShaderParameter(SHADER_COLOR_PARAM, IsRed ? greenLight.Color : redLight.Color);
+            lightShader.SetShaderParameter(SHADER_COLOR_PARAM, currentLight == redLight ? greenLight.Color : redLight.Color);
             ShaderAngle = default;
         }
 

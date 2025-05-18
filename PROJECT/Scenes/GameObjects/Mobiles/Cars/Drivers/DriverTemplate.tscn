@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://1jhjwv04aqks"]
+
+[ext_resource type="PackedScene" uid="uid://bjx5sbyjja8ln" path="res://Scenes/GameObjects/Mobiles/Cars/CarTemplate.tscn" id="1_t2x1b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2c55i"]
+size = Vector2(200, 50)
+
+[node name="Driver" instance=ExtResource("1_t2x1b")]
+
+[node name="mobileDetect" type="Area2D" parent="." index="5"]
+position = Vector2(200, 0)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mobileDetect" index="0"]
+shape = SubResource("RectangleShape2D_2c55i")

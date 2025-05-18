@@ -117,11 +117,16 @@ namespace Com.IsartDigital.WatchOut.GameObjects.Mobiles
             if (Speed < MIN_SPEED_THRESHOLD)
             {
                 StopMoving();
-                if (brakeForce == ManualBrakeForce)
-                    StartMovingBackward();
+                OnBrakeStop();
                 return;
             }
             Move(pDelta);
+        }
+
+        protected virtual void OnBrakeStop()
+        {
+            if (brakeForce == ManualBrakeForce)
+                StartMovingBackward();
         }
 
         protected override void StopMoving()
