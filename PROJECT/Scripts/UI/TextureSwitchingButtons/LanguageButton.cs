@@ -9,6 +9,12 @@ namespace Com.IsartDigital.WatchOut.UI.TextureSwitchingButtons
     {
         [Export] private string[] locales;
 
+        public override void _Ready()
+        {
+            base._Ready();
+            TranslationServer.SetLocale(locales[0]);
+        }
+
         protected override void OnPress()
         {
             base.OnPress();

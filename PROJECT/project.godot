@@ -10,11 +10,14 @@ config_version=5
 
 [application]
 
-config/name="WatchOut"
+config/name="Watch Out!"
 run/main_scene="res://Scenes/Main.tscn"
 config/features=PackedStringArray("4.2", "C#", "Mobile")
 run/max_fps=60
-config/icon="res://Assets/icon.svg"
+boot_splash/bg_color=Color(0.803922, 0.803922, 0.803922, 1)
+boot_splash/image="res://Assets/isartLogo.png"
+config/icon="res://icon.png"
+boot_splash/minimum_display_time=1500
 
 [autoload]
 
@@ -27,8 +30,9 @@ window/size/viewport_width=1600
 window/size/viewport_height=2560
 window/size/window_width_override=600
 window/size/window_height_override=800
-window/stretch/mode="viewport"
 window/handheld/orientation=1
+window/icon="res://icon.png"
+window/windows_native_icon=""
 
 [dotnet]
 

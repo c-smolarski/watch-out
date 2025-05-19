@@ -250,7 +250,7 @@ position = Vector2(3000, -3020)
 position = Vector2(100, 1600)
 
 [connection signal="DriverDetected" from="GameObjects/Obstacles/TrafficLight" to="GameObjects/Cars/Speeder" method="StartMovingForward"]
-[connection signal="DriverDetected" from="GameObjects/Obstacles/TrafficLightTop" to="GameObjects/Cars/CopCar" method="TurnOnSirens"]
 [connection signal="DriverDetected" from="GameObjects/Obstacles/TrafficLightTop" to="GameObjects/Cars/CopCar" method="StartMovingForward"]
+[connection signal="DriverDetected" from="GameObjects/Obstacles/TrafficLightTop" to="GameObjects/Cars/CopCar" method="TurnOnSirens"]
 
 [editable path="Assets/Parkspot"]
